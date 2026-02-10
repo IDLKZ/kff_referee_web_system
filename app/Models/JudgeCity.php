@@ -27,14 +27,14 @@ class JudgeCity extends Model
 
 	protected $table = 'judge_cities';
 
-	protected $casts = [
-		'user_id' => 'int',
-		'city_id' => 'int',
-	];
-
 	protected $fillable = [
 		'user_id',
 		'city_id',
+	];
+
+	protected $casts = [
+		'user_id' => 'int',
+		'city_id' => 'int',
 	];
 
 	public function city()

@@ -28,12 +28,12 @@ class JudgeCityManagement extends Component
     public bool $showFormModal = false;
     public bool $showDeleteModal = false;
     public bool $showSearchModal = false;
-    public bool $isEditing = false;
 
     // Form fields
     public ?int $editingId = null;
     public ?int $user_id = null;
     public ?int $city_id = null;
+    public bool $isEditing = false;
 
     // Searchable select state
     public string $userSearch = '';
@@ -43,7 +43,7 @@ class JudgeCityManagement extends Component
 
     // Delete target
     public ?int $deletingId = null;
-    public string $deletingName = '';
+    public string $deletingInfo = '';
 
     protected function rules(): array
     {
@@ -191,7 +191,7 @@ class JudgeCityManagement extends Component
         $this->checkPermission(PermissionConstants::JUDGE_CITIES_DELETE);
         $item = JudgeCity::with(['user', 'city'])->findOrFail($id);
         $this->deletingId = $item->id;
-        $this->deletingName = $item->user->last_name . ' ' . $item->user->first_name . ' — ' . $item->city->title_ru;
+        $this->deletingInfo = $item->user->last_name . ' ' . $item->user->first_name . ' — ' . $item->city->title_ru;
         $this->showDeleteModal = true;
     }
 
@@ -235,6 +235,7 @@ class JudgeCityManagement extends Component
     private function resetForm(): void
     {
         $this->editingId = null;
+        $this->isEditing = false;
         $this->user_id = null;
         $this->city_id = null;
         $this->userSearch = '';

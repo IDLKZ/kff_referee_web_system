@@ -49,10 +49,10 @@
                                 @endif
                             </div>
                         </th>
-                        <th class="cursor-pointer hover:bg-opacity-80 transition-colors" wire:click="sortBy('user_name')">
+                        <th class="cursor-pointer hover:bg-opacity-80 transition-colors" wire:click="sortBy('user_id')">
                             <div class="flex items-center gap-1">
                                 {{ __('crud.judge') }}
-                                @if($sortField === 'user_name')
+                                @if($sortField === 'user_id')
                                     <svg class="w-3 h-3" style="color: var(--color-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="{{ $sortDirection === 'asc' ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7' }}"/>
@@ -60,10 +60,10 @@
                                 @endif
                             </div>
                         </th>
-                        <th class="cursor-pointer hover:bg-opacity-80 transition-colors" wire:click="sortBy('city_name')">
+                        <th class="cursor-pointer hover:bg-opacity-80 transition-colors" wire:click="sortBy('city_id')">
                             <div class="flex items-center gap-1">
                                 {{ __('crud.city') }}
-                                @if($sortField === 'city_name')
+                                @if($sortField === 'city_id')
                                     <svg class="w-3 h-3" style="color: var(--color-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                               d="{{ $sortDirection === 'asc' ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7' }}"/>
@@ -71,6 +71,8 @@
                                 @endif
                             </div>
                         </th>
+                        <th>{{ __('crud.username') }}</th>
+                        <th>{{ __('crud.city_title') }}</th>
                         <th>{{ __('crud.actions') }}</th>
                     </tr>
                 </thead>
@@ -78,16 +80,25 @@
                     @forelse($items as $item)
                         <tr wire:key="judge-city-{{ $item->id }}">
                             <td style="color: var(--text-muted);">{{ $item->id }}</td>
-                            <td>
-                                <div class="font-medium" style="color: var(--text-primary);">
+                            <td class="font-medium">
+                                @if($item->user)
                                     {{ $item->user->last_name }} {{ $item->user->first_name }}
-                                </div>
-                                <div class="text-xs" style="color: var(--text-muted);">
-                                    {{ $item->user->email }}
-                                </div>
+                                @else
+                                    <span style="color: var(--text-muted);">{{ __('crud.deleted_user') }}</span>
+                                @endif
                             </td>
                             <td>
-                                <span class="font-medium">{{ $item->city->title_ru }}</span>
+                                @if($item->city)
+                                    {{ $item->city->title_ru }}
+                                @else
+                                    <span style="color: var(--text-muted);">{{ __('crud.deleted_city') }}</span>
+                                @endif
+                            </td>
+                            <td style="color: var(--text-muted);">
+                                @if($item->user){{ $item->user->username }}@endif
+                            </td>
+                            <td style="color: var(--text-muted);">
+                                @if($item->city){{ $item->city->value ?? '—' }}@endif
                             </td>
                             <td>
                                 <div class="flex items-center gap-1">
@@ -117,7 +128,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="text-center py-8" style="color: var(--text-muted);">
+                            <td colspan="6" class="text-center py-8" style="color: var(--text-muted);">
                                 {{ __('crud.no_results') }}
                             </td>
                         </tr>
@@ -194,7 +205,7 @@
     {{-- Create / Edit Modal --}}
     <x-modal wire:model="showFormModal" maxWidth="lg">
         <x-slot name="title">
-            {{ $isEditing ? __('crud.edit_judge_city') : __('crud.create_judge_city') }}
+            {{ $editingId ? __('crud.edit_judge_city') : __('crud.create_judge_city') }}
         </x-slot>
 
         <form wire:submit="save">
@@ -340,7 +351,7 @@
                 {{ __('crud.confirm_delete_text') }}
             </p>
             <p class="mt-2 font-semibold" style="color: var(--text-primary);">
-                {{ $deletingName }}
+                {{ $deletingInfo }}
             </p>
         </div>
 
