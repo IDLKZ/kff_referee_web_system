@@ -13,6 +13,7 @@ use App\Livewire\Admin\RolePermissionManagement;
 use App\Livewire\Admin\JudgeCityManagement;
 use App\Livewire\Admin\JudgeTypeManagement;
 use App\Livewire\Admin\JudgeRequirementManagement;
+use App\Livewire\Admin\MatchManagement;
 use App\Livewire\Admin\UserManagement;
 use App\Livewire\Auth\Login;
 use Illuminate\Support\Facades\Route;
@@ -59,6 +60,7 @@ Route::middleware('auth.active')->group(function () {
             Route::get('/judge-types', JudgeTypeManagement::class)->middleware('permission:' . PermissionConstants::JUDGE_TYPES_INDEX)->name('admin.judge-types');
             Route::get('/judge-cities', JudgeCityManagement::class)->middleware('permission:' . PermissionConstants::JUDGE_CITIES_INDEX)->name('admin.judge-cities');
             Route::get('/judge-requirements', JudgeRequirementManagement::class)->middleware('permission:' . PermissionConstants::JUDGE_REQUIREMENTS_INDEX)->name('admin.judge-requirements');
+            Route::get('/matches', MatchManagement::class)->middleware('permission:' . PermissionConstants::MATCHES_INDEX)->name('admin.matches');
         });
 
     // KFF / PFLK dashboard

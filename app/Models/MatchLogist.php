@@ -30,6 +30,11 @@ class MatchLogist extends Model
 		'logist_id' => 'int'
 	];
 
+	protected $fillable = [
+		'match_id',
+		'logist_id'
+	];
+
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'logist_id');

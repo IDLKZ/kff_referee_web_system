@@ -83,14 +83,14 @@ class JudgeRequirementManagement extends Component
                          ->orWhere('title_en', 'like', "%{$this->matchSearch}%");
                   })
                   ->orWhereHas('ownerClub', function ($cq) {
-                      $cq->where('title_ru', 'like', "%{$this->matchSearch}%")
-                         ->orWhere('title_kk', 'like', "%{$this->matchSearch}%")
-                         ->orWhere('title_en', 'like', "%{$this->matchSearch}%");
+                      $cq->where('short_name_ru', 'like', "%{$this->matchSearch}%")
+                         ->orWhere('short_name_kk', 'like', "%{$this->matchSearch}%")
+                         ->orWhere('short_name_en', 'like', "%{$this->matchSearch}%");
                   })
                   ->orWhereHas('guestClub', function ($cq) {
-                      $cq->where('title_ru', 'like', "%{$this->matchSearch}%")
-                         ->orWhere('title_kk', 'like', "%{$this->matchSearch}%")
-                         ->orWhere('title_en', 'like', "%{$this->matchSearch}%");
+                      $cq->where('short_name_ru', 'like', "%{$this->matchSearch}%")
+                         ->orWhere('short_name_kk', 'like', "%{$this->matchSearch}%")
+                         ->orWhere('short_name_en', 'like', "%{$this->matchSearch}%");
                   });
             })
             ->limit(10)
@@ -119,8 +119,8 @@ class JudgeRequirementManagement extends Component
         $match = MatchModel::with(['tournament', 'ownerClub', 'guestClub'])->findOrFail($id);
         $this->match_id = $match->id;
         $this->selectedMatchName = $match->tournament->title_ru . ': ' .
-                                   $match->ownerClub->title_ru . ' vs ' .
-                                   $match->guestClub->title_ru;
+                                   $match->ownerClub->short_name_ru . ' vs ' .
+                                   $match->guestClub->short_name_ru;
         $this->matchSearch = '';
     }
 
@@ -166,8 +166,8 @@ class JudgeRequirementManagement extends Component
         $this->is_required = $item->is_required;
 
         $this->selectedMatchName = $item->match->tournament->title_ru . ': ' .
-                                   $item->match->ownerClub->title_ru . ' vs ' .
-                                   $item->match->guestClub->title_ru;
+                                   $item->match->ownerClub->short_name_ru . ' vs ' .
+                                   $item->match->guestClub->short_name_ru;
         $this->selectedJudgeTypeName = $item->judgeType->title_ru;
 
         $this->matchSearch = '';
@@ -223,8 +223,8 @@ class JudgeRequirementManagement extends Component
         $this->deletingId = $item->id;
         $this->deletingInfo = $item->judgeType->title_ru . ' — ' .
                               $item->match->tournament->title_ru . ': ' .
-                              $item->match->ownerClub->title_ru . ' vs ' .
-                              $item->match->guestClub->title_ru;
+                              $item->match->ownerClub->short_name_ru . ' vs ' .
+                              $item->match->guestClub->short_name_ru;
         $this->showDeleteModal = true;
     }
 
@@ -299,14 +299,14 @@ class JudgeRequirementManagement extends Component
                            ->orWhere('title_en', 'like', "%{$this->search}%");
                     })
                     ->orWhereHas('match.ownerClub', function ($cq) {
-                        $cq->where('title_ru', 'like', "%{$this->search}%")
-                           ->orWhere('title_kk', 'like', "%{$this->search}%")
-                           ->orWhere('title_en', 'like', "%{$this->search}%");
+                        $cq->where('short_name_ru', 'like', "%{$this->search}%")
+                           ->orWhere('short_name_kk', 'like', "%{$this->search}%")
+                           ->orWhere('short_name_en', 'like', "%{$this->search}%");
                     })
                     ->orWhereHas('match.guestClub', function ($cq) {
-                        $cq->where('title_ru', 'like', "%{$this->search}%")
-                           ->orWhere('title_kk', 'like', "%{$this->search}%")
-                           ->orWhere('title_en', 'like', "%{$this->search}%");
+                        $cq->where('short_name_ru', 'like', "%{$this->search}%")
+                           ->orWhere('short_name_kk', 'like', "%{$this->search}%")
+                           ->orWhere('short_name_en', 'like', "%{$this->search}%");
                     })
                     ->orWhereHas('judgeType', function ($jq) {
                         $jq->where('title_ru', 'like', "%{$this->search}%")

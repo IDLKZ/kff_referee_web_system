@@ -86,7 +86,7 @@
                                         <span class="font-medium">{{ $item->match->tournament->title_ru }}</span>
                                         @if($item->match->ownerClub && $item->match->guestClub)
                                             <div class="text-sm" style="color: var(--text-muted);">
-                                                {{ $item->match->ownerClub->title_ru }} vs {{ $item->match->guestClub->title_ru }}
+                                                {{ $item->match->ownerClub->short_name_ru }} vs {{ $item->match->guestClub->short_name_ru }}
                                             </div>
                                         @endif
                                     </div>
@@ -261,7 +261,7 @@
                                                 x-on:mouseleave="$el.style.backgroundColor = 'transparent'">
                                             <div class="font-medium">{{ $matchOption->tournament->title_ru }}</div>
                                             <div class="text-xs" style="color: var(--text-muted);">
-                                                {{ $matchOption->ownerClub->title_ru }} vs {{ $matchOption->guestClub->title_ru }}
+                                                {{ $matchOption->ownerClub->short_name_ru }} vs {{ $matchOption->guestClub->short_name_ru }}
                                             </div>
                                         </button>
                                     @empty

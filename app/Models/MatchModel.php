@@ -39,7 +39,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property City $city
  * @property Operation $operation
- * @property Club|null $club
+ * @property Club $ownerClub
+ * @property Club $guestClub
+ * @property Club|null $winner
  * @property Season $season
  * @property Stadium $stadium
  * @property Tournament $tournament
@@ -109,7 +111,17 @@ class MatchModel extends Model
 		return $this->belongsTo(Operation::class, 'current_operation_id');
 	}
 
-	public function club()
+	public function ownerClub()
+	{
+		return $this->belongsTo(Club::class, 'owner_club_id');
+	}
+
+	public function guestClub()
+	{
+		return $this->belongsTo(Club::class, 'guest_club_id');
+	}
+
+	public function winner()
 	{
 		return $this->belongsTo(Club::class, 'winner_id');
 	}
@@ -131,17 +143,17 @@ class MatchModel extends Model
 
 	public function judge_requirements()
 	{
-		return $this->hasMany(JudgeRequirement::class);
+		return $this->hasMany(JudgeRequirement::class, 'match_id');
 	}
 
 	public function match_judges()
 	{
-		return $this->hasMany(MatchJudge::class);
+		return $this->hasMany(MatchJudge::class, 'match_id');
 	}
 
 	public function match_logists()
 	{
-		return $this->hasMany(MatchLogist::class);
+		return $this->hasMany(MatchLogist::class, 'match_id');
 	}
 
 	public function operations()
@@ -153,16 +165,16 @@ class MatchModel extends Model
 
 	public function match_protocol_requirements()
 	{
-		return $this->hasMany(MatchProtocolRequirement::class);
+		return $this->hasMany(MatchProtocolRequirement::class, 'match_id');
 	}
 
 	public function match_report_documents()
 	{
-		return $this->hasMany(MatchReportDocument::class);
+		return $this->hasMany(MatchReportDocument::class, 'match_id');
 	}
 
 	public function trips()
 	{
-		return $this->hasMany(Trip::class);
+		return $this->hasMany(Trip::class, 'match_id');
 	}
 }
