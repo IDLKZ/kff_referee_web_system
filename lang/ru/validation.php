@@ -11,11 +11,24 @@ return [
     ],
     'email' => 'Поле :attribute должно быть корректным email адресом.',
 
+    // File validation
+    'file_too_large' => 'Размер файла не должен превышать :max КБ.',
+    'invalid_file_extension' => 'Недопустимый формат файла. Разрешены: :values.',
+    'invalid_file_type' => 'Недопустимый тип файла.',
+    'file_not_found' => 'Файл не найден.',
+    'file_upload_failed' => 'Не удалось загрузить файл.',
+
+    // User validation
+    'invalid_phone_format' => 'Неверный формат телефона. Используйте формат: +7(777)123-45-67',
+    'invalid_username_format' => 'Логин может содержать только латинские буквы, цифры, подчеркивание и @',
+    'invalid_iin_format' => 'ИИН должен состоять из 12 цифр',
+
     'attributes' => [
         'login' => 'логин',
         'password' => 'пароль',
         'email' => 'email',
         'phone' => 'телефон',
         'username' => 'имя пользователя',
+        'file' => 'файл',
     ],
 ];

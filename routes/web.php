@@ -6,6 +6,9 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LocaleController;
 use App\Livewire\Admin\RoleManagement;
+use App\Livewire\Admin\PermissionManagement;
+use App\Livewire\Admin\RolePermissionManagement;
+use App\Livewire\Admin\UserManagement;
 use App\Livewire\Auth\Login;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +46,9 @@ Route::middleware('auth.active')->group(function () {
         ->group(function () {
             Route::get('/dashboard', fn () => view('admin.dashboard'))->name('admin.dashboard');
             Route::get('/roles', RoleManagement::class)->middleware('permission:' . PermissionConstants::ROLES_INDEX)->name('admin.roles');
+            Route::get('/permissions', PermissionManagement::class)->middleware('permission:' . PermissionConstants::PERMISSIONS_INDEX)->name('admin.permissions');
+            Route::get('/role-permissions', RolePermissionManagement::class)->middleware('permission:' . PermissionConstants::ROLE_PERMISSIONS_INDEX)->name('admin.role-permissions');
+            Route::get('/users', UserManagement::class)->middleware('permission:' . PermissionConstants::USERS_INDEX)->name('admin.users');
         });
 
     // KFF / PFLK dashboard

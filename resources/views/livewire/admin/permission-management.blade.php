@@ -1,10 +1,10 @@
-@section('page-title', __('ui.roles'))
+@section('page-title', __('ui.permissions'))
 
 <div>
     {{-- Header --}}
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <h2 class="text-2xl font-bold" style="color: var(--text-primary);">
-            {{ __('ui.roles') }}
+            {{ __('ui.permissions') }}
         </h2>
 
         <div class="flex items-center gap-3">
@@ -21,7 +21,7 @@
             </button>
 
             {{-- Create button --}}
-            @if(auth()->user()->hasPermission(\App\Constants\PermissionConstants::ROLES_CREATE))
+            @if(auth()->user()->hasPermission(\App\Constants\PermissionConstants::PERMISSIONS_CREATE))
                 <button wire:click="openCreateModal" class="btn-primary">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -73,79 +73,26 @@
                                 @endif
                             </div>
                         </th>
-                        <th class="cursor-pointer hover:bg-opacity-80 transition-colors" wire:click="sortBy('group')">
-                            <div class="flex items-center gap-1">
-                                {{ __('crud.group') }}
-                                @if($sortField === 'group')
-                                    <svg class="w-3 h-3" style="color: var(--color-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="{{ $sortDirection === 'asc' ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7' }}"/>
-                                    </svg>
-                                @endif
-                            </div>
-                        </th>
-                        <th class="cursor-pointer hover:bg-opacity-80 transition-colors" wire:click="sortBy('can_register')">
-                            <div class="flex items-center gap-1">
-                                {{ __('crud.can_register') }}
-                                @if($sortField === 'can_register')
-                                    <svg class="w-3 h-3" style="color: var(--color-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="{{ $sortDirection === 'asc' ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7' }}"/>
-                                    </svg>
-                                @endif
-                            </div>
-                        </th>
-                        <th class="cursor-pointer hover:bg-opacity-80 transition-colors" wire:click="sortBy('is_active')">
-                            <div class="flex items-center gap-1">
-                                {{ __('crud.status') }}
-                                @if($sortField === 'is_active')
-                                    <svg class="w-3 h-3" style="color: var(--color-primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="{{ $sortDirection === 'asc' ? 'M5 15l7-7 7 7' : 'M19 9l-7 7-7-7' }}"/>
-                                    </svg>
-                                @endif
-                            </div>
-                        </th>
                         <th>{{ __('crud.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($roles as $role)
-                        <tr wire:key="role-{{ $role->id }}">
-                            <td style="color: var(--text-muted);">{{ $role->id }}</td>
-                            <td class="font-medium">{{ $role->title_ru }}</td>
-                            <td>{{ $role->title_kk ?? '—' }}</td>
-                            <td>{{ $role->title_en ?? '—' }}</td>
+                    @forelse($permissions as $permission)
+                        <tr wire:key="permission-{{ $permission->id }}">
+                            <td style="color: var(--text-muted);">{{ $permission->id }}</td>
+                            <td class="font-medium">{{ $permission->title_ru }}</td>
+                            <td>{{ $permission->title_kk ?? '—' }}</td>
+                            <td>{{ $permission->title_en ?? '—' }}</td>
                             <td>
                                 <code class="text-xs px-1.5 py-0.5 rounded"
                                       style="background: var(--bg-hover); color: var(--text-secondary);">
-                                    {{ $role->value }}
+                                    {{ $permission->value }}
                                 </code>
-                            </td>
-                            <td>
-                                <code class="text-xs px-1.5 py-0.5 rounded"
-                                      style="background: var(--bg-hover); color: var(--text-secondary);">
-                                    {{ $role->group }}
-                                </code>
-                            </td>
-                            <td>
-                                @if($role->can_register)
-                                    <span class="badge badge-success">{{ __('crud.yes') }}</span>
-                                @else
-                                    <span class="badge badge-danger">{{ __('crud.no') }}</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if($role->is_active)
-                                    <span class="badge badge-success">{{ __('crud.active') }}</span>
-                                @else
-                                    <span class="badge badge-danger">{{ __('crud.inactive') }}</span>
-                                @endif
                             </td>
                             <td>
                                 <div class="flex items-center gap-1">
-                                    @if(auth()->user()->hasPermission(\App\Constants\PermissionConstants::ROLES_UPDATE))
-                                        <button wire:click="openEditModal({{ $role->id }})"
+                                    @if(auth()->user()->hasPermission(\App\Constants\PermissionConstants::PERMISSIONS_UPDATE))
+                                        <button wire:click="openEditModal({{ $permission->id }})"
                                                 class="btn-icon btn-icon-edit"
                                                 title="{{ __('crud.edit') }}">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,8 +102,8 @@
                                         </button>
                                     @endif
 
-                                    @if(auth()->user()->hasPermission(\App\Constants\PermissionConstants::ROLES_DELETE))
-                                        <button wire:click="confirmDelete({{ $role->id }})"
+                                    @if(auth()->user()->hasPermission(\App\Constants\PermissionConstants::PERMISSIONS_DELETE))
+                                        <button wire:click="confirmDelete({{ $permission->id }})"
                                                 class="btn-icon btn-icon-delete"
                                                 title="{{ __('crud.delete') }}">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,7 +117,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="9" class="text-center py-8" style="color: var(--text-muted);">
+                            <td colspan="6" class="text-center py-8" style="color: var(--text-muted);">
                                 {{ __('crud.no_results') }}
                             </td>
                         </tr>
@@ -180,9 +127,9 @@
         </div>
 
         {{-- Pagination --}}
-        @if($roles->hasPages())
+        @if($permissions->hasPages())
             <div class="px-6 py-4" style="border-top: 1px solid var(--border-color);">
-                {{ $roles->links('vendor.pagination.tailwind') }}
+                {{ $permissions->links('vendor.pagination.tailwind') }}
             </div>
         @endif
     </div>
@@ -230,20 +177,6 @@
                             <span class="ml-1">{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
                         @endif
                     </button>
-                    <button wire:click="sortBy('group')"
-                            class="text-left px-3 py-2 rounded-md text-sm transition-colors {{ $sortField === 'group' ? 'btn-primary' : 'btn-secondary' }}">
-                        {{ __('crud.group') }}
-                        @if($sortField === 'group')
-                            <span class="ml-1">{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
-                        @endif
-                    </button>
-                    <button wire:click="sortBy('is_active')"
-                            class="text-left px-3 py-2 rounded-md text-sm transition-colors {{ $sortField === 'is_active' ? 'btn-primary' : 'btn-secondary' }}">
-                        {{ __('crud.status') }}
-                        @if($sortField === 'is_active')
-                            <span class="ml-1">{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
-                        @endif
-                    </button>
                 </div>
             </div>
         </div>
@@ -261,7 +194,7 @@
     {{-- Create / Edit Modal --}}
     <x-modal wire:model="showFormModal" maxWidth="lg">
         <x-slot name="title">
-            {{ $isEditing ? __('crud.edit_role') : __('crud.create_role') }}
+            {{ $isEditing ? __('crud.edit_permission') : __('crud.create_permission') }}
         </x-slot>
 
         <form wire:submit="save">
@@ -291,44 +224,19 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                {{-- Value --}}
-                <div>
-                    <label class="form-label">{{ __('crud.value') }} <span style="color:var(--color-danger);">*</span></label>
-                    <input type="text" wire:model="value"
-                           class="form-input @error('value') is-invalid @enderror"
-                           {{ $isEditing ? 'disabled' : '' }}>
-                    @error('value') <p class="form-error">{{ $message }}</p> @enderror
-                </div>
-
-                {{-- Group --}}
-                <div>
-                    <label class="form-label">{{ __('crud.group') }} <span style="color:var(--color-danger);">*</span></label>
-                    <select wire:model="group"
-                            class="form-input @error('group') is-invalid @enderror">
-                        <option value="">—</option>
-                        @foreach($this->getGroupOptions() as $key => $label)
-                            <option value="{{ $key }}">{{ $label }}</option>
-                        @endforeach
-                    </select>
-                    @error('group') <p class="form-error">{{ $message }}</p> @enderror
-                </div>
-            </div>
-
-            <div class="flex items-center gap-6 mb-2">
-                {{-- Can Register --}}
-                <label class="flex items-center gap-2 cursor-pointer select-none">
-                    <input type="checkbox" wire:model="can_register"
-                           class="w-4 h-4 rounded" style="accent-color: var(--color-primary);">
-                    <span class="text-sm" style="color: var(--text-secondary);">{{ __('crud.can_register') }}</span>
-                </label>
-
-                {{-- Is Active --}}
-                <label class="flex items-center gap-2 cursor-pointer select-none">
-                    <input type="checkbox" wire:model="is_active"
-                           class="w-4 h-4 rounded" style="accent-color: var(--color-primary);">
-                    <span class="text-sm" style="color: var(--text-secondary);">{{ __('crud.is_active') }}</span>
-                </label>
+            {{-- Value --}}
+            <div class="mb-4">
+                <label class="form-label">{{ __('crud.value') }} <span style="color:var(--color-danger);">*</span></label>
+                <input type="text" wire:model="value"
+                       class="form-input @error('value') is-invalid @enderror"
+                       {{ $isEditing ? 'disabled' : '' }}
+                       placeholder="{{ __('crud.value_placeholder') }}">
+                @error('value') <p class="form-error">{{ $message }}</p> @enderror
+                @if(!$isEditing)
+                    <p class="text-xs mt-1" style="color: var(--text-muted);">
+                        {{ __('crud.value_hint') }}
+                    </p>
+                @endif
             </div>
         </form>
 
@@ -361,7 +269,7 @@
                 {{ __('crud.confirm_delete_text') }}
             </p>
             <p class="mt-2 font-semibold" style="color: var(--text-primary);">
-                {{ $deletingRoleName }}
+                {{ $deletingPermissionName }}
             </p>
         </div>
 
