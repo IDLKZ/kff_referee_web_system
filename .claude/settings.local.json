@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(php artisan make:migration:*)",
+      "Bash(php artisan:*)",
+      "Bash(xargs:*)",
+      "Bash(ls:*)",
+      "Bash(if not exist \"D:\\\\projects\\\\kff_referee_web_system\\\\resources\\\\views\\\\components\" mkdir \"D:\\\\projects\\\\kff_referee_web_system\\\\resources\\\\views\\\\components\")"
+    ]
+  }
+}

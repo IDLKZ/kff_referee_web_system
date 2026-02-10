@@ -1,0 +1,35 @@
+<?php
+
+return [
+    'create' => 'Create',
+    'edit' => 'Edit',
+    'delete' => 'Delete',
+    'save' => 'Save',
+    'cancel' => 'Cancel',
+    'close' => 'Close',
+    'actions' => 'Actions',
+    'search' => 'Search...',
+    'no_results' => 'No data found',
+    'confirm_delete' => 'Confirm Deletion',
+    'confirm_delete_text' => 'Are you sure you want to delete this record? This action cannot be undone.',
+    'yes_delete' => 'Yes, delete',
+    'created_success' => 'Record created successfully.',
+    'updated_success' => 'Record updated successfully.',
+    'deleted_success' => 'Record deleted successfully.',
+    'status' => 'Status',
+    'active' => 'Active',
+    'inactive' => 'Inactive',
+    'yes' => 'Yes',
+    'no' => 'No',
+
+    // Role-specific
+    'create_role' => 'Create Role',
+    'edit_role' => 'Edit Role',
+    'title_ru' => 'Title (RU)',
+    'title_kk' => 'Title (KK)',
+    'title_en' => 'Title (EN)',
+    'value' => 'System Code',
+    'group' => 'Group',
+    'can_register' => 'Available for Registration',
+    'is_active' => 'Active',
+];

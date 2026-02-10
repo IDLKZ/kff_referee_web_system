@@ -1,0 +1,45 @@
+{{--
+    Number input с поддержкой Livewire
+    @include('shared.common_form_fields.number_input', [
+        'model'    => 'form.qty',
+        'label'    => 'Количество',
+        'min'      => 0,               // optional
+        'max'      => 100,             // optional
+        'step'     => 1,               // optional (0.01 для decimal)
+        'required' => false,           // optional
+        'disabled' => false,           // optional
+    ])
+--}}
+@php
+    $required = $required ?? false;
+    $disabled = $disabled ?? false;
+    $min = $min ?? null;
+    $max = $max ?? null;
+    $step = $step ?? 1;
+    $fieldName = str_replace(['form.', '.'], ['', '_'], $model);
+@endphp
+
+<div class="mb-4">
+    <label for="{{ $fieldName }}" class="block text-sm font-medium text-gray-700 mb-1">
+        {{ $label }}
+        @if($required) <span class="text-red-500">*</span> @endif
+    </label>
+
+    <input
+        id="{{ $fieldName }}"
+        type="number"
+        wire:model.live.debounce.300ms="{{ $model }}"
+        step="{{ $step }}"
+        @if(!is_null($min)) min="{{ $min }}" @endif
+        @if(!is_null($max)) max="{{ $max }}" @endif
+        @if($required) required @endif
+        @if($disabled) disabled @endif
+        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm
+               @error($model) border-red-500 @enderror
+               @if($disabled) bg-gray-100 cursor-not-allowed @endif"
+    >
+
+    @error($model)
+        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+    @enderror
+</div>

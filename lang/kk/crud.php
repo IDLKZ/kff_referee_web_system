@@ -1,0 +1,35 @@
+<?php
+
+return [
+    'create' => 'Құру',
+    'edit' => 'Өңдеу',
+    'delete' => 'Жою',
+    'save' => 'Сақтау',
+    'cancel' => 'Бас тарту',
+    'close' => 'Жабу',
+    'actions' => 'Әрекеттер',
+    'search' => 'Іздеу...',
+    'no_results' => 'Деректер жоқ',
+    'confirm_delete' => 'Жоюды растау',
+    'confirm_delete_text' => 'Бұл жазбаны жойғыңыз келетініне сенімдісіз бе? Бұл әрекетті болдырмау мүмкін емес.',
+    'yes_delete' => 'Иә, жою',
+    'created_success' => 'Жазба сәтті жасалды.',
+    'updated_success' => 'Жазба сәтті жаңартылды.',
+    'deleted_success' => 'Жазба сәтті жойылды.',
+    'status' => 'Күйі',
+    'active' => 'Белсенді',
+    'inactive' => 'Белсенді емес',
+    'yes' => 'Иә',
+    'no' => 'Жоқ',
+
+    // Role-specific
+    'create_role' => 'Рөл құру',
+    'edit_role' => 'Рөлді өңдеу',
+    'title_ru' => 'Атауы (RU)',
+    'title_kk' => 'Атауы (KK)',
+    'title_en' => 'Атауы (EN)',
+    'value' => 'Жүйелік код',
+    'group' => 'Топ',
+    'can_register' => 'Тіркелу кезінде қол жетімді',
+    'is_active' => 'Белсенді',
+];
