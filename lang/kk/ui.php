@@ -26,6 +26,11 @@ return [
     'roles' => 'Рөлдер',
     'permissions' => 'Рұқсаттар',
 
+    'countries' => 'Елдер',
+    'cities' => 'Қалалар',
+    'judge_types' => 'Төреші түрлері',
+    'judge_cities' => 'Төрешілердің қалалары',
+
     // Sidebar — KFF
     'matches' => 'Матчтар',
     'tournaments' => 'Турнирлер',

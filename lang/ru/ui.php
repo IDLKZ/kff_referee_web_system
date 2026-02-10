@@ -26,6 +26,11 @@ return [
     'roles' => 'Роли',
     'permissions' => 'Разрешения',
 
+    'countries' => 'Страны',
+    'cities' => 'Города',
+    'judge_types' => 'Типы судей',
+    'judge_cities' => 'Города судей',
+
     // Sidebar — KFF
     'matches' => 'Матчи',
     'tournaments' => 'Турниры',

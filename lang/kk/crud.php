@@ -84,4 +84,37 @@ return [
     'search_placeholder' => 'Іздеу мәтінін енгізіңіз...',
     'value_placeholder' => 'Мысалы: users.index',
     'value_hint' => 'Пішім: ресурс.әрекет (мысалы: users.index)',
+
+    // Country-specific
+    'create_country' => 'Ел құру',
+    'edit_country' => 'Елді өңдеу',
+    'country' => 'Ел',
+    'select_country' => 'Елді таңдаңыз',
+    'all_countries' => 'Барлық елдер',
+    'country_value_placeholder' => 'Мысалы: KZ',
+    'country_value_hint' => 'ISO ел коды (мысалы: KZ, RU, US)',
+
+    // City-specific
+    'create_city' => 'Қала құру',
+    'edit_city' => 'Қаланы өңдеу',
+    'city_value_placeholder' => 'Мысалы: almaty',
+    'city_value_hint' => 'Бірегей қала коды (мысалы: almaty, astana)',
+
+    // JudgeType-specific
+    'create_judge_type' => 'Төреші түрін құру',
+    'edit_judge_type' => 'Төреші түрін өңдеу',
+    'judge_type_value_placeholder' => 'Мысалы: main_referee',
+    'judge_type_value_hint' => 'Бірегей төреші түрі коды (мысалы: main_referee, assistant)',
+
+    // JudgeCity-specific
+    'judge' => 'Төреші',
+    'city' => 'Қала',
+    'create_judge_city' => 'Төрешіні қалаға тағайындау',
+    'edit_judge_city' => 'Тағайындауды өңдеу',
+    'judge_city_exists' => 'Бұл төреші осы қалаға тағайындалған',
+    'search_user_placeholder' => 'Аты, email бойынша іздеу...',
+    'search_city_placeholder' => 'Қала іздеу...',
+    'select_judge_required' => 'Төрешіні таңдаңыз',
+    'select_city_required' => 'Қаланы таңдаңыз',
+    'type_to_search' => 'Іздеу үшін кем дегенде 2 таңба енгізіңіз...',
 ];

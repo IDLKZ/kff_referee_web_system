@@ -54,8 +54,9 @@ class UserManagement extends Component
     public bool $is_active = true;
     public bool $is_verified = false;
 
-    // Temporary image URL for preview
+    // Image URLs for preview
     public ?string $temporaryImageUrl = null;
+    public ?string $existingImageUrl = null;
 
     // Delete target
     public ?int $deletingUserId = null;
@@ -110,7 +111,7 @@ class UserManagement extends Component
     public function openEditModal(int $id): void
     {
         $this->checkPermission(PermissionConstants::USERS_UPDATE);
-        $user = User::findOrFail($id);
+        $user = User::with('file')->findOrFail($id);
 
         $this->editingUserId = $user->id;
         $this->role_id = $user->role_id;
@@ -126,6 +127,13 @@ class UserManagement extends Component
         $this->birth_date = $user->birth_date ? $user->birth_date->format('Y-m-d') : '';
         $this->is_active = $user->is_active;
         $this->is_verified = $user->is_verified;
+
+        // Resolve existing image URL once
+        $this->existingImageUrl = null;
+        if ($user->file && \Illuminate\Support\Facades\Storage::disk('uploads')->exists($user->file->file_path)) {
+            $this->existingImageUrl = \Illuminate\Support\Facades\Storage::disk('uploads')->url($user->file->file_path);
+        }
+
         $this->isEditing = true;
         $this->showFormModal = true;
     }
@@ -170,7 +178,7 @@ class UserManagement extends Component
 
         // Hash password if provided
         if ($this->password) {
-            $data['password_hash'] = hash('sha512', $this->password);
+            $data['password_hash'] = Hash::make($this->password);
         }
 
         if ($this->isEditing) {
@@ -232,6 +240,7 @@ class UserManagement extends Component
         $this->image = null;
         $this->image_id = null;
         $this->temporaryImageUrl = null;
+        $this->existingImageUrl = null;
     }
 
     public function updatedImage(): void
@@ -262,6 +271,7 @@ class UserManagement extends Component
         $this->image = null;
         $this->image_id = null;
         $this->temporaryImageUrl = null;
+        $this->existingImageUrl = null;
         $this->last_name = '';
         $this->first_name = '';
         $this->patronymic = '';

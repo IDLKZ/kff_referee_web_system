@@ -5,9 +5,13 @@ use App\Constants\RoleConstants;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LocaleController;
+use App\Livewire\Admin\CityManagement;
+use App\Livewire\Admin\CountryManagement;
 use App\Livewire\Admin\RoleManagement;
 use App\Livewire\Admin\PermissionManagement;
 use App\Livewire\Admin\RolePermissionManagement;
+use App\Livewire\Admin\JudgeCityManagement;
+use App\Livewire\Admin\JudgeTypeManagement;
 use App\Livewire\Admin\UserManagement;
 use App\Livewire\Auth\Login;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +53,10 @@ Route::middleware('auth.active')->group(function () {
             Route::get('/permissions', PermissionManagement::class)->middleware('permission:' . PermissionConstants::PERMISSIONS_INDEX)->name('admin.permissions');
             Route::get('/role-permissions', RolePermissionManagement::class)->middleware('permission:' . PermissionConstants::ROLE_PERMISSIONS_INDEX)->name('admin.role-permissions');
             Route::get('/users', UserManagement::class)->middleware('permission:' . PermissionConstants::USERS_INDEX)->name('admin.users');
+            Route::get('/countries', CountryManagement::class)->middleware('permission:' . PermissionConstants::COUNTRIES_INDEX)->name('admin.countries');
+            Route::get('/cities', CityManagement::class)->middleware('permission:' . PermissionConstants::CITIES_INDEX)->name('admin.cities');
+            Route::get('/judge-types', JudgeTypeManagement::class)->middleware('permission:' . PermissionConstants::JUDGE_TYPES_INDEX)->name('admin.judge-types');
+            Route::get('/judge-cities', JudgeCityManagement::class)->middleware('permission:' . PermissionConstants::JUDGE_CITIES_INDEX)->name('admin.judge-cities');
         });
 
     // KFF / PFLK dashboard

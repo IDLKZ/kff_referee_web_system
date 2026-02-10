@@ -8,7 +8,7 @@
                 </svg>
             </span>
         @else
-            <button class="pagination-item" onclick="Livewire.navigate('{{ $paginator->previousPageUrl() }}')">
+            <button class="pagination-item" wire:click="previousPage" wire:loading.attr="disabled">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
@@ -28,7 +28,7 @@
                     @if ($page == $paginator->currentPage())
                         <span class="pagination-item active" aria-current="page">{{ $page }}</span>
                     @else
-                        <button class="pagination-item" onclick="Livewire.navigate('{{ $url }}')">{{ $page }}</button>
+                        <button class="pagination-item" wire:click="gotoPage({{ $page }})">{{ $page }}</button>
                     @endif
                 @endforeach
             @endif
@@ -36,7 +36,7 @@
 
         {{-- Next Page Link --}}
         @if ($paginator->hasMorePages())
-            <button class="pagination-item" onclick="Livewire.navigate('{{ $paginator->nextPageUrl() }}')">
+            <button class="pagination-item" wire:click="nextPage" wire:loading.attr="disabled">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                 </svg>

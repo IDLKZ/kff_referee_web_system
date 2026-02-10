@@ -254,11 +254,8 @@
                                 <div class="relative">
                                     @if($temporaryImageUrl)
                                         <img src="{{ $temporaryImageUrl }}" class="w-24 h-24 rounded-full object-cover">
-                                    @elseif($image_id && $isEditing)
-                                        @php $user = \App\Models\User::find($editingUserId); @endphp
-                                        @if($user && $user->file && \Illuminate\Support\Facades\Storage::disk('uploads')->exists($user->file->file_path))
-                                            <img src="{{ \Illuminate\Support\Facades\Storage::disk('uploads')->url($user->file->file_path) }}" class="w-24 h-24 rounded-full object-cover">
-                                        @endif
+                                    @elseif($existingImageUrl)
+                                        <img src="{{ $existingImageUrl }}" class="w-24 h-24 rounded-full object-cover">
                                     @endif
                                     <button type="button" wire:click="removeImage"
                                             class="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-white"

@@ -84,4 +84,37 @@ return [
     'search_placeholder' => 'Enter search text...',
     'value_placeholder' => 'E.g.: users.index',
     'value_hint' => 'Format: resource.action (e.g.: users.index)',
+
+    // Country-specific
+    'create_country' => 'Create Country',
+    'edit_country' => 'Edit Country',
+    'country' => 'Country',
+    'select_country' => 'Select Country',
+    'all_countries' => 'All Countries',
+    'country_value_placeholder' => 'E.g.: KZ',
+    'country_value_hint' => 'ISO country code (e.g.: KZ, RU, US)',
+
+    // City-specific
+    'create_city' => 'Create City',
+    'edit_city' => 'Edit City',
+    'city_value_placeholder' => 'E.g.: almaty',
+    'city_value_hint' => 'Unique city code (e.g.: almaty, astana)',
+
+    // JudgeType-specific
+    'create_judge_type' => 'Create Judge Type',
+    'edit_judge_type' => 'Edit Judge Type',
+    'judge_type_value_placeholder' => 'E.g.: main_referee',
+    'judge_type_value_hint' => 'Unique judge type code (e.g.: main_referee, assistant)',
+
+    // JudgeCity-specific
+    'judge' => 'Judge',
+    'city' => 'City',
+    'create_judge_city' => 'Assign Judge to City',
+    'edit_judge_city' => 'Edit Judge Assignment',
+    'judge_city_exists' => 'This judge is already assigned to this city',
+    'search_user_placeholder' => 'Search by name, email...',
+    'search_city_placeholder' => 'Search city...',
+    'select_judge_required' => 'Please select a judge',
+    'select_city_required' => 'Please select a city',
+    'type_to_search' => 'Type at least 2 characters to search...',
 ];

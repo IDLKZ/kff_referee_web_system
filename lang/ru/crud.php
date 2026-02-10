@@ -84,4 +84,37 @@ return [
     'search_placeholder' => 'Введите текст для поиска...',
     'value_placeholder' => 'Например: users.index',
     'value_hint' => 'Формат: ресурс.действие (например: users.index)',
+
+    // Country-specific
+    'create_country' => 'Создать страну',
+    'edit_country' => 'Редактировать страну',
+    'country' => 'Страна',
+    'select_country' => 'Выберите страну',
+    'all_countries' => 'Все страны',
+    'country_value_placeholder' => 'Например: KZ',
+    'country_value_hint' => 'ISO-код страны (например: KZ, RU, US)',
+
+    // City-specific
+    'create_city' => 'Создать город',
+    'edit_city' => 'Редактировать город',
+    'city_value_placeholder' => 'Например: almaty',
+    'city_value_hint' => 'Уникальный код города (например: almaty, astana)',
+
+    // JudgeType-specific
+    'create_judge_type' => 'Создать тип судьи',
+    'edit_judge_type' => 'Редактировать тип судьи',
+    'judge_type_value_placeholder' => 'Например: main_referee',
+    'judge_type_value_hint' => 'Уникальный код типа судьи (например: main_referee, assistant)',
+
+    // JudgeCity-specific
+    'judge' => 'Судья',
+    'city' => 'Город',
+    'create_judge_city' => 'Назначить судью в город',
+    'edit_judge_city' => 'Редактировать назначение',
+    'judge_city_exists' => 'Этот судья уже назначен в данный город',
+    'search_user_placeholder' => 'Поиск по имени, email...',
+    'search_city_placeholder' => 'Поиск города...',
+    'select_judge_required' => 'Выберите судью',
+    'select_city_required' => 'Выберите город',
+    'type_to_search' => 'Введите минимум 2 символа для поиска...',
 ];

@@ -26,6 +26,11 @@ return [
     'roles' => 'Roles',
     'permissions' => 'Permissions',
 
+    'countries' => 'Countries',
+    'cities' => 'Cities',
+    'judge_types' => 'Judge Types',
+    'judge_cities' => 'Judge Cities',
+
     // Sidebar — KFF
     'matches' => 'Matches',
     'tournaments' => 'Tournaments',
