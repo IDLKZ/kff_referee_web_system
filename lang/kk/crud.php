@@ -117,4 +117,20 @@ return [
     'select_judge_required' => 'Төрешіні таңдаңыз',
     'select_city_required' => 'Қаланы таңдаңыз',
     'type_to_search' => 'Іздеу үшін кем дегенде 2 таңба енгізіңіз...',
+
+    // JudgeRequirement-specific
+    'match' => 'Матч',
+    'judge_type' => 'Төреші түрі',
+    'qty' => 'Саны',
+    'is_required' => 'Міндетті',
+    'create_judge_requirement' => 'Төрешілерге талап құру',
+    'edit_judge_requirement' => 'Төрешілерге талапты өңдеу',
+    'judge_requirement_exists' => 'Бұл талап осы матч үшін және төреші түрі үшін бар',
+    'search_match_placeholder' => 'Матч іздеу (турнир, клуб)...',
+    'search_judge_type_placeholder' => 'Төреші түрін іздеу...',
+    'select_match_required' => 'Матчты таңдаңыз',
+    'select_judge_type_required' => 'Төреші түрін таңдаңыз',
+    'qty_required' => 'Санын көрсетіңіз',
+    'qty_min' => 'Минимум: 1',
+    'qty_max' => 'Максимум: 100',
 ];

@@ -117,4 +117,20 @@ return [
     'select_judge_required' => 'Please select a judge',
     'select_city_required' => 'Please select a city',
     'type_to_search' => 'Type at least 2 characters to search...',
+
+    // JudgeRequirement-specific
+    'match' => 'Match',
+    'judge_type' => 'Judge Type',
+    'qty' => 'Quantity',
+    'is_required' => 'Required',
+    'create_judge_requirement' => 'Create Judge Requirement',
+    'edit_judge_requirement' => 'Edit Judge Requirement',
+    'judge_requirement_exists' => 'This requirement already exists for this match and judge type',
+    'search_match_placeholder' => 'Search match (tournament, club)...',
+    'search_judge_type_placeholder' => 'Search judge type...',
+    'select_match_required' => 'Please select a match',
+    'select_judge_type_required' => 'Please select a judge type',
+    'qty_required' => 'Please specify quantity',
+    'qty_min' => 'Minimum: 1',
+    'qty_max' => 'Maximum: 100',
 ];

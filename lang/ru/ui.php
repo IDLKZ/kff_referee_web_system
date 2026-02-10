@@ -30,6 +30,7 @@ return [
     'cities' => 'Города',
     'judge_types' => 'Типы судей',
     'judge_cities' => 'Города судей',
+    'judge_requirements' => 'Требования к судьям',
 
     // Sidebar — KFF
     'matches' => 'Матчи',

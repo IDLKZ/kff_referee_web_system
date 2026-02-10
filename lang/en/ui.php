@@ -30,6 +30,7 @@ return [
     'cities' => 'Cities',
     'judge_types' => 'Judge Types',
     'judge_cities' => 'Judge Cities',
+    'judge_requirements' => 'Judge Requirements',
 
     // Sidebar — KFF
     'matches' => 'Matches',

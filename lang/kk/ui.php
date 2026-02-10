@@ -30,6 +30,7 @@ return [
     'cities' => 'Қалалар',
     'judge_types' => 'Төреші түрлері',
     'judge_cities' => 'Төрешілердің қалалары',
+    'judge_requirements' => 'Төрешілерге талаптар',
 
     // Sidebar — KFF
     'matches' => 'Матчтар',

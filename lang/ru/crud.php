@@ -117,4 +117,20 @@ return [
     'select_judge_required' => 'Выберите судью',
     'select_city_required' => 'Выберите город',
     'type_to_search' => 'Введите минимум 2 символа для поиска...',
+
+    // JudgeRequirement-specific
+    'match' => 'Матч',
+    'judge_type' => 'Тип судьи',
+    'qty' => 'Количество',
+    'is_required' => 'Обязательно',
+    'create_judge_requirement' => 'Создать требование к судьям',
+    'edit_judge_requirement' => 'Редактировать требование к судьям',
+    'judge_requirement_exists' => 'Такое требование уже существует для этого матча и типа судьи',
+    'search_match_placeholder' => 'Поиск матча (турнир, клуб)...',
+    'search_judge_type_placeholder' => 'Поиск типа судьи...',
+    'select_match_required' => 'Выберите матч',
+    'select_judge_type_required' => 'Выберите тип судьи',
+    'qty_required' => 'Укажите количество',
+    'qty_min' => 'Минимум: 1',
+    'qty_max' => 'Максимум: 100',
 ];
