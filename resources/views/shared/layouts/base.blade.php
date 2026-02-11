@@ -74,6 +74,9 @@
         };
     </script>
 
+    {{-- Wire Elements Modal --}}
+    @livewire('wire-elements-modal')
+
     {{-- Livewire Scripts --}}
     @livewireScripts
 
