@@ -36,6 +36,7 @@ return [
     'matches' => 'Matches',
     'tournaments' => 'Tournaments',
     'seasons' => 'Seasons',
+    'club_types' => 'Club Types',
     'clubs' => 'Clubs',
     'stadiums' => 'Stadiums',
     'judges' => 'Judges',

@@ -30,6 +30,11 @@ class ClubStadium extends Model
 		'stadium_id' => 'int'
 	];
 
+	protected $fillable = [
+		'club_id',
+		'stadium_id',
+	];
+
 	public function club()
 	{
 		return $this->belongsTo(Club::class);

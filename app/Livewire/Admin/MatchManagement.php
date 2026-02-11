@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Constants\CategoryOperationConstants;
 use App\Constants\PermissionConstants;
 use App\Constants\RoleConstants;
 use App\Models\Club;
@@ -218,6 +219,17 @@ class MatchManagement extends Component
 
         $this->validate();
 
+        // For new matches, set the first operation in the workflow if not specified
+        if (!$this->isEditing && !$this->current_operation_id) {
+            $firstOperation = Operation::where('is_first', true)
+                ->where('is_active', true)
+                ->whereHas('category_operation', function ($q) {
+                    $q->where('value', CategoryOperationConstants::REFEREE_ASSIGNMENT);
+                })
+                ->first();
+            $this->current_operation_id = $firstOperation ? $firstOperation->id : null;
+        }
+
         $data = [
             'tournament_id' => $this->tournament_id,
             'season_id' => $this->season_id,
@@ -236,7 +248,7 @@ class MatchManagement extends Component
             'is_canceled' => $this->is_canceled,
             'cancel_reason' => $this->is_canceled ? ($this->cancel_reason ?: null) : null,
             'info' => $this->info ? json_decode($this->info, true) : null,
-            'current_operation_id' => $this->current_operation_id ?: null,
+            'current_operation_id' => $this->current_operation_id,
         ];
 
         if ($this->isEditing) {

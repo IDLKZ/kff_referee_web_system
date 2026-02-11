@@ -36,6 +36,7 @@ return [
     'matches' => 'Матчи',
     'tournaments' => 'Турниры',
     'seasons' => 'Сезоны',
+    'club_types' => 'Типы клубов',
     'clubs' => 'Клубы',
     'stadiums' => 'Стадионы',
     'judges' => 'Судьи',

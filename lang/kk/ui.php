@@ -36,6 +36,7 @@ return [
     'matches' => 'Матчтар',
     'tournaments' => 'Турнирлер',
     'seasons' => 'Маусымдар',
+    'club_types' => 'Клуб түрлері',
     'clubs' => 'Клубтар',
     'stadiums' => 'Стадиондар',
     'judges' => 'Төрешілер',

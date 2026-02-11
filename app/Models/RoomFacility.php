@@ -30,6 +30,11 @@ class RoomFacility extends Model
 		'facility_id' => 'int'
 	];
 
+	protected $fillable = [
+		'room_id',
+		'facility_id',
+	];
+
 	public function facility()
 	{
 		return $this->belongsTo(Facility::class);
