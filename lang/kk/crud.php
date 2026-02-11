@@ -360,4 +360,34 @@ return [
     'enter_description_ru' => 'Орысша сипаттамасын енгізіңіз',
     'enter_description_kk' => 'Қазақша сипаттамасын енгізіңіз',
     'enter_description_en' => 'Ағылшынша сипаттамасын енгізіңіз',
+
+    // Facility-specific
+    'create_facility' => 'Ыңғайлылық қосу',
+    'edit_facility' => 'Ыңғайлылықты өзгерту',
+    'facility' => 'Ыңғайлылық',
+    'select_facility' => 'Ыңғайлылықты таңдаңыз',
+    'all_facilities' => 'Барлық ыңғайлылықтар',
+
+    // CategoryOperation-specific
+    'create_category_operation' => 'Операция санатын құру',
+    'edit_category_operation' => 'Операция санатын өңдеу',
+    'category_operation_value_placeholder' => 'Мысалы: assignment',
+    'category_operation_value_hint' => 'Санаттың бірегей жүйелік коды (мысалы: assignment, trip, reporting)',
+    'is_first_label' => 'Бірінші',
+    'is_first_hint' => 'Бизнес-процесс тізбегіндегі бастапқы санат',
+    'is_last_label' => 'Соңғы',
+    'is_last_hint' => 'Бизнес-процесс тізбегіндегі соңғы санат',
+    'previous_category' => 'Алдыңғы санат',
+    'next_category' => 'Келесі санат',
+    'chain_position' => 'Позиция',
+    'middle' => 'Аралық',
+    'none' => 'Жоқ',
+
+    // RoomFacility-specific
+    'create_room_facility' => 'Бөлмеге ыңғайлылық тағайындау',
+    'room_facility_exists' => 'Бұл ыңғайлылық осы бөлмеге тағайындалған',
+    'select_room' => 'Бөлмені таңдаңыз',
+    'select_room_required' => 'Бөлмені таңдаңыз',
+    'select_facility_required' => 'Ыңғайлылықты таңдаңыз',
+    'select_hotel_first' => 'Алдымен қонақүйді таңдаңыз',
 ];

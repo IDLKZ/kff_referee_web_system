@@ -42,6 +42,9 @@ return [
     'judges' => 'Judges',
     'trips' => 'Trips',
     'hotels' => 'Hotels',
+    'facilities' => 'Facilities',
+    'room_facilities' => 'Room Facilities',
+    'category_operations' => 'Operation Categories',
 
     // Sidebar — referee
     'my_matches' => 'My Matches',

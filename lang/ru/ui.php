@@ -42,6 +42,9 @@ return [
     'judges' => 'Судьи',
     'trips' => 'Командировки',
     'hotels' => 'Гостиницы',
+    'facilities' => 'Удобства',
+    'room_facilities' => 'Удобства номеров',
+    'category_operations' => 'Категории операций',
 
     // Sidebar — referee
     'my_matches' => 'Мои матчи',

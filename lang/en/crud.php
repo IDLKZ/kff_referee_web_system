@@ -360,4 +360,34 @@ return [
     'enter_description_ru' => 'Enter description in Russian',
     'enter_description_kk' => 'Enter description in Kazakh',
     'enter_description_en' => 'Enter description in English',
+
+    // Facility-specific
+    'create_facility' => 'Create Facility',
+    'edit_facility' => 'Edit Facility',
+    'facility' => 'Facility',
+    'select_facility' => 'Select Facility',
+    'all_facilities' => 'All Facilities',
+
+    // CategoryOperation-specific
+    'create_category_operation' => 'Create Operation Category',
+    'edit_category_operation' => 'Edit Operation Category',
+    'category_operation_value_placeholder' => 'E.g.: assignment',
+    'category_operation_value_hint' => 'Unique system code for the category (e.g.: assignment, trip, reporting)',
+    'is_first_label' => 'First',
+    'is_first_hint' => 'Starting category in the business process chain',
+    'is_last_label' => 'Last',
+    'is_last_hint' => 'Final category in the business process chain',
+    'previous_category' => 'Previous Category',
+    'next_category' => 'Next Category',
+    'chain_position' => 'Position',
+    'middle' => 'Middle',
+    'none' => 'None',
+
+    // RoomFacility-specific
+    'create_room_facility' => 'Assign Facility to Room',
+    'room_facility_exists' => 'This facility is already assigned to this room',
+    'select_room' => 'Select Room',
+    'select_room_required' => 'Please select a room',
+    'select_facility_required' => 'Please select a facility',
+    'select_hotel_first' => 'Select a hotel first',
 ];

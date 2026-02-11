@@ -360,4 +360,34 @@ return [
     'enter_description_ru' => 'Введите описание на русском',
     'enter_description_kk' => 'Введите описание на казахском',
     'enter_description_en' => 'Введите описание на английском',
+
+    // Facility-specific
+    'create_facility' => 'Создать удобство',
+    'edit_facility' => 'Редактировать удобство',
+    'facility' => 'Удобство',
+    'select_facility' => 'Выберите удобство',
+    'all_facilities' => 'Все удобства',
+
+    // CategoryOperation-specific
+    'create_category_operation' => 'Создать категорию операции',
+    'edit_category_operation' => 'Редактировать категорию операции',
+    'category_operation_value_placeholder' => 'Например: assignment',
+    'category_operation_value_hint' => 'Уникальный системный код категории (например: assignment, trip, reporting)',
+    'is_first_label' => 'Первая',
+    'is_first_hint' => 'Начальная категория в цепочке бизнес-процесса',
+    'is_last_label' => 'Последняя',
+    'is_last_hint' => 'Конечная категория в цепочке бизнес-процесса',
+    'previous_category' => 'Предыдущая категория',
+    'next_category' => 'Следующая категория',
+    'chain_position' => 'Позиция',
+    'middle' => 'Промежуточная',
+    'none' => 'Нет',
+
+    // RoomFacility-specific
+    'create_room_facility' => 'Назначить удобство номеру',
+    'room_facility_exists' => 'Это удобство уже назначено данному номеру',
+    'select_room' => 'Выберите номер',
+    'select_room_required' => 'Выберите номер',
+    'select_facility_required' => 'Выберите удобство',
+    'select_hotel_first' => 'Сначала выберите отель',
 ];

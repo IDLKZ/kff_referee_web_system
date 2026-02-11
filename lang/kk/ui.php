@@ -42,6 +42,9 @@ return [
     'judges' => 'Төрешілер',
     'trips' => 'Іссапарлар',
     'hotels' => 'Қонақүйлер',
+    'facilities' => 'Ыңғайлылықтар',
+    'room_facilities' => 'Бөлме ыңғайлылықтары',
+    'category_operations' => 'Операция санаттары',
 
     // Sidebar — referee
     'my_matches' => 'Менің матчтарым',
