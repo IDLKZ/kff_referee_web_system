@@ -20,6 +20,7 @@ use App\Livewire\Admin\FacilityManagement;
 use App\Livewire\Admin\RoomFacilityManagement;
 use App\Livewire\Admin\HotelRoomManagement;
 use App\Livewire\Admin\ClubTypeManagement;
+use App\Livewire\Admin\TransportTypeManagement;
 use App\Livewire\Admin\JudgeRequirementManagement;
 use App\Livewire\Admin\MatchManagement;
 use App\Livewire\Admin\SeasonManagement;
@@ -80,6 +81,7 @@ Route::middleware('auth.active')->group(function () {
             Route::get('/hotel-rooms', HotelRoomManagement::class)->middleware('permission:' . PermissionConstants::HOTEL_ROOMS_INDEX)->name('admin.hotel-rooms');
             Route::get('/facilities', FacilityManagement::class)->middleware('permission:' . PermissionConstants::FACILITIES_INDEX)->name('admin.facilities');
             Route::get('/room-facilities', RoomFacilityManagement::class)->middleware('permission:' . PermissionConstants::ROOM_FACILITIES_INDEX)->name('admin.room-facilities');
+            Route::get('/transport-types', TransportTypeManagement::class)->middleware('permission:' . PermissionConstants::TRANSPORT_TYPES_INDEX)->name('admin.transport-types');
             Route::get('/stadiums', StadiumsManagement::class)->middleware('permission:' . PermissionConstants::STADIUMS_INDEX)->name('admin.stadiums');
             Route::get('/category-operations', CategoryOperationManagement::class)->middleware('permission:' . PermissionConstants::CATEGORY_OPERATIONS_INDEX)->name('admin.category-operations');
             Route::get('/matches', MatchManagement::class)->middleware('permission:' . PermissionConstants::MATCHES_INDEX)->name('admin.matches');

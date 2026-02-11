@@ -44,6 +44,7 @@ return [
     'hotels' => 'Қонақүйлер',
     'facilities' => 'Ыңғайлылықтар',
     'room_facilities' => 'Бөлме ыңғайлылықтары',
+    'transport_types' => 'Көлік түрлері',
     'category_operations' => 'Операция санаттары',
 
     // Sidebar — referee

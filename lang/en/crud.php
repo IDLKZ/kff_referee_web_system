@@ -390,4 +390,10 @@ return [
     'select_room_required' => 'Please select a room',
     'select_facility_required' => 'Please select a facility',
     'select_hotel_first' => 'Select a hotel first',
+
+    // TransportType-specific
+    'create_transport_type' => 'Create Transport Type',
+    'edit_transport_type' => 'Edit Transport Type',
+    'transport_type_value_placeholder' => 'e.g. airplane',
+    'transport_type_value_hint' => 'Unique system code for transport type (e.g. airplane, train, bus)',
 ];

@@ -390,4 +390,10 @@ return [
     'select_room_required' => 'Выберите номер',
     'select_facility_required' => 'Выберите удобство',
     'select_hotel_first' => 'Сначала выберите отель',
+
+    // TransportType-specific
+    'create_transport_type' => 'Создать тип транспорта',
+    'edit_transport_type' => 'Редактировать тип транспорта',
+    'transport_type_value_placeholder' => 'Например: airplane',
+    'transport_type_value_hint' => 'Уникальный системный код типа транспорта (например: airplane, train, bus)',
 ];
