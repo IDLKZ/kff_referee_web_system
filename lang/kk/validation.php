@@ -31,4 +31,15 @@ return [
         'username' => 'пайдаланушы аты',
         'file' => 'файл',
     ],
+
+    // Match Logists validation
+    'match_id_required' => 'Матчты таңдаңыз.',
+    'match_id_exists' => 'Матч табылмады.',
+    'logist_id_required' => 'Пайдаланушыны таңдаңыз.',
+    'logist_id_exists' => 'Пайдаланушы табылмады.',
+    'logist_must_be_active' => 'Пайдаланушы белсенді болуы керек.',
+    'logist_must_be_logistician' => 'Пайдаланушының логистикалық рөлі болуы керек.',
+
+    'match' => 'Матч',
+    'logist' => 'Логист',
 ];

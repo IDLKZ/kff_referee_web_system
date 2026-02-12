@@ -220,6 +220,7 @@ class PermissionConstants
     const MATCH_OPERATION_LOGS_UPDATE = 'match_operation_logs.update';
     const MATCH_OPERATION_LOGS_DELETE = 'match_operation_logs.delete';
 
+
     // Notifications
     const NOTIFICATIONS_INDEX = 'notifications.index';
     const NOTIFICATIONS_CREATE = 'notifications.create';

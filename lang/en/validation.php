@@ -31,4 +31,15 @@ return [
         'username' => 'username',
         'file' => 'file',
     ],
+
+    // Match Logists validation
+    'match_id_required' => 'Select a match.',
+    'match_id_exists' => 'Match not found.',
+    'logist_id_required' => 'Select a user.',
+    'logist_id_exists' => 'User not found.',
+    'logist_must_be_active' => 'User must be active.',
+    'logist_must_be_logistician' => 'User must have logistician role.',
+
+    'match' => 'Match',
+    'logist' => 'Logist',
 ];

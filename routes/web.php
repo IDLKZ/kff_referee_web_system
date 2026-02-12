@@ -26,6 +26,9 @@ use App\Livewire\Admin\SeasonManagement;
 use App\Livewire\Admin\StadiumsManagement;
 use App\Livewire\Admin\TournamentManagement;
 use App\Livewire\Admin\UserManagement;
+use App\Livewire\Admin\OperationManagement;
+use App\Livewire\Admin\RoleOperationManagement;
+use App\Livewire\Admin\MatchLogistsManagement;
 use App\Livewire\Auth\Login;
 use Illuminate\Support\Facades\Route;
 
@@ -82,7 +85,10 @@ Route::middleware('auth.active')->group(function () {
             Route::get('/room-facilities', RoomFacilityManagement::class)->middleware('permission:' . PermissionConstants::ROOM_FACILITIES_INDEX)->name('admin.room-facilities');
             Route::get('/stadiums', StadiumsManagement::class)->middleware('permission:' . PermissionConstants::STADIUMS_INDEX)->name('admin.stadiums');
             Route::get('/category-operations', CategoryOperationManagement::class)->middleware('permission:' . PermissionConstants::CATEGORY_OPERATIONS_INDEX)->name('admin.category-operations');
+            Route::get('/operations', OperationManagement::class)->middleware('permission:' . PermissionConstants::OPERATIONS_INDEX)->name('admin.operations');
+            Route::get('/role-operations', RoleOperationManagement::class)->middleware('permission:' . PermissionConstants::ROLE_OPERATIONS_INDEX)->name('admin.role-operations');
             Route::get('/matches', MatchManagement::class)->middleware('permission:' . PermissionConstants::MATCHES_INDEX)->name('admin.matches');
+            Route::get('/match-logists', MatchLogistsManagement::class)->middleware('permission:' . PermissionConstants::MATCH_LOGISTS_INDEX)->name('admin.match-logists');
         });
 
     // KFF / PFLK dashboard

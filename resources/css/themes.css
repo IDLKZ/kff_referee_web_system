@@ -478,6 +478,29 @@ body {
     background: rgba(220, 38, 38, 0.15);
 }
 
+.badge-secondary {
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+}
+
+.badge-info {
+    background: var(--color-info-light);
+    color: var(--color-info);
+}
+
+.badge-purple {
+    background: rgba(147, 51, 234, 0.15);
+    color: rgba(147, 51, 234, 1);
+}
+
+.theme-dark .badge-info {
+    background: rgba(37, 99, 235, 0.15);
+}
+
+.theme-dark .badge-purple {
+    background: rgba(147, 51, 234, 0.3);
+}
+
 /* ---- Icon Buttons ---- */
 .btn-icon {
     display: inline-flex;

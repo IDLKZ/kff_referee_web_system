@@ -390,4 +390,14 @@ return [
     'select_room_required' => 'Выберите номер',
     'select_facility_required' => 'Выберите удобство',
     'select_hotel_first' => 'Сначала выберите отель',
+
+    // MatchLogists-specific
+    'match_logists' => 'Логисты матчей',
+    'create_match_logist' => 'Назначить логиста матчу',
+    'edit_match_logist' => 'Редактировать назначение',
+    'logist_role_filter' => 'Роль логиста',
+    'select_match' => 'Выберите матч',
+    'select_logist' => 'Выберите логиста',
+    'match_logists_search_placeholder' => 'Поиск по матчу или логисту...',
+    'date' => 'Дата',
 ];

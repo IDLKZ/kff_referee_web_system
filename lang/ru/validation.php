@@ -31,4 +31,15 @@ return [
         'username' => 'имя пользователя',
         'file' => 'файл',
     ],
+
+    // Match Logists validation
+    'match_id_required' => 'Выберите матч.',
+    'match_id_exists' => 'Матч не найден.',
+    'logist_id_required' => 'Выберите пользователя.',
+    'logist_id_exists' => 'Пользователь не найден.',
+    'logist_must_be_active' => 'Пользователь должен быть активным.',
+    'logist_must_be_logistician' => 'Пользователь должен иметь роль логиста.',
+
+    'match' => 'Матч',
+    'logist' => 'Логист',
 ];

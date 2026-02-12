@@ -30,6 +30,11 @@ class RoleOperation extends Model
 		'operation_id' => 'int'
 	];
 
+	protected $fillable = [
+		'role_id',
+		'operation_id',
+	];
+
 	public function operation()
 	{
 		return $this->belongsTo(Operation::class);
