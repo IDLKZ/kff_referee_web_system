@@ -400,4 +400,10 @@ return [
     'select_logist' => 'Выберите логиста',
     'match_logists_search_placeholder' => 'Поиск по матчу или логисту...',
     'date' => 'Дата',
+
+    // TransportType-specific
+    'create_transport_type' => 'Создать тип транспорта',
+    'edit_transport_type' => 'Редактировать тип транспорта',
+    'transport_type_value_placeholder' => 'Например: airplane',
+    'transport_type_value_hint' => 'Уникальный системный код типа транспорта (например: airplane, train, bus)',
 ];

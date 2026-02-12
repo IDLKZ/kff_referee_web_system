@@ -391,6 +391,12 @@ return [
     'select_facility_required' => 'Ыңғайлылықты таңдаңыз',
     'select_hotel_first' => 'Алдымен қонақүйді таңдаңыз',
 
+    // TransportType-specific
+    'create_transport_type' => 'Көлік түрін құру',
+    'edit_transport_type' => 'Көлік түрін өңдеу',
+    'transport_type_value_placeholder' => 'Мысалы: airplane',
+    'transport_type_value_hint' => 'Көлік түрінің бірегей жүйелік коды (мысалы: airplane, train, bus)',
+
     // Operation-specific
     'create_operation' => 'Операция құру',
     'edit_operation' => 'Операцияны өңдеу',

@@ -44,6 +44,7 @@ return [
     'hotels' => 'Гостиницы',
     'facilities' => 'Удобства',
     'room_facilities' => 'Удобства номеров',
+    'transport_types' => 'Типы транспорта',
     'category_operations' => 'Категории операций',
 
     // Sidebar — referee

@@ -435,4 +435,10 @@ return [
     'select_logist' => 'Select Logist',
     'match_logists_search_placeholder' => 'Search by match or logist...',
     'date' => 'Date',
+
+    // TransportType-specific
+    'create_transport_type' => 'Create Transport Type',
+    'edit_transport_type' => 'Edit Transport Type',
+    'transport_type_value_placeholder' => 'e.g. airplane',
+    'transport_type_value_hint' => 'Unique system code for transport type (e.g. airplane, train, bus)',
 ];
