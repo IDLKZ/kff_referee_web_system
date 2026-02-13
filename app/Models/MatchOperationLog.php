@@ -35,7 +35,7 @@ class MatchOperationLog extends Model
 		'match_id' => 'int',
 		'from_operation_id' => 'int',
 		'to_operation_id' => 'int',
-		'performed_by_id' => 'int'
+		'performed_by_id' => 'int',
 	];
 
 	protected $fillable = [
@@ -43,7 +43,7 @@ class MatchOperationLog extends Model
 		'from_operation_id',
 		'to_operation_id',
 		'performed_by_id',
-		'comment'
+		'comment',
 	];
 
 	public function operation()

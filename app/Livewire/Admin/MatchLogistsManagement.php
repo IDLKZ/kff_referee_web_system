@@ -25,7 +25,7 @@ class MatchLogistsManagement extends Component {
     public ?int $filter_match_id = null;
     public ?int $filter_logist_id = null;
     public ?string $filter_role = null; // filter by role value
-    public string $sortField = 'id';
+    public string $sortField = 'match_id';
     public string $sortDirection = 'asc';
 
     // --- Состояние модальных окон ---
@@ -316,7 +316,7 @@ class MatchLogistsManagement extends Component {
             $query->join('users as u', 'match_logists as ml')
                 ->orderBy('u.last_name', $this->sortDirection);
         } else {
-            $query->orderBy('match_logists.id', $this->sortDirection);
+            $query->orderBy('match_logists.' . $this->sortField, $this->sortDirection);
         }
 
         $matchLogists = $query->paginate(15);

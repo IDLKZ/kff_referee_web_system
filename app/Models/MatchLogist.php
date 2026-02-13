@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\Model;
 class MatchLogist extends Model
 {
 	protected $table = 'match_logists';
-	public $incrementing = false;
 	public $timestamps = false;
 
 	protected $casts = [

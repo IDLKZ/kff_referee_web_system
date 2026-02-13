@@ -33,6 +33,21 @@ return [
     'judge_requirements' => 'Judge Requirements',
 
     // Sidebar — KFF
+    'referee_approval' => 'Referee Approval',
+    'referee_approve_detail' => 'Referee Assignment Details',
+    'referee_request' => 'Match Invitations',
+    'referee_request_detail' => 'Invitation Details',
+    'back_to_list' => 'Back to list',
+    'tab_waiting_response' => 'Waiting Response',
+    'tab_accepted' => 'Accepted',
+    'tab_declined' => 'Declined',
+    'waiting_for_response' => 'Waiting for response',
+    'my_assignment' => 'My Assignment',
+    'no_assignment_yet' => 'No assignments yet',
+    'not_assigned_yet' => 'Not assigned yet',
+    'accept_invitation' => 'Accept Invitation',
+    'decline_invitation' => 'Decline Invitation',
+
     'matches' => 'Matches',
     'tournaments' => 'Tournaments',
     'seasons' => 'Seasons',

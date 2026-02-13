@@ -10,7 +10,9 @@
       "Bash(if not exist \"D:\\\\projects\\\\kff_referee_web_system\\\\resources\\\\views\\\\components\" mkdir \"D:\\\\projects\\\\kff_referee_web_system\\\\resources\\\\views\\\\components\")",
       "Bash(php -l:*)",
       "Bash(composer require:*)",
-      "Bash(php -r:*)"
+      "Bash(php -r:*)",
+      "Bash(git checkout:*)",
+      "Bash(if not exist \"D:\\\\projects\\\\kff_referee_web_system\\\\resources\\\\views\\\\shared\\\\common\" mkdir \"D:\\\\projects\\\\kff_referee_web_system\\\\resources\\\\views\\\\shared\\\\common\")"
     ]
   }
 }

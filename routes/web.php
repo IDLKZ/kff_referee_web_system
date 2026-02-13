@@ -31,6 +31,10 @@ use App\Livewire\Admin\OperationManagement;
 use App\Livewire\Admin\RoleOperationManagement;
 use App\Livewire\Admin\MatchLogistsManagement;
 use App\Livewire\Auth\Login;
+use App\Livewire\Kff\RefereeApproval;
+use App\Livewire\Kff\RefereeApproveDetail;
+use App\Livewire\Referee\RefereeRequest;
+use App\Livewire\Referee\RefereeRequestDetail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -98,6 +102,8 @@ Route::middleware('auth.active')->group(function () {
         ->middleware('role:' . RoleConstants::KFF_PFLK_GROUP)
         ->group(function () {
             Route::get('/dashboard', fn () => view('kff.dashboard'))->name('kff.dashboard');
+            Route::get('/referee-approval', RefereeApproval::class)->name('kff.referee-approval');
+            Route::get('/referee-approval/{match}', RefereeApproveDetail::class)->name('kff.referee-approve-detail');
         });
 
     // Referee dashboard
@@ -105,5 +111,7 @@ Route::middleware('auth.active')->group(function () {
         ->middleware('role:' . RoleConstants::REFEREE_GROUP)
         ->group(function () {
             Route::get('/dashboard', fn () => view('referee.dashboard'))->name('referee.dashboard');
+            Route::get('/referee-request', RefereeRequest::class)->name('referee.referee-request');
+            Route::get('/referee-request/{match}', RefereeRequestDetail::class)->name('referee.referee-request-detail');
         });
 });

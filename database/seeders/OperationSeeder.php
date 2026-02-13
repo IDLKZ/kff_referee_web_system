@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Operation;
 use App\Models\CategoryOperation;
 use App\Constants\CategoryOperationConstants;
+use App\Constants\OperationConstants;
 
 class OperationSeeder extends Seeder
 {
@@ -29,7 +30,7 @@ class OperationSeeder extends Seeder
         // ===== 1. Назначение судей =====
 
         $ops['ref_1'] = Operation::updateOrCreate(
-            ['value' => 'match_created_waiting_referees'],
+            ['value' => OperationConstants::MATCH_CREATED_WAITING_REFEREES],
             [
                 'category_id' => $refCat->id,
                 'title_ru' => 'Матч создан, ожидает назначения судей',
@@ -41,7 +42,7 @@ class OperationSeeder extends Seeder
         );
 
         $ops['ref_2'] = Operation::updateOrCreate(
-            ['value' => 'referee_assignment'],
+            ['value' => OperationConstants::REFEREE_ASSIGNMENT],
             [
                 'category_id' => $refCat->id,
                 'title_ru' => 'Назначение судей',
@@ -53,7 +54,7 @@ class OperationSeeder extends Seeder
         );
 
         $ops['ref_3'] = Operation::updateOrCreate(
-            ['value' => 'referee_team_approval'],
+            ['value' => OperationConstants::REFEREE_TEAM_APPROVAL],
             [
                 'category_id' => $refCat->id,
                 'title_ru' => 'Утверждение финальной бригады',
@@ -65,7 +66,7 @@ class OperationSeeder extends Seeder
         );
 
         $ops['ref_4'] = Operation::updateOrCreate(
-            ['value' => 'referee_reassignment'],
+            ['value' => OperationConstants::REFEREE_REASSIGNMENT],
             [
                 'category_id' => $refCat->id,
                 'title_ru' => 'Переназначение судей',
@@ -79,7 +80,7 @@ class OperationSeeder extends Seeder
         // ===== 2. Командировка =====
 
         $ops['trip_1'] = Operation::updateOrCreate(
-            ['value' => 'select_transport_departure'],
+            ['value' => OperationConstants::SELECT_TRANSPORT_DEPARTURE],
             [
                 'category_id' => $tripCat->id,
                 'title_ru' => 'Выбор точки отправления и транспорта',
@@ -91,7 +92,7 @@ class OperationSeeder extends Seeder
         );
 
         $ops['trip_2'] = Operation::updateOrCreate(
-            ['value' => 'trip_processing'],
+            ['value' => OperationConstants::TRIP_PROCESSING],
             [
                 'category_id' => $tripCat->id,
                 'title_ru' => 'Оформление командировки',
@@ -105,7 +106,7 @@ class OperationSeeder extends Seeder
         // ===== 3. Ожидание протокола и результата матча =====
 
         $ops['prot_1'] = Operation::updateOrCreate(
-            ['value' => 'waiting_for_protocol'],
+            ['value' => OperationConstants::WAITING_FOR_PROTOCOL],
             [
                 'category_id' => $protCat->id,
                 'title_ru' => 'Ожидание протокола и результата матча',
@@ -117,7 +118,7 @@ class OperationSeeder extends Seeder
         );
 
         $ops['prot_2'] = Operation::updateOrCreate(
-            ['value' => 'protocol_review'],
+            ['value' => OperationConstants::PROTOCOL_REVIEW],
             [
                 'category_id' => $protCat->id,
                 'title_ru' => 'Проверка протокола и результата',
@@ -129,7 +130,7 @@ class OperationSeeder extends Seeder
         );
 
         $ops['prot_3'] = Operation::updateOrCreate(
-            ['value' => 'protocol_reprocessing'],
+            ['value' => OperationConstants::PROTOCOL_REPROCESSING],
             [
                 'category_id' => $protCat->id,
                 'title_ru' => 'Переоформление протокола и результата матча',
@@ -143,7 +144,7 @@ class OperationSeeder extends Seeder
         // ===== 4. Завершение =====
 
         $ops['final'] = Operation::updateOrCreate(
-            ['value' => 'successfully_completed'],
+            ['value' => OperationConstants::SUCCESSFULLY_COMPLETED],
             [
                 'category_id' => $finalCat->id,
                 'title_ru' => 'Успешно завершено',

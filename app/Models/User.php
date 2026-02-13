@@ -27,6 +27,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string|null $iin
  * @property Carbon|null $birth_date
  * @property string|null $password_hash
+ * @property string|null $remember_token
  * @property bool $is_active
  * @property bool $is_verified
  * @property Carbon|null $created_at
@@ -80,6 +81,7 @@ class User extends Authenticatable
 		'iin',
 		'birth_date',
 		'password_hash',
+		'remember_token',
 		'is_active',
 		'is_verified'
 	];
