@@ -85,4 +85,8 @@ return [
     'role' => 'Роль',
     'last_login' => 'Последний вход',
     'just_now' => 'Только что',
+
+    // Sidebar — KFF (Head)
+    'head_referee_approval' => 'Утверждение бригады',
+    'head_referee_approve_detail' => 'Утверждение судейской бригады',
 ];

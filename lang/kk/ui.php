@@ -84,4 +84,8 @@ return [
     'role' => 'Рөл',
     'last_login' => 'Соңғы кіру',
     'just_now' => 'Жаңа ғана',
+
+    // Sidebar — KFF (Head)
+    'head_referee_approval' => 'Бригаданы бекіту',
+    'head_referee_approve_detail' => 'Төрешілер бригадасын бекіту',
 ];

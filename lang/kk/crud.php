@@ -502,4 +502,23 @@ return [
     'requirements_not_met_error' => 'Барлық міндетті төреші талаптары орындалмаған.',
     'submitted_for_review_success' => 'Бригада бекітуге жіберілді.',
     'request_comment_placeholder' => 'Төрешіге қосымша ақпарат (міндетті емес)',
+    'confirm_accept_invitation' => 'Шақыруды қабылдауды растау',
+    'confirm_decline_invitation' => 'Шақырудан бас тартуды растау',
+    'response_comment_placeholder' => 'Себебін немесе түсініктемені енгізіңіз (міндетті емес)',
+
+    // HeadRefereeApproval-specific
+    'approve_judge' => 'Төрешіні бекіту',
+    'reject_judge' => 'Төрешіні бас тарту',
+    'approve_brigade' => 'Бригаданы бекіту',
+    'reject_brigade' => 'Бригаданы бас тарту',
+    'approve_judge_confirm' => 'Бұл төрешіні бекіткіңіз келетініне сенімдісіз бе?',
+    'reject_judge_confirm' => 'Бұл төрешіні бас тартқыңыз келетініне сенімдісіз бе?',
+    'approve_brigade_confirm' => 'Бүкіл бригаданы бекіткіңіз келетініне сенімдісіз бе?',
+    'reject_brigade_confirm' => 'Бригаданы бас тартып, қайта тағайындауға жібергіңіз келетініне сенімдісіз бе?',
+    'brigade_approved_success' => 'Бригада сәтті бекітілді.',
+    'brigade_rejected_success' => 'Бригада бас тартылып, қайта тағайындауға жіберілді.',
+    'judge_approved_success' => 'Төреші бекітілді.',
+    'judge_rejected_success' => 'Төреші бас тартылды.',
+    'final_comment_placeholder' => 'Шешім түсініктемесі (бас тартқанда міндетті)',
+    'brigade_not_ready_error' => 'Барлық міндетті төрешілер бекітілмеген.',
 ];

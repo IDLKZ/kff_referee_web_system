@@ -129,7 +129,7 @@ class RefereeRequest extends Component
             ]);
     }
 
-    protected function applyFilters($query)
+    protected function applyQueryFilters($query)
     {
         if ($this->search) {
             $search = $this->search;
@@ -155,9 +155,10 @@ class RefereeRequest extends Component
         }
 
         if ($this->filter_club_id) {
-            $query->where(function ($q) use ($this->filter_club_id) {
-                $q->where('owner_club_id', $this->filter_club_id)
-                  ->orWhere('guest_club_id', $this->filter_club_id);
+            $clubId = $this->filter_club_id;
+            $query->where(function ($q) use ($clubId) {
+                $q->where('owner_club_id', $clubId)
+                  ->orWhere('guest_club_id', $clubId);
             });
         }
 
@@ -169,7 +170,7 @@ class RefereeRequest extends Component
         $userId = auth()->id();
 
         return match ($tab) {
-            'waiting' => $this->applyFilters(
+            'waiting' => $this->applyQueryFilters(
                 MatchModel::query()
                     ->whereHas('match_judges', function ($query) use ($userId) {
                         $query->where('judge_id', $userId)
@@ -188,7 +189,7 @@ class RefereeRequest extends Component
                         'match_judges.judge_type',
                     ])
             ),
-            'accepted' => $this->applyFilters(
+            'accepted' => $this->applyQueryFilters(
                 MatchModel::query()
                     ->whereHas('match_judges', function ($query) use ($userId) {
                         $query->where('judge_id', $userId)
@@ -207,7 +208,7 @@ class RefereeRequest extends Component
                         'match_judges.judge_type',
                     ])
             ),
-            'declined' => $this->applyFilters(
+            'declined' => $this->applyQueryFilters(
                 MatchModel::query()
                     ->whereHas('match_judges', function ($query) use ($userId) {
                         $query->where('judge_id', $userId)

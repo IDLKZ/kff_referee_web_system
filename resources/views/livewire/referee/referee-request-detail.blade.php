@@ -153,13 +153,13 @@
                         {{-- Action buttons --}}
                         @if($assignment->judge_response == 0)
                             <div class="flex gap-2">
-                                <button wire:click="acceptInvitation" class="btn-primary text-sm flex-1">
+                                <button wire:click="openResponseModal('accept')" class="btn-primary text-sm flex-1">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                     </svg>
                                     {{ __('crud.accept_invitation') }}
                                 </button>
-                                <button wire:click="declineInvitation" class="btn-danger text-sm flex-1">
+                                <button wire:click="openResponseModal('decline')" class="btn-danger text-sm flex-1">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                     </svg>
@@ -180,20 +180,55 @@
         </div>
     @endif
 
-    {{-- ── Response Confirmation Modal ───────────────────────────────── --}}
-    @if(auth()->user()->role->value === \App\Constants\RoleConstants::SOCCER_REFEREE)
-        @script
-            window.addEventListener('referee-accept', function(e) {
-                if (e.detail.confirm) {
-                    @this.acceptInvitation()
-                }
-            })
+    {{-- ── Response Modal ───────────────────────────────── --}}
+    @if($showResponseModal)
+        <div class="fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(0,0,0,0.5);">
+            <div class="w-full max-w-md rounded-lg shadow-xl p-6" style="background: var(--bg-card);"
+                 @click.outside="$wire.closeResponseModal()" @keydown.escape.window="$wire.closeResponseModal()">
+                {{-- Title --}}
+                <h3 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
+                    @if($responseAction === 'accept')
+                        {{ __('crud.confirm_accept_invitation') }}
+                    @else
+                        {{ __('crud.confirm_decline_invitation') }}
+                    @endif
+                </h3>
 
-            window.addEventListener('referee-decline', function(e) {
-                if (e.detail.confirm) {
-                    @this.declineInvitation()
-                }
-            })
-        @endscript
+                {{-- Comment --}}
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-1" style="color: var(--text-secondary);">
+                        {{ __('crud.judge_comment') }}
+                    </label>
+                    <textarea
+                        wire:model="responseComment"
+                        rows="3"
+                        class="form-input w-full"
+                        placeholder="{{ __('crud.response_comment_placeholder') }}"
+                    ></textarea>
+                </div>
+
+                {{-- Buttons --}}
+                <div class="flex gap-3 justify-end">
+                    <button wire:click="closeResponseModal" class="btn-secondary text-sm">
+                        {{ __('crud.cancel') }}
+                    </button>
+                    @if($responseAction === 'accept')
+                        <button wire:click="submitResponse" class="btn-primary text-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            {{ __('crud.accept_invitation') }}
+                        </button>
+                    @else
+                        <button wire:click="submitResponse" class="btn-danger text-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                            {{ __('crud.decline_invitation') }}
+                        </button>
+                    @endif
+                </div>
+            </div>
+        </div>
     @endif
 </div>

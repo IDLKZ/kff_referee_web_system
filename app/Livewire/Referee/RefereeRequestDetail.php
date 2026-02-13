@@ -14,6 +14,9 @@ use Livewire\Component;
 class RefereeRequestDetail extends Component
 {
     public int $matchId;
+    public bool $showResponseModal = false;
+    public string $responseAction = ''; // 'accept' or 'decline'
+    public string $responseComment = '';
 
     public function mount(int $match): void
     {
@@ -46,29 +49,22 @@ class RefereeRequestDetail extends Component
         ])->findOrFail($this->matchId);
     }
 
-    // Actions for responding to invitation
-    public function acceptInvitation(): void
+    // Open modal for accept/decline
+    public function openResponseModal(string $action): void
     {
-        $userId = auth()->id();
-
-        $matchJudge = MatchJudge::where('match_id', $this->matchId)
-            ->where('judge_id', $userId)
-            ->first();
-
-        if (! $matchJudge) {
-            session()->flash('toastr_error', __('crud.invitation_not_found_error'));
-            return;
-        }
-
-        $matchJudge->update([
-            'judge_response' => 1,
-            'judge_comment' => null,
-        ]);
-
-        session()->flash('toastr_success', __('crud.invitation_accepted_success'));
+        $this->responseAction = $action;
+        $this->responseComment = '';
+        $this->showResponseModal = true;
     }
 
-    public function declineInvitation(): void
+    public function closeResponseModal(): void
+    {
+        $this->showResponseModal = false;
+        $this->responseAction = '';
+        $this->responseComment = '';
+    }
+
+    public function submitResponse(): void
     {
         $userId = auth()->id();
 
@@ -78,14 +74,25 @@ class RefereeRequestDetail extends Component
 
         if (! $matchJudge) {
             session()->flash('toastr_error', __('crud.invitation_not_found_error'));
+            $this->closeResponseModal();
             return;
         }
 
-        $matchJudge->update([
-            'judge_response' => -1,
-        ]);
+        if ($this->responseAction === 'accept') {
+            $matchJudge->update([
+                'judge_response' => 1,
+                'judge_comment' => $this->responseComment ?: null,
+            ]);
+            session()->flash('toastr_success', __('crud.invitation_accepted_success'));
+        } else {
+            $matchJudge->update([
+                'judge_response' => -1,
+                'judge_comment' => $this->responseComment ?: null,
+            ]);
+            session()->flash('toastr_success', __('crud.invitation_declined_success'));
+        }
 
-        session()->flash('toastr_success', __('crud.invitation_declined_success'));
+        $this->closeResponseModal();
     }
 
     public function render()

@@ -83,4 +83,8 @@ return [
     'role' => 'Role',
     'last_login' => 'Last Login',
     'just_now' => 'Just now',
+
+    // Sidebar — KFF (Head)
+    'head_referee_approval' => 'Brigade Approval',
+    'head_referee_approve_detail' => 'Referee Brigade Approval',
 ];

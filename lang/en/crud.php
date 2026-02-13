@@ -502,4 +502,23 @@ return [
     'requirements_not_met_error' => 'Not all required judge requirements are met.',
     'submitted_for_review_success' => 'Team submitted for approval.',
     'request_comment_placeholder' => 'Additional information for referee (optional)',
+    'confirm_accept_invitation' => 'Confirm acceptance of invitation',
+    'confirm_decline_invitation' => 'Confirm decline of invitation',
+    'response_comment_placeholder' => 'Enter reason or comment (optional)',
+
+    // HeadRefereeApproval-specific
+    'approve_judge' => 'Approve Judge',
+    'reject_judge' => 'Reject Judge',
+    'approve_brigade' => 'Approve Brigade',
+    'reject_brigade' => 'Reject Brigade',
+    'approve_judge_confirm' => 'Are you sure you want to approve this judge?',
+    'reject_judge_confirm' => 'Are you sure you want to reject this judge?',
+    'approve_brigade_confirm' => 'Are you sure you want to approve the entire brigade?',
+    'reject_brigade_confirm' => 'Are you sure you want to reject the brigade and send it for reassignment?',
+    'brigade_approved_success' => 'Brigade approved successfully.',
+    'brigade_rejected_success' => 'Brigade rejected and sent for reassignment.',
+    'judge_approved_success' => 'Judge approved.',
+    'judge_rejected_success' => 'Judge rejected.',
+    'final_comment_placeholder' => 'Decision comment (required for rejection)',
+    'brigade_not_ready_error' => 'Not all required judges are approved.',
 ];
