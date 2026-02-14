@@ -11,6 +11,7 @@ use App\Models\HotelRoom;
 use App\Models\MatchJudge;
 use App\Models\MatchLogist;
 use App\Models\MatchModel;
+use App\Models\MatchProtocolRequirement;
 use App\Models\Operation;
 use App\Models\Trip;
 use App\Models\TripDocument;
@@ -138,6 +139,7 @@ class KffTripDetail extends Component
             OperationConstants::SELECT_TRANSPORT_DEPARTURE,
             OperationConstants::TRIP_PROCESSING,
             OperationConstants::WAITING_FOR_PROTOCOL,
+            OperationConstants::SUCCESSFULLY_COMPLETED,
         ];
 
         abort_unless(in_array($this->currentOperationValue, $validOperations), 403);
@@ -145,7 +147,10 @@ class KffTripDetail extends Component
 
     protected function checkReadOnlyStatus(): void
     {
-        $this->isReadOnly = $this->currentOperationValue === OperationConstants::WAITING_FOR_PROTOCOL;
+        $this->isReadOnly = in_array($this->currentOperationValue, [
+            OperationConstants::WAITING_FOR_PROTOCOL,
+            OperationConstants::SUCCESSFULLY_COMPLETED,
+        ]);
     }
 
     protected function loadJudges(): void
@@ -229,12 +234,21 @@ class KffTripDetail extends Component
         session()->flash('message', __('crud.operation_changed_success'));
     }
 
-    public function transitionToWaitingForProtocol(): void
+    public function transitionToNextAfterTrip(): void
     {
         abort_unless(!$this->isReadOnly, 403);
         abort_unless($this->isAllTripsReady(), 403);
 
-        $operationId = Operation::where('value', OperationConstants::WAITING_FOR_PROTOCOL)
+        // Check if there are protocol requirements for this match
+        $hasProtocolRequirements = MatchProtocolRequirement::where('match_id', $this->matchId)->exists();
+
+        if ($hasProtocolRequirements) {
+            $nextOperation = OperationConstants::WAITING_FOR_PROTOCOL;
+        } else {
+            $nextOperation = OperationConstants::SUCCESSFULLY_COMPLETED;
+        }
+
+        $operationId = Operation::where('value', $nextOperation)
             ->pluck('id')
             ->first();
 

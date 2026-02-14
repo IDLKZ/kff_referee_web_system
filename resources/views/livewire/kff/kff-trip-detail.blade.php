@@ -557,14 +557,14 @@
                         {{ __('crud.ready_for_processing') }}
                     </button>
                 @elseif($currentOperationValue === OperationConstants::TRIP_PROCESSING)
-                    <button wire:click="transitionToWaitingForProtocol"
+                    <button wire:click="transitionToNextAfterTrip"
                             wire:confirm="{{ __('crud.confirm_action') }}"
                             class="btn-primary w-full justify-center"
                             wire:loading.attr="disabled">
-                        <svg class="w-5 h-5" wire:loading.remove wire:target="transitionToWaitingForProtocol" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5" wire:loading.remove wire:target="transitionToNextAfterTrip" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                        <svg class="w-5 h-5 animate-spin" wire:loading wire:target="transitionToWaitingForProtocol" fill="none" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 animate-spin" wire:loading wire:target="transitionToNextAfterTrip" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
                         </svg>

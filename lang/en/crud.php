@@ -506,6 +506,20 @@ return [
     'confirm_decline_invitation' => 'Confirm decline of invitation',
     'response_comment_placeholder' => 'Enter reason or comment (optional)',
 
+    // Protocol Management
+    'required_document' => 'Required',
+    'optional_document' => 'Optional',
+    'documents_count' => 'Documents',
+    'report_submitted' => 'Submitted',
+    'report_not_submitted' => 'Not Submitted',
+    'report_accepted' => 'Accepted',
+    'report_rejected' => 'Rejected',
+    'report_pending_review' => 'Pending Review',
+    'final_comment' => 'Comment',
+    'file' => 'File',
+    'upload' => 'Upload',
+    'upload_comment_placeholder' => 'Additional information (optional)',
+
     // HeadRefereeApproval-specific
     'approve_judge' => 'Approve Judge',
     'reject_judge' => 'Reject Judge',

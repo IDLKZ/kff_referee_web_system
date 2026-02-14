@@ -466,6 +466,20 @@ return [
     'confirm_decline_invitation' => 'Подтверждение отклонения приглашения',
     'response_comment_placeholder' => 'Укажите причину или комментарий (необязательно)',
 
+    // Protocol Management
+    'required_document' => 'Обязательно',
+    'optional_document' => 'Необязательно',
+    'documents_count' => 'Документов',
+    'report_submitted' => 'Отправлен',
+    'report_not_submitted' => 'Не отправлен',
+    'report_accepted' => 'Принят',
+    'report_rejected' => 'Отклонён',
+    'report_pending_review' => 'На рассмотрении',
+    'final_comment' => 'Комментарий',
+    'file' => 'Файл',
+    'upload' => 'Загрузить',
+    'upload_comment_placeholder' => 'Дополнительная информация (необязательно)',
+
     // HeadRefereeApproval-specific
     'approve_judge' => 'Утвердить судью',
     'reject_judge' => 'Отклонить судью',

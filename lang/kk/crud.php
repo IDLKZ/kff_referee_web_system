@@ -506,6 +506,20 @@ return [
     'confirm_decline_invitation' => 'Шақырудан бас тартуды растау',
     'response_comment_placeholder' => 'Себебін немесе түсініктемені енгізіңіз (міндетті емес)',
 
+    // Protocol Management
+    'required_document' => 'Міндетті',
+    'optional_document' => 'Міндетті емес',
+    'documents_count' => 'Құжаттар',
+    'report_submitted' => 'Жіберілді',
+    'report_not_submitted' => 'Жіберілмеді',
+    'report_accepted' => 'Қабылданды',
+    'report_rejected' => 'Қабылданбады',
+    'report_pending_review' => 'Қарауда',
+    'final_comment' => 'Түсініктеме',
+    'file' => 'Файл',
+    'upload' => 'Жүктеу',
+    'upload_comment_placeholder' => 'Қосымша ақпарат (міндетті емес)',
+
     // HeadRefereeApproval-specific
     'approve_judge' => 'Төрешіні бекіту',
     'reject_judge' => 'Төрешіні бас тарту',

@@ -32,6 +32,8 @@ use App\Livewire\Admin\RoleOperationManagement;
 use App\Livewire\Admin\MatchLogistsManagement;
 use App\Livewire\Auth\Login;
 use App\Livewire\Kff\HeadRefereeApproval;
+use App\Models\File;
+use Illuminate\Support\Facades\Storage;
 use App\Livewire\Kff\HeadRefereeApproveDetail;
 use App\Livewire\Kff\RefereeApproval;
 use App\Livewire\Kff\RefereeApproveDetail;
@@ -41,6 +43,8 @@ use App\Livewire\Referee\RefereeRequest;
 use App\Livewire\Referee\RefereeRequestDetail;
 use App\Livewire\Referee\RefereeTripDetail;
 use App\Livewire\Referee\RefereeTrips;
+use App\Livewire\Referee\RefereeProtocolManagement;
+use App\Livewire\Referee\RefereeProtocolDetailManagement;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -67,6 +71,15 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth.active')->group(function () {
     // Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    // File download
+    Route::get('/files/{id}', function ($id) {
+        $file = File::find($id);
+        if (!$file) {
+            abort(404);
+        }
+        return Storage::disk(config('filesystems.default', 'public'))->download($file->file_path, $file->filename);
+    })->name('files.download');
 
     // Root — redirect to role-specific dashboard
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -125,5 +138,7 @@ Route::middleware('auth.active')->group(function () {
             Route::get('/referee-request/{match}', RefereeRequestDetail::class)->name('referee.referee-request-detail');
             Route::get('/referee-trips', RefereeTrips::class)->name('referee.referee-trips');
             Route::get('/referee-trip-detail/{tripId}', RefereeTripDetail::class)->name('referee.referee-trip-detail');
+            Route::get('/referee-protocols', RefereeProtocolManagement::class)->name('referee.referee-protocol-management');
+            Route::get('/referee-protocols/{matchId}', RefereeProtocolDetailManagement::class)->name('referee.referee-protocol-detail');
         });
 });
