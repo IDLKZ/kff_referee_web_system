@@ -25,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  * 
  * @property City $city
+ * @property City $arrival_city
  * @property User|null $user
  * @property TransportType $transport_type
  * @property Trip $trip
@@ -59,6 +60,11 @@ class TripMigration extends Model
 	public function city()
 	{
 		return $this->belongsTo(City::class, 'departure_city_id');
+	}
+
+	public function arrival_city()
+	{
+		return $this->belongsTo(City::class, 'arrival_city_id');
 	}
 
 	public function user()

@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property JudgeType $judge_type
  * @property Collection|MatchReportDocument[] $match_report_documents
  * @property Collection|MatchReport[] $match_reports
+ * @property Trip|null $trip
  *
  * @package App\Models
  */
@@ -88,5 +89,10 @@ class MatchJudge extends Model
 	public function match_reports()
 	{
 		return $this->hasMany(MatchReport::class);
+	}
+
+	public function trip()
+	{
+		return $this->hasOne(Trip::class, 'judge_id', 'judge_id');
 	}
 }

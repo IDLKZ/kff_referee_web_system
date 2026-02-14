@@ -151,13 +151,13 @@ $locale ??= app()->getLocale();
 
     {{-- Action Button --}}
     <div class="px-5 py-3" style="border-top: 1px solid var(--border-color);">
-        <button wire:click="openMatchDetailModal({{ $trip->match_id }})"
-                class="w-full btn-secondary text-sm">
+        <a href="{{ route('kff.kff-trip-detail', $trip->match_id) }}"
+           class="w-full btn-secondary text-sm inline-flex items-center justify-center">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M15 12a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
             </svg>
             {{ __('crud.view_details') }}
-        </button>
+        </a>
     </div>
 </div>

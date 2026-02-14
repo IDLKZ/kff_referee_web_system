@@ -121,6 +121,11 @@ class Trip extends Model
 					->withTimestamps();
 	}
 
+	public function trip_hotels()
+	{
+		return $this->hasMany(TripHotel::class);
+	}
+
 	public function trip_migrations()
 	{
 		return $this->hasMany(TripMigration::class);

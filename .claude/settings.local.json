@@ -12,7 +12,10 @@
       "Bash(composer require:*)",
       "Bash(php -r:*)",
       "Bash(git checkout:*)",
-      "Bash(if not exist \"D:\\\\projects\\\\kff_referee_web_system\\\\resources\\\\views\\\\shared\\\\common\" mkdir \"D:\\\\projects\\\\kff_referee_web_system\\\\resources\\\\views\\\\shared\\\\common\")"
+      "Bash(if not exist \"D:\\\\projects\\\\kff_referee_web_system\\\\resources\\\\views\\\\shared\\\\common\" mkdir \"D:\\\\projects\\\\kff_referee_web_system\\\\resources\\\\views\\\\shared\\\\common\")",
+      "Bash(composer test:*)",
+      "Bash(composer dump-autoload:*)",
+      "mcp__ide__getDiagnostics"
     ]
   }
 }
