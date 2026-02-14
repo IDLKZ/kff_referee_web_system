@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property int $id
  * @property int $match_id
+ * @property int $operation_id
  * @property int|null $departure_city_id
  * @property int|null $arrival_city_id
  * @property string|null $name
@@ -32,7 +33,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property City|null $city
  * @property User|null $user
- * @property Match $match
+ * @property MatchModel $match
+ * @property Operation|null $operation
  * @property TransportType $transport_type
  * @property Collection|TripDocument[] $trip_documents
  * @property Collection|Hotel[] $hotels
@@ -47,6 +49,7 @@ class Trip extends Model
 
 	protected $casts = [
 		'match_id' => 'int',
+		'operation_id' => 'int',
 		'departure_city_id' => 'int',
 		'arrival_city_id' => 'int',
 		'departure_date' => 'datetime',
@@ -58,6 +61,7 @@ class Trip extends Model
 
 	protected $fillable = [
 		'match_id',
+		'operation_id',
 		'departure_city_id',
 		'arrival_city_id',
 		'name',
@@ -75,6 +79,16 @@ class Trip extends Model
 		return $this->belongsTo(City::class, 'departure_city_id');
 	}
 
+	public function arrival_city()
+	{
+		return $this->belongsTo(City::class, 'arrival_city_id');
+	}
+
+	public function judge()
+	{
+		return $this->belongsTo(User::class, 'judge_id');
+	}
+
 	public function user()
 	{
 		return $this->belongsTo(User::class, 'logist_id');
@@ -83,6 +97,11 @@ class Trip extends Model
 	public function match()
 	{
 		return $this->belongsTo(MatchModel::class);
+	}
+
+	public function operation()
+	{
+		return $this->belongsTo(Operation::class, 'operation_id');
 	}
 
 	public function transport_type()

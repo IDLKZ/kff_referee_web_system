@@ -64,7 +64,7 @@ return [
 
     // Sidebar — referee
     'my_matches' => 'My Matches',
-    'my_trips' => 'Trips',
+    'my_trips' => 'My Trips',
     'reports' => 'Reports',
     'notifications' => 'Notifications',
 

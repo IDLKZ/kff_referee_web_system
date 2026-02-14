@@ -66,7 +66,7 @@ return [
 
     // Sidebar — referee
     'my_matches' => 'Мои матчи',
-    'my_trips' => 'Командировки',
+    'my_trips' => 'Мои командировки',
     'reports' => 'Отчёты',
     'notifications' => 'Уведомления',
 

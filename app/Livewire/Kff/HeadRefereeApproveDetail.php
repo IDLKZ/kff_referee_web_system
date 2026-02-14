@@ -66,41 +66,43 @@ class HeadRefereeApproveDetail extends Component
             $typeId = $req->judge_type_id;
             $judges = $match->match_judges->where('type_id', $typeId);
 
-            // Only judges who accepted (judge_response == 1) matter for HEAD decisions
-            $acceptedJudges = $judges->filter(fn ($mj) => $mj->judge_response == 1);
+            // Historical approved judges from previous rounds (is_actual = true)
+            $historicalApproved = $judges->filter(fn ($mj) => $mj->is_actual === true)->count();
 
-            $approvedCount = $acceptedJudges->filter(fn ($mj) => $mj->final_status == 1)->count();
-            $rejectedCount = $acceptedJudges->filter(fn ($mj) => $mj->final_status == -1)->count();
-            $pendingCount = $acceptedJudges->filter(fn ($mj) => $mj->final_status == 0)->count();
+            // Current round: accepted judges (judge_response == 1, is_actual === null)
+            $currentJudges = $judges->filter(fn ($mj) => $mj->judge_response == 1 && $mj->is_actual === null);
+
+            $currentApproved = $currentJudges->filter(fn ($mj) => $mj->final_status == 1)->count();
+            $currentRejected = $currentJudges->filter(fn ($mj) => $mj->final_status == -1)->count();
+            $currentPending  = $currentJudges->filter(fn ($mj) => $mj->final_status == 0)->count();
 
             $info[$typeId] = [
                 'requirement' => $req,
-                'accepted' => $acceptedJudges->count(),
-                'approved' => $approvedCount,
-                'rejected' => $rejectedCount,
-                'pending' => $pendingCount,
+                'historical_approved' => $historicalApproved,
+                'approved' => min($historicalApproved + $currentApproved, $req->qty),
+                'rejected' => $currentRejected,   // current round only
+                'pending' => $currentPending,      // current round only
             ];
         }
-
         return $info;
     }
 
     /**
      * Determine brigade-level button availability and states.
      *
+     * Staffing = is_actual=true (historical) + is_actual=null & final_status=1 (current approved)
+     *
      * Rules:
-     * - Buttons appear only when NO accepted judge has final_status == 0 (all decided)
-     * - If any is_required judge has final_status == -1 → only reassignment available
-     * - If all is_required approved AND all optional decided → both buttons available
-     * - Approve brigade requires all is_required approved (final_status == 1)
-     *   and all optional judges also approved (final_status == 1)
+     * - Buttons appear only when NO current judge has final_status == 0 (all decided)
+     * - If any required type not fully staffed (approved < qty) → only reassignment
+     * - If all required staffed + some optional not staffed → both buttons
+     * - If all types fully staffed → only approve trip
      */
     protected function computeBrigadeState(array $slotInfo): array
     {
-        $allDecided = true;        // no pending judges remain
-        $hasRequiredRejected = false; // any is_required judge rejected
-        $allRequiredApproved = true;  // all is_required judges approved
-        $allOptionalApproved = true;  // all optional judges approved (or none exist)
+        $allDecided = true;           // no pending current judges
+        $allRequiredStaffed = true;   // all required types: approved >= qty
+        $allFullyStaffed = true;      // all types (required + optional): approved >= qty
         $hasSlots = count($slotInfo) > 0;
 
         foreach ($slotInfo as $info) {
@@ -108,34 +110,30 @@ class HeadRefereeApproveDetail extends Component
                 $allDecided = false;
             }
 
-            if ($info['requirement']->is_required) {
-                if ($info['rejected'] > 0) {
-                    $hasRequiredRejected = true;
-                }
-                if ($info['approved'] < $info['requirement']->qty) {
-                    $allRequiredApproved = false;
-                }
-            } else {
-                if ($info['rejected'] > 0) {
-                    $allOptionalApproved = false;
-                }
+            $staffed = $info['approved'] >= $info['requirement']->qty;
+
+            if (!$staffed) {
+                $allFullyStaffed = false;
+            }
+
+            if ($info['requirement']->is_required && !$staffed) {
+                $allRequiredStaffed = false;
             }
         }
 
-        // Buttons only show when all accepted judges have been decided (no pending)
+        // Buttons only show when all current judges have been decided (no pending)
         $showButtons = $hasSlots && $allDecided;
 
-        // Can approve: all required approved AND all optional approved
-        $canApprove = $showButtons && $allRequiredApproved && $allOptionalApproved && !$hasRequiredRejected;
+        // Can approve trip: all required types fully staffed
+        $canApprove = $showButtons && $allRequiredStaffed;
 
-        // Can reassign: buttons are shown (always available when buttons visible)
-        $canReassign = $showButtons;
+        // Can reassign: not all types fully staffed (there are gaps to fill)
+        $canReassign = $showButtons && !$allFullyStaffed;
 
         return [
             'showButtons' => $showButtons,
             'canApprove' => $canApprove,
             'canReassign' => $canReassign,
-            'hasRequiredRejected' => $hasRequiredRejected,
         ];
     }
 
@@ -206,7 +204,7 @@ class HeadRefereeApproveDetail extends Component
             ->where('match_id', $this->matchId)
             ->first();
 
-        if (!$mj || $mj->judge_response != 1) {
+        if (!$mj || $mj->judge_response != 1 || $mj->is_actual !== null) {
             return;
         }
 
@@ -269,12 +267,30 @@ class HeadRefereeApproveDetail extends Component
             return;
         }
 
+        // Lock current-round judges: is_actual = true if approved, false if rejected
+        MatchJudge::where('match_id', $this->matchId)
+            ->where('judge_response', 1)
+            ->whereNull('is_actual')
+            ->get()
+            ->each(fn ($mj) => $mj->update([
+                'is_actual' => $mj->final_status == 1,
+            ]));
+
         $this->transitionTo(OperationConstants::SELECT_TRANSPORT_DEPARTURE);
         session()->flash('toastr_success', __('crud.brigade_approved_success'));
     }
 
     protected function rejectBrigade(): void
     {
+        // Lock current-round judges before reassignment
+        MatchJudge::where('match_id', $this->matchId)
+            ->where('judge_response', 1)
+            ->whereNull('is_actual')
+            ->get()
+            ->each(fn ($mj) => $mj->update([
+                'is_actual' => $mj->final_status == 1,
+            ]));
+
         $this->transitionTo(OperationConstants::REFEREE_REASSIGNMENT);
         session()->flash('toastr_success', __('crud.brigade_rejected_success'));
     }

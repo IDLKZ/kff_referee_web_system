@@ -37,6 +37,8 @@ use App\Livewire\Kff\RefereeApproval;
 use App\Livewire\Kff\RefereeApproveDetail;
 use App\Livewire\Referee\RefereeRequest;
 use App\Livewire\Referee\RefereeRequestDetail;
+use App\Livewire\Referee\RefereeTrips;
+use App\Livewire\Kff\KffTrips;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -108,6 +110,7 @@ Route::middleware('auth.active')->group(function () {
             Route::get('/referee-approval/{match}', RefereeApproveDetail::class)->name('kff.referee-approve-detail');
             Route::get('/head-referee-approval', HeadRefereeApproval::class)->name('kff.head-referee-approval');
             Route::get('/head-referee-approval/{match}', HeadRefereeApproveDetail::class)->name('kff.head-referee-approve-detail');
+            Route::get('/kff-trips', KffTrips::class)->name('kff.kff-trips');
         });
 
     // Referee dashboard
@@ -117,5 +120,6 @@ Route::middleware('auth.active')->group(function () {
             Route::get('/dashboard', fn () => view('referee.dashboard'))->name('referee.dashboard');
             Route::get('/referee-request', RefereeRequest::class)->name('referee.referee-request');
             Route::get('/referee-request/{match}', RefereeRequestDetail::class)->name('referee.referee-request-detail');
+            Route::get('/referee-trips', RefereeTrips::class)->name('referee.referee-trips');
         });
 });

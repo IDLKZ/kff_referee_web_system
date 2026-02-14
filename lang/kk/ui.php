@@ -65,7 +65,7 @@ return [
 
     // Sidebar — referee
     'my_matches' => 'Менің матчтарым',
-    'my_trips' => 'Іссапарлар',
+    'my_trips' => 'Менің іссапарларым',
     'reports' => 'Есептер',
     'notifications' => 'Хабарламалар',
 

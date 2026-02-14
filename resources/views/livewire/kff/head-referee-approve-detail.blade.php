@@ -63,11 +63,11 @@
             @foreach($slotInfo as $typeId => $info)
                 @php
                     $req = $info['requirement'];
-                    // Only show judges who accepted (judge_response == 1)
-                    $judgesForType = $match->match_judges->where('type_id', $typeId)->filter(fn ($mj) => $mj->judge_response == 1);
+                    // Only show current-round judges who accepted
+                    $judgesForType = $match->match_judges->where('type_id', $typeId)->filter(fn ($mj) => $mj->judge_response == 1 && $mj->is_actual === null);
                     $pct = $req->qty > 0 ? min(100, round($info['approved'] / $req->qty * 100)) : 0;
-                    $isMet = $req->is_required ? ($info['approved'] >= $req->qty) : ($info['rejected'] == 0);
-                    $barColor = $isMet ? 'var(--color-success)' : 'var(--color-warning)';
+                    $isMet = $info['approved'] >= $req->qty;
+                    $barColor = $isMet ? 'var(--color-success)' : ($info['pending'] > 0 ? 'var(--color-warning)' : 'var(--color-danger)');
                 @endphp
                 <div class="card p-5">
                     {{-- Type header --}}
@@ -144,21 +144,23 @@
                                         </div>
                                     @endif
 
-                                    {{-- Action buttons — always available while at referee_team_approval --}}
-                                    <div class="flex items-center gap-2 mt-3 pt-2" style="border-top: 1px solid var(--border-color);">
-                                        <button
-                                            wire:click="openJudgeModal({{ $mj->id }}, 'approve')"
-                                            class="{{ $mj->final_status == 1 ? 'btn-secondary' : 'btn-primary' }} text-xs py-1 px-3"
-                                        >
-                                            {{ __('crud.approve_judge') }}
-                                        </button>
-                                        <button
-                                            wire:click="openJudgeModal({{ $mj->id }}, 'reject')"
-                                            class="{{ $mj->final_status == -1 ? 'btn-secondary' : 'btn-danger' }} text-xs py-1 px-3"
-                                        >
-                                            {{ __('crud.reject_judge') }}
-                                        </button>
-                                    </div>
+                                    {{-- Action buttons — only for current-round judges --}}
+                                    @if($mj->is_actual === null)
+                                        <div class="flex items-center gap-2 mt-3 pt-2" style="border-top: 1px solid var(--border-color);">
+                                            <button
+                                                wire:click="openJudgeModal({{ $mj->id }}, 'approve')"
+                                                class="{{ $mj->final_status == 1 ? 'btn-secondary' : 'btn-primary' }} text-xs py-1 px-3"
+                                            >
+                                                {{ __('crud.approve_judge') }}
+                                            </button>
+                                            <button
+                                                wire:click="openJudgeModal({{ $mj->id }}, 'reject')"
+                                                class="{{ $mj->final_status == -1 ? 'btn-secondary' : 'btn-danger' }} text-xs py-1 px-3"
+                                            >
+                                                {{ __('crud.reject_judge') }}
+                                            </button>
+                                        </div>
+                                    @endif
                                 </div>
                             @endforeach
                         </div>
@@ -176,7 +178,7 @@
                     <div>
                         <h4 class="font-semibold" style="color: var(--text-primary);">{{ __('ui.head_referee_approve_detail') }}</h4>
                         <p class="text-sm mt-1" style="color: var(--text-secondary);">
-                            @if($brigadeState['hasRequiredRejected'])
+                            @if(!$brigadeState['canApprove'])
                                 {{ __('crud.brigade_not_ready_error') }}
                             @else
                                 {{ __('crud.waiting_for_head_approval_hint') }}
@@ -204,6 +206,85 @@
                 </div>
             </div>
         @endif
+
+        {{-- ── Historical Judges (previous rounds, is_actual != null) ── --}}
+        @php
+            $historicalJudges = $match->match_judges->filter(fn ($mj) => $mj->is_actual !== null);
+        @endphp
+        @if($historicalJudges->count())
+            <div class="card p-5 mb-6" style="opacity: 0.7;">
+                <h4 class="font-semibold mb-4" style="color: var(--text-secondary);">{{ __('crud.historical_judges') }}</h4>
+                @foreach($slotInfo as $typeId => $info)
+                    @php $histForType = $historicalJudges->where('type_id', $typeId); @endphp
+                    @if($histForType->count())
+                        <div class="mt-3">
+                            <h5 class="text-sm font-semibold mb-2" style="color: var(--text-muted);">
+                                {{ $info['requirement']->judge_type->{'title_' . $locale} ?? '—' }}
+                            </h5>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                @foreach($histForType as $mj)
+                                    <div class="rounded-lg p-3" style="background: var(--bg-body); border: 1px solid var(--border-color);">
+                                        <div class="font-semibold text-sm mb-1" style="color: var(--text-primary);">
+                                            {{ $mj->user->last_name ?? '' }} {{ $mj->user->first_name ?? '' }}
+                                        </div>
+                                        <div class="flex flex-wrap items-center gap-2">
+                                            @if($mj->is_actual)
+                                                <span class="badge badge-success">{{ __('crud.final_status_approved') }}</span>
+                                            @else
+                                                <span class="badge badge-danger">{{ __('crud.final_status_rejected') }}</span>
+                                            @endif
+                                        </div>
+                                        @if($mj->final_comment)
+                                            <div class="text-xs mt-1" style="color: var(--text-muted);">
+                                                {{ $mj->final_comment }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        @endif
+
+        {{-- ── Declined Judges (judge_response == -1) ── --}}
+        @php
+            $declinedJudges = $match->match_judges->filter(fn ($mj) => $mj->judge_response == -1);
+        @endphp
+        @if($declinedJudges->count())
+            <div class="card p-5 mb-6" style="opacity: 0.7;">
+                <h4 class="font-semibold mb-4" style="color: var(--text-secondary);">{{ __('crud.declined_judges') }}</h4>
+                @foreach($slotInfo as $typeId => $info)
+                    @php $declinedForType = $declinedJudges->where('type_id', $typeId); @endphp
+                    @if($declinedForType->count())
+                        <div class="mt-3">
+                            <h5 class="text-sm font-semibold mb-2" style="color: var(--text-muted);">
+                                {{ $info['requirement']->judge_type->{'title_' . $locale} ?? '—' }}
+                            </h5>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                                @foreach($declinedForType as $mj)
+                                    <div class="rounded-lg p-3" style="background: var(--bg-body); border: 1px solid var(--border-color);">
+                                        <div class="font-semibold text-sm mb-1" style="color: var(--text-primary);">
+                                            {{ $mj->user->last_name ?? '' }} {{ $mj->user->first_name ?? '' }}
+                                        </div>
+                                        <div class="flex flex-wrap items-center gap-2">
+                                            <span class="badge badge-danger">{{ __('crud.judge_response_declined') }}</span>
+                                        </div>
+                                        @if($mj->judge_comment)
+                                            <div class="text-xs mt-1" style="color: var(--text-muted);">
+                                                <span class="font-medium">{{ __('crud.judge_comment') }}:</span>
+                                                {{ $mj->judge_comment }}
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        @endif
     @else
         {{-- Not at approval stage — read-only --}}
         <div class="card p-5 mb-6">
@@ -217,14 +298,57 @@
             </div>
 
             @foreach($slotInfo as $typeId => $info)
-                @php $judgesForType = $match->match_judges->where('type_id', $typeId)->filter(fn ($mj) => $mj->judge_response == 1); @endphp
+                @php
+                    $allForType = $match->match_judges->where('type_id', $typeId)->filter(fn ($mj) => $mj->judge_response == 1);
+                    $approvedForType = $allForType->filter(fn ($mj) => $mj->is_actual === true);
+                    $rejectedForType = $allForType->filter(fn ($mj) => $mj->is_actual === false);
+                    $currentForType = $allForType->filter(fn ($mj) => $mj->is_actual === null);
+                    $declinedForType = $match->match_judges->where('type_id', $typeId)->filter(fn ($mj) => $mj->judge_response == -1);
+                @endphp
                 <div class="mt-4">
                     <h4 class="text-sm font-semibold mb-2" style="color: var(--text-secondary);">
                         {{ $info['requirement']->judge_type->{'title_' . $locale} ?? '—' }}
-                        <span class="font-normal">({{ $judgesForType->count() }}/{{ $info['requirement']->qty }})</span>
+                        <span class="font-normal">({{ $info['approved'] }}/{{ $info['requirement']->qty }})</span>
+                        @if($info['requirement']->is_required)
+                            <span class="badge badge-danger" style="font-size: 0.6875rem;">{{ __('crud.is_required') }}</span>
+                        @else
+                            <span class="badge badge-secondary" style="font-size: 0.6875rem;">{{ __('crud.optional') }}</span>
+                        @endif
                     </h4>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                        @foreach($judgesForType as $mj)
+                        {{-- Approved (is_actual=true) --}}
+                        @foreach($approvedForType as $mj)
+                            <div class="rounded-lg p-3" style="background: var(--bg-body); border: 1px solid var(--color-success);">
+                                <div class="font-semibold text-sm mb-1" style="color: var(--text-primary);">
+                                    {{ $mj->user->last_name ?? '' }} {{ $mj->user->first_name ?? '' }}
+                                </div>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="badge badge-success">{{ __('crud.final_status_approved') }}</span>
+                                </div>
+                                @if($mj->final_comment)
+                                    <div class="text-xs mt-1" style="color: var(--text-muted);">{{ $mj->final_comment }}</div>
+                                @endif
+                            </div>
+                        @endforeach
+
+                        {{-- Rejected (is_actual=false) --}}
+                        @foreach($rejectedForType as $mj)
+                            <div class="rounded-lg p-3" style="background: var(--bg-body); border: 1px solid var(--color-danger); opacity: 0.6;">
+                                <div class="font-semibold text-sm mb-1" style="color: var(--text-primary);">
+                                    {{ $mj->user->last_name ?? '' }} {{ $mj->user->first_name ?? '' }}
+                                </div>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="badge badge-danger">{{ __('crud.final_status_rejected') }}</span>
+                                </div>
+                                @if($mj->final_comment)
+                                    <div class="text-xs mt-1" style="color: var(--text-muted);">{{ $mj->final_comment }}</div>
+                                @endif
+                            </div>
+                        @endforeach
+
+                        {{-- Current round (is_actual=null) --}}
+                        @foreach($currentForType as $mj)
                             <div class="rounded-lg p-3" style="background: var(--bg-body); border: 1px solid var(--border-color);">
                                 <div class="font-semibold text-sm mb-1" style="color: var(--text-primary);">
                                     {{ $mj->user->last_name ?? '' }} {{ $mj->user->first_name ?? '' }}
@@ -238,9 +362,31 @@
                                         <span class="badge badge-warning">{{ __('crud.final_status_pending') }}</span>
                                     @endif
                                 </div>
+                                @if($mj->final_comment)
+                                    <div class="text-xs mt-1" style="color: var(--text-muted);">{{ $mj->final_comment }}</div>
+                                @endif
+                            </div>
+                        @endforeach
+
+                        {{-- Declined invitation (judge_response=-1) --}}
+                        @foreach($declinedForType as $mj)
+                            <div class="rounded-lg p-3" style="background: var(--bg-body); border: 1px solid var(--border-color); opacity: 0.6;">
+                                <div class="font-semibold text-sm mb-1" style="color: var(--text-primary);">
+                                    {{ $mj->user->last_name ?? '' }} {{ $mj->user->first_name ?? '' }}
+                                </div>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="badge badge-danger">{{ __('crud.judge_response_declined') }}</span>
+                                </div>
+                                @if($mj->judge_comment)
+                                    <div class="text-xs mt-1" style="color: var(--text-muted);">{{ $mj->judge_comment }}</div>
+                                @endif
                             </div>
                         @endforeach
                     </div>
+
+                    @if($allForType->isEmpty() && $declinedForType->isEmpty())
+                        <p class="text-sm" style="color: var(--text-muted);">{{ __('crud.no_judges_assigned') }}</p>
+                    @endif
                 </div>
             @endforeach
         </div>

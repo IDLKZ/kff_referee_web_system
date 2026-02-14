@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string|null $judge_comment
  * @property int $final_status
  * @property string|null $final_comment
+ * @property bool|null $is_actual
  * @property int|null $created_by_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -47,6 +48,7 @@ class MatchJudge extends Model
 		'judge_id' => 'int',
 		'judge_response' => 'int',
 		'final_status' => 'int',
+		'is_actual' => 'bool',
 		'created_by_id' => 'int'
 	];
 
@@ -59,6 +61,7 @@ class MatchJudge extends Model
 		'judge_comment',
 		'final_status',
 		'final_comment',
+		'is_actual',
 		'created_by_id'
 	];
 
