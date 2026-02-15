@@ -30,6 +30,7 @@ use App\Livewire\Admin\UserManagement;
 use App\Livewire\Admin\OperationManagement;
 use App\Livewire\Admin\RoleOperationManagement;
 use App\Livewire\Admin\MatchLogistsManagement;
+use App\Livewire\Admin\MatchProtocolRequirementManagement;
 use App\Livewire\Auth\Login;
 use App\Livewire\Kff\HeadRefereeApproval;
 use App\Models\File;
@@ -116,6 +117,7 @@ Route::middleware('auth.active')->group(function () {
             Route::get('/role-operations', RoleOperationManagement::class)->middleware('permission:' . PermissionConstants::ROLE_OPERATIONS_INDEX)->name('admin.role-operations');
             Route::get('/matches', MatchManagement::class)->middleware('permission:' . PermissionConstants::MATCHES_INDEX)->name('admin.matches');
             Route::get('/match-logists', MatchLogistsManagement::class)->middleware('permission:' . PermissionConstants::MATCH_LOGISTS_INDEX)->name('admin.match-logists');
+            Route::get('/match-protocol-requirements', MatchProtocolRequirementManagement::class)->middleware('permission:' . PermissionConstants::MATCH_PROTOCOL_REQUIREMENTS_INDEX)->name('admin.match-protocol-requirements');
         });
 
     // KFF / PFLK dashboard

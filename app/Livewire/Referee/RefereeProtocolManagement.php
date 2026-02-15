@@ -108,7 +108,7 @@ class RefereeProtocolManagement extends Component
         $waitingOperation = $this->getWaitingForProtocolOperation();
 
         if (!$waitingOperation) {
-            return collect();
+            return MatchProtocolRequirement::whereRaw('1 = 0');
         }
 
         // Step 1: Get judge's MatchJudge records (final_status=1, judge_response=1, is_actual=true)
@@ -119,7 +119,7 @@ class RefereeProtocolManagement extends Component
             ->get(['match_id', 'type_id']);
 
         if ($matchJudges->isEmpty()) {
-            return collect();
+            return MatchProtocolRequirement::whereRaw('1 = 0');
         }
 
         $matchIds = $matchJudges->pluck('match_id')->unique();
@@ -131,7 +131,7 @@ class RefereeProtocolManagement extends Component
             ->pluck('id');
 
         if ($actualMatchIds->isEmpty()) {
-            return collect();
+            return MatchProtocolRequirement::whereRaw('1 = 0');
         }
 
         // Step 3: Build query for protocol requirements

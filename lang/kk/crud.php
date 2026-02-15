@@ -612,6 +612,18 @@ return [
     'hotel' => 'Қонақүй',
     'select_hotel' => 'Қонақүйді таңдаңыз',
 
+    // MatchProtocolRequirement-specific
+    'match_protocol_requirements' => 'Матч хатталықы талаптары',
+    'create_match_protocol_requirement' => 'Хатталық талапты жасау',
+    'edit_match_protocol_requirement' => 'Хатталық талапты өңдеу',
+    'match_id' => 'Матч ID-і',
+    'info_ru' => 'Ақпарат (RU)',
+    'info_kk' => 'Ақпарат (KK)',
+    'info_en' => 'Ақпарат (EN)',
+    'info_placeholder' => 'Қосымша ақпарат...',
+    'extensions' => 'Кеңейтулер',
+    'extensions_hint' => 'JSON пішімінде енгізіңіз. Мысалы: {"allowed_extensions": ["pdf", "doc"], "max_size": 5242880}',
+
     // MatchProtocolDetailReport-specific
     'review_decision' => 'Тексеру шешімі',
     'pending' => 'Күтілуде',

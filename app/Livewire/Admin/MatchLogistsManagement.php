@@ -54,7 +54,7 @@ class MatchLogistsManagement extends Component {
                 'exists:users,id',
                 function ($attribute, $value, $fail) {
                     $user = User::find($value);
-                    if (!$user || !$user->isActive()) {
+                    if (!$user || !$user->is_active) {
                         $fail(__('validation.logist_must_be_active'));
                     }
                     if ($user && $user->role->value !== RoleConstants::REFEREEING_DEPARTMENT_LOGISTICIAN) {

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->text('info_kk')->nullable();
             $table->text('info_en')->nullable();
             $table->boolean('is_required')->default(true)->comment('Обязательный ли документ');
-            $table->json('extensions')->comment('Допустимые расширения файлов ["pdf","jpg"]');
+            $table->json('extensions')->nullable()->comment('Допустимые расширения файлов ["pdf","jpg"]');
             $table->timestamps();
         });
     }
