@@ -596,4 +596,16 @@ return [
     'file_already_uploaded' => 'File already uploaded',
     'hotel' => 'Hotel',
     'select_hotel' => 'Select hotel',
+
+    // MatchProtocolRequirement-specific
+    'match_protocol_requirements' => 'Match Protocol Requirements',
+    'create_match_protocol_requirement' => 'Create Protocol Requirement',
+    'edit_match_protocol_requirement' => 'Edit Protocol Requirement',
+    'match_id' => 'Match ID',
+    'info_ru' => 'Information (RU)',
+    'info_kk' => 'Information (KK)',
+    'info_en' => 'Information (EN)',
+    'info_placeholder' => 'Additional information...',
+    'extensions' => 'Extensions',
+    'extensions_hint' => 'Enter data in JSON format. Example: {"allowed_extensions": ["pdf", "doc"], "max_size": 5242880}',
 ];

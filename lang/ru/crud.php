@@ -556,4 +556,16 @@ return [
     'file_already_uploaded' => 'Файл уже загружен',
     'hotel' => 'Отель',
     'select_hotel' => 'Выберите отель',
+
+    // MatchProtocolRequirement-specific
+    'match_protocol_requirements' => 'Требования к протоколу матчей',
+    'create_match_protocol_requirement' => 'Создать требование к протоколу',
+    'edit_match_protocol_requirement' => 'Редактировать требование к протоколу',
+    'match_id' => 'ID матча',
+    'info_ru' => 'Информация (RU)',
+    'info_kk' => 'Информация (KK)',
+    'info_en' => 'Информация (EN)',
+    'info_placeholder' => 'Дополнительная информация...',
+    'extensions' => 'Расширения',
+    'extensions_hint' => 'Введите данные в формате JSON. Например: {"allowed_extensions": ["pdf", "doc"], "max_size": 5242880}',
 ];
