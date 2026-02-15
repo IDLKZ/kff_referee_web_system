@@ -45,6 +45,8 @@ use App\Livewire\Referee\RefereeTripDetail;
 use App\Livewire\Referee\RefereeTrips;
 use App\Livewire\Referee\RefereeProtocolManagement;
 use App\Livewire\Referee\RefereeProtocolDetailManagement;
+use App\Livewire\Kff\MatchProtocolReport;
+use App\Livewire\Kff\MatchProtocolDetailReport;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -127,6 +129,8 @@ Route::middleware('auth.active')->group(function () {
             Route::get('/head-referee-approval/{match}', HeadRefereeApproveDetail::class)->name('kff.head-referee-approve-detail');
             Route::get('/kff-trips', KffTrips::class)->name('kff.kff-trips');
             Route::get('/kff-trip-detail/{matchId}', KffTripDetail::class)->name('kff.kff-trip-detail');
+            Route::get('/protocol-review', MatchProtocolReport::class)->name('kff.protocol-review');
+            Route::get('/protocol-report-detail/{reportId}', MatchProtocolDetailReport::class)->name('kff.protocol-report-detail');
         });
 
     // Referee dashboard

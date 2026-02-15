@@ -117,4 +117,14 @@ return [
     // Sidebar — KFF (Head)
     'head_referee_approval' => 'Бригаданы бекіту',
     'head_referee_approve_detail' => 'Төрешілер бригадасын бекіту',
+
+    // Protocol Review
+    'review' => 'Тексеру',
+    'protocol_review' => 'Есептерді тексеру',
+    'protocol_report_detail' => 'Есеп мәліметтері',
+    'protocol_report_detail_placeholder' => 'Есеп мәліметтері беті әзірленуде.',
+    'match_details' => 'Матч мәліметтері',
+    'document_review' => 'Құжаттарды тексеру',
+    'review_not_available_hint' => 'Құжаттарды тексеру мүмкін емес. Матчтың ағымдағы күйі өзгертуге рұқсат етпейді.',
+    'complete_review' => 'Тексеруді аяқтау',
 ];

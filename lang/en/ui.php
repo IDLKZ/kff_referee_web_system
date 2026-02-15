@@ -116,4 +116,14 @@ return [
     // Sidebar — KFF (Head)
     'head_referee_approval' => 'Brigade Approval',
     'head_referee_approve_detail' => 'Referee Brigade Approval',
+
+    // Protocol Review
+    'review' => 'Review',
+    'protocol_review' => 'Report Review',
+    'protocol_report_detail' => 'Report Details',
+    'protocol_report_detail_placeholder' => 'Report details page is under development.',
+    'match_details' => 'Match Details',
+    'document_review' => 'Document Review',
+    'review_not_available_hint' => 'Document review is not available. Current match status does not allow editing.',
+    'complete_review' => 'Complete Review',
 ];

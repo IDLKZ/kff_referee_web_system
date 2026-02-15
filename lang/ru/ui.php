@@ -118,4 +118,14 @@ return [
     // Sidebar — KFF (Head)
     'head_referee_approval' => 'Утверждение бригады',
     'head_referee_approve_detail' => 'Утверждение судейской бригады',
+
+    // Protocol Review
+    'review' => 'Проверка',
+    'protocol_review' => 'Проверка отчетов',
+    'protocol_report_detail' => 'Детали отчета',
+    'protocol_report_detail_placeholder' => 'Страница деталей отчета находится в разработке.',
+    'match_details' => 'Детали матча',
+    'document_review' => 'Проверка документов',
+    'review_not_available_hint' => 'Проверка документов недоступна. Текущий статус матча не позволяет редактирование.',
+    'complete_review' => 'Завершить проверку',
 ];
