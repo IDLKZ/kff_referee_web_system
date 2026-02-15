@@ -112,6 +112,11 @@ return [
     'role' => 'Role',
     'last_login' => 'Last Login',
     'just_now' => 'Just now',
+    'total_matches' => 'Matches',
+    'account_info' => 'Account Information',
+    'php_version' => 'PHP Version',
+    'laravel_version' => 'Laravel Version',
+    'email' => 'Email',
 
     // Sidebar — KFF (Head)
     'head_referee_approval' => 'Brigade Approval',

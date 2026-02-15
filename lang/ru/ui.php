@@ -103,6 +103,7 @@ return [
     'greeting' => 'Здравствуйте, :name!',
     'total_users' => 'Пользователи',
     'total_roles' => 'Роли',
+    'total_matches' => 'Матчи',
     'active_matches' => 'Активные матчи',
     'total_tournaments' => 'Турниры',
     'total_clubs' => 'Клубы',
@@ -114,6 +115,10 @@ return [
     'role' => 'Роль',
     'last_login' => 'Последний вход',
     'just_now' => 'Только что',
+    'account_info' => 'Информация об аккаунте',
+    'php_version' => 'Версия PHP',
+    'laravel_version' => 'Версия Laravel',
+    'email' => 'Email',
 
     // Sidebar — KFF (Head)
     'head_referee_approval' => 'Утверждение бригады',

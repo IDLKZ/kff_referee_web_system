@@ -113,6 +113,11 @@ return [
     'role' => 'Рөл',
     'last_login' => 'Соңғы кіру',
     'just_now' => 'Жаңа ғана',
+    'total_matches' => 'Матчтар',
+    'account_info' => 'Аккаунт туралы ақпарат',
+    'php_version' => 'PHP нұсқасы',
+    'laravel_version' => 'Laravel нұсқасы',
+    'email' => 'Email',
 
     // Sidebar — KFF (Head)
     'head_referee_approval' => 'Бригаданы бекіту',

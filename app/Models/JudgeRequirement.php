@@ -48,6 +48,11 @@ class JudgeRequirement extends Model
 		return $this->belongsTo(JudgeType::class);
 	}
 
+	public function judgeType()
+	{
+		return $this->belongsTo(JudgeType::class, 'judge_type_id');
+	}
+
 	public function match()
 	{
 		return $this->belongsTo(MatchModel::class);

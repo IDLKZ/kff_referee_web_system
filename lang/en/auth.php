@@ -14,4 +14,6 @@ return [
     'too_many_attempts' => 'Too many login attempts. Please try again in :seconds seconds.',
     'system_title' => 'KFF Referee Management System',
     'system_subtitle' => 'Kazakhstan Football Federation',
+    'enter_credentials' => 'Enter your credentials to sign in',
+    'full_name' => 'Full Name',
 ];
