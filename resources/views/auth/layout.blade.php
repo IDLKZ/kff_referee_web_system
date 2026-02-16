@@ -38,7 +38,35 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            background: #0a0a0f;
+            background: var(--bg-body, #0a0a0f);
+        }
+
+        /* Dark Theme (default) */
+        :root {
+            --bg-body: #0a0a0f;
+            --bg-card: rgba(17, 17, 27, 0.85);
+            --bg-input: rgba(255, 255, 255, 0.04);
+            --bg-hover: rgba(255, 255, 255, 0.1);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.5);
+            --text-tertiary: rgba(255, 255, 255, 0.3);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --accent-primary: #6366f1;
+            --accent-secondary: #8b5cf6;
+        }
+
+        /* Light Theme */
+        .theme-light {
+            --bg-body: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --bg-input: rgba(0, 0, 0, 0.04);
+            --bg-hover: rgba(0, 0, 0, 0.06);
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-tertiary: #94a3b8;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --accent-primary: #4f46e5;
+            --accent-secondary: #7c3aed;
         }
 
         /* Animated background */
@@ -51,10 +79,24 @@
         .bg-gradient {
             position: absolute;
             inset: 0;
-            background: radial-gradient(ellipse at 20% 20%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
-                        radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-                        radial-gradient(ellipse at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+            background: var(--bg-gradient);
             animation: gradientMove 15s ease-in-out infinite alternate;
+        }
+
+        /* Default gradient (dark) */
+        :root {
+            --bg-gradient:
+                radial-gradient(ellipse at 20% 20%, rgba(79, 70, 229, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+        }
+
+        /* Light theme gradient */
+        .theme-light {
+            --bg-gradient:
+                radial-gradient(ellipse at 20% 20%, rgba(79, 70, 229, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(59, 130, 246, 0.04) 0%, transparent 70%);
         }
 
         @keyframes gradientMove {
@@ -70,11 +112,21 @@
         .grid-pattern {
             position: absolute;
             inset: 0;
-            background-image:
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-image: var(--grid-pattern);
             background-size: 50px 50px;
             animation: gridMove 20s linear infinite;
+        }
+
+        :root {
+            --grid-pattern:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+        }
+
+        .theme-light {
+            --grid-pattern:
+                linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
         }
 
         @keyframes gridMove {
@@ -98,9 +150,17 @@
             position: absolute;
             width: 4px;
             height: 4px;
-            background: rgba(139, 92, 246, 0.6);
+            background: var(--particle-color, rgba(139, 92, 246, 0.6));
             border-radius: 50%;
             animation: particleFloat 15s ease-in-out infinite;
+        }
+
+        :root {
+            --particle-color: rgba(139, 92, 246, 0.6);
+        }
+
+        .theme-light {
+            --particle-color: rgba(99, 102, 241, 0.4);
         }
 
         @keyframes particleFloat {
@@ -131,16 +191,26 @@
 
         /* Card */
         .login-card {
-            background: rgba(17, 17, 27, 0.8);
+            background: var(--bg-card);
             backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-color);
             border-radius: 24px;
             padding: 48px 40px;
-            box-shadow:
+            box-shadow: var(--card-shadow);
+            animation: cardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        :root {
+            --card-shadow:
                 0 25px 80px -20px rgba(79, 70, 229, 0.3),
                 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
-            animation: cardEntrance 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .theme-light {
+            --card-shadow:
+                0 25px 80px -20px rgba(0, 0, 0, 0.1),
+                0 0 0 1px rgba(255, 255, 255, 0.8) inset;
         }
 
         @keyframes cardEntrance {
@@ -171,10 +241,18 @@
             inset: -8px;
             border: 2px solid transparent;
             border-radius: 20px;
-            background: linear-gradient(45deg, #6366f1, #8b5cf6, #ec4899, #6366f1);
+            background: var(--logo-ring-gradient);
             background-size: 300% 300%;
             animation: ringRotate 4s linear infinite;
             z-index: -1;
+        }
+
+        :root {
+            --logo-ring-gradient: linear-gradient(45deg, #6366f1, #8b5cf6, #ec4899, #6366f1);
+        }
+
+        .theme-light {
+            --logo-ring-gradient: linear-gradient(45deg, #4f46e5, #7c3aed, #db2777, #4f46e5);
         }
 
         @keyframes ringRotate {
@@ -188,9 +266,17 @@
             justify-content: center;
             width: 64px;
             height: 64px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: var(--logo-gradient);
             border-radius: 16px;
             color: white;
+        }
+
+        :root {
+            --logo-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+        }
+
+        .theme-light {
+            --logo-gradient: linear-gradient(135deg, #4f46e5, #7c3aed);
         }
 
         .logo svg {
@@ -201,14 +287,14 @@
         .title {
             font-size: 26px;
             font-weight: 700;
-            color: #ffffff;
+            color: var(--text-primary);
             margin-bottom: 8px;
             letter-spacing: -0.5px;
         }
 
         .subtitle {
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
+            color: var(--text-secondary);
         }
 
         /* Form */
@@ -220,7 +306,7 @@
             display: block;
             font-size: 13px;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-secondary);
             margin-bottom: 8px;
         }
 
@@ -233,37 +319,55 @@
             left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.4);
+            color: var(--input-icon-color);
             transition: color 0.3s ease;
             pointer-events: none;
+        }
+
+        :root {
+            --input-icon-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .theme-light {
+            --input-icon-color: rgba(0, 0, 0, 0.3);
         }
 
         .form-input {
             width: 100%;
             height: 50px;
             padding: 0 50px 0 48px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: var(--bg-input);
+            border: 1px solid var(--border-color);
             border-radius: 12px;
-            color: #ffffff;
+            color: var(--text-primary);
             font-size: 15px;
             transition: all 0.3s ease;
             outline: none;
         }
 
         .form-input::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+            color: var(--text-tertiary);
         }
 
         .form-input:focus {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(99, 102, 241, 0.6);
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            background: var(--input-focus-bg);
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px var(--input-focus-shadow);
+        }
+
+        :root {
+            --input-focus-bg: rgba(255, 255, 255, 0.08);
+            --input-focus-shadow: rgba(99, 102, 241, 0.1);
+        }
+
+        .theme-light {
+            --input-focus-bg: rgba(0, 0, 0, 0.02);
+            --input-focus-shadow: rgba(99, 102, 241, 0.08);
         }
 
         .form-input:focus + .input-icon,
         .input-wrapper:focus-within .input-icon {
-            color: #8b5cf6;
+            color: var(--accent-secondary);
         }
 
         .password-toggle {
@@ -271,7 +375,7 @@
             right: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: rgba(255, 255, 255, 0.4);
+            color: var(--input-icon-color);
             cursor: pointer;
             transition: color 0.3s ease;
             background: none;
@@ -280,7 +384,7 @@
         }
 
         .password-toggle:hover {
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--text-primary);
         }
 
         .error-text {
@@ -301,17 +405,25 @@
         .custom-checkbox {
             width: 18px;
             height: 18px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid var(--checkbox-border);
             border-radius: 5px;
-            background: rgba(255, 255, 255, 0.04);
+            background: var(--bg-input);
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             flex-shrink: 0;
         }
 
+        :root {
+            --checkbox-border: rgba(255, 255, 255, 0.2);
+        }
+
+        .theme-light {
+            --checkbox-border: rgba(0, 0, 0, 0.15);
+        }
+
         .custom-checkbox:checked {
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             border-color: transparent;
         }
 
@@ -329,14 +441,14 @@
 
         .checkbox-text {
             font-size: 14px;
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--text-secondary);
         }
 
         /* Submit button */
         .submit-btn {
             width: 100%;
             height: 52px;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             border: none;
             border-radius: 12px;
             color: white;
@@ -363,7 +475,15 @@
 
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.5);
+            box-shadow: var(--btn-shadow);
+        }
+
+        :root {
+            --btn-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.5);
+        }
+
+        .theme-light {
+            --btn-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.4);
         }
 
         .submit-btn:hover::before {
@@ -386,27 +506,8 @@
             top: 24px;
             right: 24px;
             display: flex;
-            gap: 12px;
+            gap: 10px;
             z-index: 100;
-        }
-
-        .control-btn {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            color: rgba(255, 255, 255, 0.6);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .control-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 1);
         }
 
         /* Footer */
@@ -414,7 +515,7 @@
             text-align: center;
             margin-top: 32px;
             font-size: 13px;
-            color: rgba(255, 255, 255, 0.3);
+            color: var(--text-tertiary);
         }
 
         /* Responsive */
@@ -455,8 +556,13 @@
 
         // Theme init from localStorage
         (function() {
-            const theme = localStorage.getItem('theme') || 'light';
-            document.documentElement.classList.add('theme-' + theme);
+            const storedTheme = localStorage.getItem('theme');
+            if (storedTheme === 'light') {
+                document.documentElement.classList.add('theme-light');
+            } else {
+                // Default to dark if not set or explicitly set to dark
+                document.documentElement.classList.add('theme-dark');
+            }
         })();
     </script>
 

@@ -17,6 +17,7 @@ class Login extends Component
     public string $login = '';
     public string $password = '';
     public bool $remember = false;
+    public bool $showPassword = false;
 
     public function authenticate(): void
     {
@@ -59,6 +60,11 @@ class Login extends Component
         $route = RedirectByRole::dashboardRouteForGroup($group);
 
         $this->redirect(route($route), navigate: true);
+    }
+
+    public function togglePasswordVisibility(): void
+    {
+        $this->showPassword = !$this->showPassword;
     }
 
     private function detectLoginField(string $login): string
