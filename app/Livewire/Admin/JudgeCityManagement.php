@@ -68,6 +68,9 @@ class JudgeCityManagement extends Component
         }
 
         return User::where('is_active', true)
+            ->whereHas('role', function ($q) {
+                $q->where('value', 'soccer_referee');
+            })
             ->where(function ($q) {
                 $q->where('last_name', 'like', "%{$this->userSearch}%")
                   ->orWhere('first_name', 'like', "%{$this->userSearch}%")

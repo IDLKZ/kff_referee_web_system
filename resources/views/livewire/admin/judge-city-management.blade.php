@@ -203,13 +203,13 @@
     </x-modal>
 
     {{-- Create / Edit Modal --}}
-    <x-modal wire:model="showFormModal" maxWidth="lg">
+    <x-modal wire:model="showFormModal" maxWidth="2xl">
         <x-slot name="title">
             {{ $editingId ? __('crud.edit_judge_city') : __('crud.create_judge_city') }}
         </x-slot>
 
         <form wire:submit="save">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="space-y-4 max-h-[85vh] overflow-y-auto pr-1">
                 {{-- User (Judge) searchable select --}}
                 <div>
                     <label class="form-label">{{ __('crud.judge') }} <span style="color:var(--color-danger);">*</span></label>

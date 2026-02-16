@@ -223,7 +223,7 @@
         </x-slot>
 
         <form wire:submit="save">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div class="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
                 {{-- Title RU --}}
                 <div>
                     <label class="form-label">{{ __('crud.title_ru') }} <span style="color:var(--color-danger);">*</span></label>
@@ -247,9 +247,7 @@
                            class="form-input @error('title_en') is-invalid @enderror">
                     @error('title_en') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 {{-- Value --}}
                 <div>
                     <label class="form-label">{{ __('crud.value') }} <span style="color:var(--color-danger);">*</span></label>
@@ -266,7 +264,7 @@
                 </div>
 
                 {{-- Is Active --}}
-                <div class="flex items-end pb-2">
+                <div>
                     <label class="flex items-center gap-2 cursor-pointer select-none">
                         <input type="checkbox" wire:model="is_active"
                                class="w-4 h-4 rounded" style="accent-color: var(--color-primary);">
