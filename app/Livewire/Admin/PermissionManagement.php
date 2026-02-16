@@ -7,11 +7,14 @@ use App\Models\Permission;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('admin.layout')]
 #[Title('Permissions')]
 class PermissionManagement extends Component
 {
+    use WithPagination;
+
     public string $search = '';
 
     // Sorting
@@ -139,6 +142,11 @@ class PermissionManagement extends Component
     public function clearSearch(): void
     {
         $this->search = '';
+    }
+
+    public function gotoPage($page): void
+    {
+        $this->setPage($page);
     }
 
     private function resetForm(): void

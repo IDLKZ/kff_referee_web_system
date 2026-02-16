@@ -44,22 +44,5 @@
         ])
     </div>
 
-    {{-- Info --}}
-    <div class="card p-6">
-        <h3 class="text-lg font-semibold mb-4" style="color: var(--text-primary);">
-            {{ __('ui.system_info') }}
-        </h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="flex justify-between py-2" style="border-bottom: 1px solid var(--border-color);">
-                <span class="text-sm" style="color: var(--text-secondary);">{{ __('ui.role') }}</span>
-                <span class="text-sm font-medium" style="color: var(--text-primary);">
-                    {{ auth()->user()->role?->{'title_' . app()->getLocale()} ?? '—' }}
-                </span>
-            </div>
-            <div class="flex justify-between py-2" style="border-bottom: 1px solid var(--border-color);">
-                <span class="text-sm" style="color: var(--text-secondary);">{{ __('ui.last_login') }}</span>
-                <span class="text-sm font-medium" style="color: var(--text-primary);">{{ __('ui.just_now') }}</span>
-            </div>
-        </div>
-    </div>
+
 @endsection

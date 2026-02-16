@@ -198,30 +198,28 @@
         </x-slot>
 
         <form wire:submit="save">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                {{-- Title RU --}}
-                <div>
-                    <label class="form-label">{{ __('crud.title_ru') }} <span style="color:var(--color-danger);">*</span></label>
-                    <input type="text" wire:model="title_ru"
-                           class="form-input @error('title_ru') is-invalid @enderror">
-                    @error('title_ru') <p class="form-error">{{ $message }}</p> @enderror
-                </div>
+            {{-- Title RU --}}
+            <div class="mb-4">
+                <label class="form-label">{{ __('crud.title_ru') }} <span style="color:var(--color-danger);">*</span></label>
+                <input type="text" wire:model="title_ru"
+                       class="form-input @error('title_ru') is-invalid @enderror">
+                @error('title_ru') <p class="form-error">{{ $message }}</p> @enderror
+            </div>
 
-                {{-- Title KK --}}
-                <div>
-                    <label class="form-label">{{ __('crud.title_kk') }}</label>
-                    <input type="text" wire:model="title_kk"
-                           class="form-input @error('title_kk') is-invalid @enderror">
-                    @error('title_kk') <p class="form-error">{{ $message }}</p> @enderror
-                </div>
+            {{-- Title KK --}}
+            <div class="mb-4">
+                <label class="form-label">{{ __('crud.title_kk') }}</label>
+                <input type="text" wire:model="title_kk"
+                       class="form-input @error('title_kk') is-invalid @enderror">
+                @error('title_kk') <p class="form-error">{{ $message }}</p> @enderror
+            </div>
 
-                {{-- Title EN --}}
-                <div>
-                    <label class="form-label">{{ __('crud.title_en') }}</label>
-                    <input type="text" wire:model="title_en"
-                           class="form-input @error('title_en') is-invalid @enderror">
-                    @error('title_en') <p class="form-error">{{ $message }}</p> @enderror
-                </div>
+            {{-- Title EN --}}
+            <div class="mb-4">
+                <label class="form-label">{{ __('crud.title_en') }}</label>
+                <input type="text" wire:model="title_en"
+                       class="form-input @error('title_en') is-invalid @enderror">
+                @error('title_en') <p class="form-error">{{ $message }}</p> @enderror
             </div>
 
             {{-- Value --}}

@@ -265,65 +265,64 @@
         </x-slot>
 
         <form wire:submit="save">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                {{-- Title RU --}}
-                <div>
-                    <label class="form-label">{{ __('crud.title_ru') }} <span style="color:var(--color-danger);">*</span></label>
-                    <input type="text" wire:model="title_ru"
-                           class="form-input @error('title_ru') is-invalid @enderror">
-                    @error('title_ru') <p class="form-error">{{ $message }}</p> @enderror
-                </div>
-
-                {{-- Title KK --}}
-                <div>
-                    <label class="form-label">{{ __('crud.title_kk') }}</label>
-                    <input type="text" wire:model="title_kk"
-                           class="form-input @error('title_kk') is-invalid @enderror">
-                    @error('title_kk') <p class="form-error">{{ $message }}</p> @enderror
-                </div>
-
-                {{-- Title EN --}}
-                <div>
-                    <label class="form-label">{{ __('crud.title_en') }}</label>
-                    <input type="text" wire:model="title_en"
-                           class="form-input @error('title_en') is-invalid @enderror">
-                    @error('title_en') <p class="form-error">{{ $message }}</p> @enderror
-                </div>
+            {{-- Title RU --}}
+            <div class="mb-4">
+                <label class="form-label">{{ __('crud.title_ru') }} <span style="color:var(--color-danger);">*</span></label>
+                <input type="text" wire:model="title_ru"
+                       class="form-input @error('title_ru') is-invalid @enderror">
+                @error('title_ru') <p class="form-error">{{ $message }}</p> @enderror
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                {{-- Value --}}
-                <div>
-                    <label class="form-label">{{ __('crud.value') }} <span style="color:var(--color-danger);">*</span></label>
-                    <input type="text" wire:model="value"
-                           class="form-input @error('value') is-invalid @enderror"
-                           {{ $isEditing ? 'disabled' : '' }}>
-                    @error('value') <p class="form-error">{{ $message }}</p> @enderror
-                </div>
-
-                {{-- Group --}}
-                <div>
-                    <label class="form-label">{{ __('crud.group') }} <span style="color:var(--color-danger);">*</span></label>
-                    <select wire:model="group"
-                            class="form-input @error('group') is-invalid @enderror">
-                        <option value="">—</option>
-                        @foreach($this->getGroupOptions() as $key => $label)
-                            <option value="{{ $key }}">{{ $label }}</option>
-                        @endforeach
-                    </select>
-                    @error('group') <p class="form-error">{{ $message }}</p> @enderror
-                </div>
+            {{-- Title KK --}}
+            <div class="mb-4">
+                <label class="form-label">{{ __('crud.title_kk') }}</label>
+                <input type="text" wire:model="title_kk"
+                       class="form-input @error('title_kk') is-invalid @enderror">
+                @error('title_kk') <p class="form-error">{{ $message }}</p> @enderror
             </div>
 
-            <div class="flex items-center gap-6 mb-2">
-                {{-- Can Register --}}
+            {{-- Title EN --}}
+            <div class="mb-4">
+                <label class="form-label">{{ __('crud.title_en') }}</label>
+                <input type="text" wire:model="title_en"
+                       class="form-input @error('title_en') is-invalid @enderror">
+                @error('title_en') <p class="form-error">{{ $message }}</p> @enderror
+            </div>
+
+            {{-- Value --}}
+            <div class="mb-4">
+                <label class="form-label">{{ __('crud.value') }} <span style="color:var(--color-danger);">*</span></label>
+                <input type="text" wire:model="value"
+                       class="form-input @error('value') is-invalid @enderror"
+                       {{ $isEditing ? 'disabled' : '' }}>
+                @error('value') <p class="form-error">{{ $message }}</p> @enderror
+            </div>
+
+            {{-- Group --}}
+            <div class="mb-4">
+                <label class="form-label">{{ __('crud.group') }} <span style="color:var(--color-danger);">*</span></label>
+                <select wire:model="group"
+                        class="form-input @error('group') is-invalid @enderror"
+                        {{ $isEditing ? 'disabled' : '' }}>
+                    <option value="">—</option>
+                    @foreach($this->getGroupOptions() as $key => $label)
+                        <option value="{{ $key }}">{{ $label }}</option>
+                    @endforeach
+                </select>
+                @error('group') <p class="form-error">{{ $message }}</p> @enderror
+            </div>
+
+            {{-- Can Register --}}
+            <div class="flex items-center gap-2 mb-4">
                 <label class="flex items-center gap-2 cursor-pointer select-none">
                     <input type="checkbox" wire:model="can_register"
                            class="w-4 h-4 rounded" style="accent-color: var(--color-primary);">
                     <span class="text-sm" style="color: var(--text-secondary);">{{ __('crud.can_register') }}</span>
                 </label>
+            </div>
 
-                {{-- Is Active --}}
+            {{-- Is Active --}}
+            <div class="flex items-center gap-2 mb-4">
                 <label class="flex items-center gap-2 cursor-pointer select-none">
                     <input type="checkbox" wire:model="is_active"
                            class="w-4 h-4 rounded" style="accent-color: var(--color-primary);">
@@ -354,7 +353,7 @@
                  style="background: var(--color-danger-light);">
                 <svg class="w-6 h-6" style="color: var(--color-danger);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833-.192 2.5 1.732 2.5z"/>
                 </svg>
             </div>
             <p style="color: var(--text-secondary);">

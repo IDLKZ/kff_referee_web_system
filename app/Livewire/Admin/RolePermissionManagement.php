@@ -9,11 +9,14 @@ use App\Models\Permission;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('admin.layout')]
 #[Title('Role Permissions')]
 class RolePermissionManagement extends Component
 {
+    use WithPagination;
+
     public string $search = '';
 
     // Sorting
@@ -124,6 +127,11 @@ class RolePermissionManagement extends Component
     public function clearSearch(): void
     {
         $this->search = '';
+    }
+
+    public function gotoPage($page): void
+    {
+        $this->setPage($page);
     }
 
     public function getRoleOptions(): array

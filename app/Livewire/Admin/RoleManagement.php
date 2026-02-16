@@ -154,6 +154,11 @@ class RoleManagement extends Component
         $this->search = '';
     }
 
+    public function gotoPage($page): void
+    {
+        $this->setPage($page);
+    }
+
     public function getGroupOptions(): array
     {
         return [

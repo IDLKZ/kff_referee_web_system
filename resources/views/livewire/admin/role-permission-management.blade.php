@@ -173,32 +173,30 @@
         </x-slot>
 
         <form wire:submit="save">
-            <div class="space-y-4 mb-4">
-                {{-- Role --}}
-                <div>
-                    <label class="form-label">{{ __('crud.role') }} <span style="color:var(--color-danger);">*</span></label>
-                    <select wire:model="role_id"
-                            class="form-input @error('role_id') is-invalid @enderror">
-                        <option value="">{{ __('crud.select_role') }}</option>
-                        @foreach($this->getRoleOptions() as $id => $title)
-                            <option value="{{ $id }}">{{ $title }}</option>
-                        @endforeach
-                    </select>
-                    @error('role_id') <p class="form-error">{{ $message }}</p> @enderror
-                </div>
+            {{-- Role --}}
+            <div class="mb-4">
+                <label class="form-label">{{ __('crud.role') }} <span style="color:var(--color-danger);">*</span></label>
+                <select wire:model="role_id"
+                        class="form-input @error('role_id') is-invalid @enderror">
+                    <option value="">{{ __('crud.select_role') }}</option>
+                    @foreach($this->getRoleOptions() as $id => $title)
+                        <option value="{{ $id }}">{{ $title }}</option>
+                    @endforeach
+                </select>
+                @error('role_id') <p class="form-error">{{ $message }}</p> @enderror
+            </div>
 
-                {{-- Permission --}}
-                <div>
-                    <label class="form-label">{{ __('crud.permission') }} <span style="color:var(--color-danger);">*</span></label>
-                    <select wire:model="permission_id"
-                            class="form-input @error('permission_id') is-invalid @enderror">
-                        <option value="">{{ __('crud.select_permission') }}</option>
-                        @foreach($this->getPermissionOptions() as $id => $title)
-                            <option value="{{ $id }}">{{ $title }}</option>
-                        @endforeach
-                    </select>
-                    @error('permission_id') <p class="form-error">{{ $message }}</p> @enderror
-                </div>
+            {{-- Permission --}}
+            <div class="mb-4">
+                <label class="form-label">{{ __('crud.permission') }} <span style="color:var(--color-danger);">*</span></label>
+                <select wire:model="permission_id"
+                        class="form-input @error('permission_id') is-invalid @enderror">
+                    <option value="">{{ __('crud.select_permission') }}</option>
+                    @foreach($this->getPermissionOptions() as $id => $title)
+                        <option value="{{ $id }}">{{ $title }}</option>
+                    @endforeach
+                </select>
+                @error('permission_id') <p class="form-error">{{ $message }}</p> @enderror
             </div>
         </form>
 
