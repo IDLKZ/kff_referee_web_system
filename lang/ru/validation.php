@@ -2,6 +2,7 @@
 
 return [
     'required' => 'Поле :attribute обязательно для заполнения.',
+    'file' => 'Поле :attribute должно быть файлом.',
     'string' => 'Поле :attribute должно быть строкой.',
     'min' => [
         'string' => 'Поле :attribute должно содержать минимум :min символов.',

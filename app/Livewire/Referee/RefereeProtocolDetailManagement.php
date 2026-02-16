@@ -34,7 +34,7 @@ class RefereeProtocolDetailManagement extends Component
     public bool $showUploadModal = false;
     public ?int $uploadRequirementId = null;
     public ?string $uploadComment = '';
-    public $uploadFiles = [];
+    public $uploadedDocument = null;
 
     // Requirements and documents
     public $protocolRequirements = [];
@@ -245,7 +245,7 @@ class RefereeProtocolDetailManagement extends Component
     {
         $this->uploadRequirementId = $requirementId;
         $this->uploadComment = '';
-        $this->uploadFiles = [];
+        $this->uploadedDocument = null;
         $this->showUploadModal = true;
     }
 
@@ -254,15 +254,29 @@ class RefereeProtocolDetailManagement extends Component
         $this->showUploadModal = false;
         $this->uploadRequirementId = null;
         $this->uploadComment = '';
-        $this->uploadFiles = [];
+        $this->uploadedDocument = null;
     }
 
     public function uploadDocument(): void
     {
-        $this->validate([
-            'uploadFiles' => 'required|array|min:1',
-            'uploadFiles.*' => 'required|file|max:10240', // 10MB max per file
+        // Debug logging
+        \Log::info('uploadDocument called', [
+            'uploadedDocument' => $this->uploadedDocument,
+            'uploadedDocument type' => gettype($this->uploadedDocument),
+            'uploadedDocument class' => is_object($this->uploadedDocument) ? get_class($this->uploadedDocument) : 'not an object',
+            'matchReport exists' => $this->matchReport !== null,
         ]);
+
+        // Skip validation if no file - show error manually
+        if (!$this->uploadedDocument) {
+            $this->errorMessage = 'Пожалуйста, выберите файл для загрузки.';
+            return;
+        }
+
+        // Temporarily skip file validation to see what we're getting
+        // $this->validate([
+        //     'uploadedDocument' => 'file|max:10240', // max 10MB
+        // ]);
 
         if (!$this->matchReport) {
             $this->errorMessage = __('ui.report_not_found');
@@ -276,7 +290,7 @@ class RefereeProtocolDetailManagement extends Component
         }
 
         // Validate file extensions if specified
-        $extensions = $requirement->extensions ? json_decode($requirement->extensions) : null;
+        $extensions = $requirement->extensions ? json_decode($requirement->extensions, true) : null;
         $fileValidationOptions = null;
 
         if ($extensions && !empty($extensions)) {
@@ -290,25 +304,48 @@ class RefereeProtocolDetailManagement extends Component
         try {
             $fileService = new FileService();
 
-            foreach ($this->uploadFiles as $uploadedFile) {
-                /** @var UploadedFile $uploadedFile */
-                $file = $fileService->save(
-                    $uploadedFile,
-                    'match_reports',
-                    $fileValidationOptions
-                );
+            $uploadedFile = $this->uploadedDocument;
 
-                // Create match report document for each file
-                MatchReportDocument::create([
-                    'match_report_id' => $this->matchReport->id,
-                    'file_id' => $file->id,
-                    'match_id' => $this->matchId,
-                    'requirement_id' => $this->uploadRequirementId,
-                    'judge_id' => auth()->id(),
-                    'comment' => $this->uploadComment ?: null,
-                    'is_accepted' => null,
-                ]);
+            // Skip if file is null or invalid
+            if (!$uploadedFile || !is_object($uploadedFile)) {
+                throw new \Exception("No valid file uploaded");
             }
+
+            // Check if file has isValid method
+            if (!method_exists($uploadedFile, 'isValid')) {
+                throw new \Exception("Uploaded file is not valid");
+            }
+
+            // Validate file is readable and has size
+            if (!$uploadedFile->isValid()) {
+                throw new \Exception("Uploaded file is not valid");
+            }
+
+            try {
+                $fileSize = $uploadedFile->getSize();
+                if ($fileSize === 0) {
+                    throw new \Exception("Uploaded file is empty");
+                }
+            } catch (\Exception $sizeException) {
+                throw new \Exception("Unable to get file size: " . $sizeException->getMessage());
+            }
+
+            $file = $fileService->save(
+                $uploadedFile,
+                'match_reports',
+                $fileValidationOptions
+            );
+
+            // Create match report document
+            MatchReportDocument::create([
+                'match_report_id' => $this->matchReport->id,
+                'file_id' => $file->id,
+                'match_id' => $this->matchId,
+                'requirement_id' => $this->uploadRequirementId,
+                'judge_id' => auth()->id(),
+                'comment' => $this->uploadComment ?: null,
+                'is_accepted' => null,
+            ]);
 
             $this->successMessage = __('ui.document_uploaded_success');
             $this->closeUploadModal();

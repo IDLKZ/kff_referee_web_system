@@ -2,6 +2,7 @@
 
 return [
     'required' => 'The :attribute field is required.',
+    'file' => 'The :attribute must be a file.',
     'string' => 'The :attribute must be a string.',
     'min' => [
         'string' => 'The :attribute must be at least :min characters.',

@@ -486,6 +486,7 @@ return [
     'my_comment' => 'My comment',
     'accepted' => 'Accepted',
     'declined' => 'Declined',
+    'invite' => 'Invite',
     'my_assignment' => 'My Assignment',
     'no_assignment_yet' => 'No assignments yet',
     'not_assigned_yet' => 'Not assigned yet',

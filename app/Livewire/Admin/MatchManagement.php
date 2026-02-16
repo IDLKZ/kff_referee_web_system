@@ -10,6 +10,7 @@ use App\Models\JudgeRequirement;
 use App\Models\JudgeType;
 use App\Models\MatchLogist;
 use App\Models\MatchModel;
+use App\Models\MatchProtocolRequirement;
 use App\Models\Operation;
 use App\Models\Season;
 use App\Models\Stadium;
@@ -71,6 +72,9 @@ class MatchManagement extends Component
     // Inline match logists
     public array $matchLogists = [];
     public ?int $newLogistId = null;
+
+    // Inline protocol requirements
+    public array $protocolRequirements = [];
 
     // Delete target
     public ?int $deletingId = null;
@@ -163,7 +167,7 @@ class MatchManagement extends Component
     {
         $this->checkPermission(PermissionConstants::MATCHES_UPDATE);
         $match = MatchModel::withTrashed()
-            ->with(['judge_requirements', 'match_logists'])
+            ->with(['judge_requirements', 'match_logists', 'match_protocol_requirements'])
             ->findOrFail($id);
 
         $this->editingId = $match->id;
@@ -198,6 +202,22 @@ class MatchManagement extends Component
 
         // Load match logists
         $this->matchLogists = $match->match_logists->pluck('logist_id')->toArray();
+
+        // Load protocol requirements
+        $this->protocolRequirements = $match->match_protocol_requirements->map(function ($req) {
+            return [
+                'id' => $req->id,
+                'judge_type_id' => $req->judge_type_id,
+                'title_ru' => $req->title_ru,
+                'title_kk' => $req->title_kk,
+                'title_en' => $req->title_en,
+                'info_ru' => $req->info_ru,
+                'info_kk' => $req->info_kk,
+                'info_en' => $req->info_en,
+                'is_required' => $req->is_required,
+                'extensions' => $req->extensions ? json_encode($req->extensions, JSON_UNESCAPED_UNICODE) : '',
+            ];
+        })->toArray();
 
         $this->isEditing = true;
         $this->showFormModal = true;
@@ -264,6 +284,9 @@ class MatchManagement extends Component
         // Sync match logists
         $this->syncMatchLogists($match);
 
+        // Sync protocol requirements
+        $this->syncProtocolRequirements($match);
+
         toastr()->success($this->isEditing ? __('crud.updated_success') : __('crud.created_success'));
 
         $this->showFormModal = false;
@@ -315,6 +338,54 @@ class MatchManagement extends Component
         }
     }
 
+    private function syncProtocolRequirements(MatchModel $match): void
+    {
+        $existingIds = $match->match_protocol_requirements()->pluck('id')->toArray();
+        $keepIds = [];
+
+        foreach ($this->protocolRequirements as $req) {
+            $extensions = !empty($req['extensions']) ? json_decode($req['extensions'], true) : null;
+
+            if (!empty($req['id'])) {
+                // Update existing
+                MatchProtocolRequirement::where('id', $req['id'])->update([
+                    'tournament_id' => $match->tournament_id,
+                    'judge_type_id' => $req['judge_type_id'],
+                    'title_ru' => $req['title_ru'],
+                    'title_kk' => $req['title_kk'] ?? null,
+                    'title_en' => $req['title_en'] ?? null,
+                    'info_ru' => $req['info_ru'],
+                    'info_kk' => $req['info_kk'] ?? null,
+                    'info_en' => $req['info_en'] ?? null,
+                    'is_required' => $req['is_required'],
+                    'extensions' => $extensions,
+                ]);
+                $keepIds[] = $req['id'];
+            } else {
+                // Create new
+                $newReq = $match->match_protocol_requirements()->create([
+                    'tournament_id' => $match->tournament_id,
+                    'judge_type_id' => $req['judge_type_id'],
+                    'title_ru' => $req['title_ru'],
+                    'title_kk' => $req['title_kk'] ?? null,
+                    'title_en' => $req['title_en'] ?? null,
+                    'info_ru' => $req['info_ru'],
+                    'info_kk' => $req['info_kk'] ?? null,
+                    'info_en' => $req['info_en'] ?? null,
+                    'is_required' => $req['is_required'],
+                    'extensions' => $extensions,
+                ]);
+                $keepIds[] = $newReq->id;
+            }
+        }
+
+        // Delete removed
+        $toDelete = array_diff($existingIds, $keepIds);
+        if ($toDelete) {
+            MatchProtocolRequirement::whereIn('id', $toDelete)->delete();
+        }
+    }
+
     // Inline judge requirement management
     public function addJudgeRequirement(): void
     {
@@ -345,6 +416,29 @@ class MatchManagement extends Component
     {
         unset($this->matchLogists[$index]);
         $this->matchLogists = array_values($this->matchLogists);
+    }
+
+    // Inline protocol requirement management
+    public function addProtocolRequirement(): void
+    {
+        $this->protocolRequirements[] = [
+            'id' => null,
+            'judge_type_id' => null,
+            'title_ru' => '',
+            'title_kk' => '',
+            'title_en' => '',
+            'info_ru' => '',
+            'info_kk' => '',
+            'info_en' => '',
+            'is_required' => true,
+            'extensions' => '',
+        ];
+    }
+
+    public function removeProtocolRequirement(int $index): void
+    {
+        unset($this->protocolRequirements[$index]);
+        $this->protocolRequirements = array_values($this->protocolRequirements);
     }
 
     public function confirmDelete(int $id): void
@@ -430,6 +524,7 @@ class MatchManagement extends Component
         $this->judgeRequirements = [];
         $this->matchLogists = [];
         $this->newLogistId = null;
+        $this->protocolRequirements = [];
         $this->resetValidation();
     }
 
