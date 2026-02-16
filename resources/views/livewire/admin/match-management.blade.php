@@ -576,6 +576,108 @@
                         <p class="text-sm" style="color: var(--text-muted);">{{ __('crud.no_results') }}</p>
                     @endif
                 </div>
+
+                {{-- Protocol Requirements Section --}}
+                <div style="border-top: 1px solid var(--border-color); padding-top: 1rem;">
+                    <div class="flex items-center justify-between mb-3">
+                        <h4 class="font-semibold" style="color: var(--text-primary);">
+                            {{ __('crud.match_protocol_requirements') }}
+                        </h4>
+                        <button type="button" wire:click="addProtocolRequirement" class="btn-secondary text-sm">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                            {{ __('crud.add_requirement') }}
+                        </button>
+                    </div>
+
+                    @if(count($protocolRequirements) > 0)
+                        <div class="space-y-3">
+                            @foreach($protocolRequirements as $index => $req)
+                                <div class="p-3 rounded-lg" style="background: var(--bg-hover);" wire:key="pr-{{ $index }}">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs font-medium" style="color: var(--text-muted);">
+                                            #{{ $index + 1 }}
+                                        </span>
+                                        <button type="button" wire:click="removeProtocolRequirement({{ $index }})"
+                                                class="p-1 rounded transition-colors"
+                                                style="color: var(--color-danger);">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    {{-- Judge Type --}}
+                                    <div class="mb-2">
+                                        <label class="form-label text-xs">{{ __('crud.judge_type') }} <span style="color:var(--color-danger);">*</span></label>
+                                        <select wire:model="protocolRequirements.{{ $index }}.judge_type_id" class="form-input text-sm">
+                                            <option value="">{{ __('crud.select_judge_type') }}</option>
+                                            @foreach($this->getJudgeTypeOptions() as $jt)
+                                                <option value="{{ $jt->id }}">{{ $jt->{'title_' . app()->getLocale()} ?? $jt->title_ru }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    {{-- Titles --}}
+                                    <div class="grid grid-cols-3 gap-2 mb-2">
+                                        <div>
+                                            <label class="form-label text-xs">{{ __('crud.title_ru') }} <span style="color:var(--color-danger);">*</span></label>
+                                            <input type="text" wire:model="protocolRequirements.{{ $index }}.title_ru"
+                                                   class="form-input text-sm" placeholder="{{ __('crud.enter_title_ru') }}">
+                                        </div>
+                                        <div>
+                                            <label class="form-label text-xs">{{ __('crud.title_kk') }}</label>
+                                            <input type="text" wire:model="protocolRequirements.{{ $index }}.title_kk"
+                                                   class="form-input text-sm" placeholder="{{ __('crud.enter_title_kk') }}">
+                                        </div>
+                                        <div>
+                                            <label class="form-label text-xs">{{ __('crud.title_en') }}</label>
+                                            <input type="text" wire:model="protocolRequirements.{{ $index }}.title_en"
+                                                   class="form-input text-sm" placeholder="{{ __('crud.enter_title_en') }}">
+                                        </div>
+                                    </div>
+
+                                    {{-- Info --}}
+                                    <div class="mb-2">
+                                        <label class="form-label text-xs">{{ __('crud.info_ru') }} <span style="color:var(--color-danger);">*</span></label>
+                                        <textarea wire:model="protocolRequirements.{{ $index }}.info_ru" rows="1"
+                                                  class="form-input text-sm" placeholder="{{ __('crud.info_placeholder') }}"></textarea>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-2 mb-2">
+                                        <div>
+                                            <label class="form-label text-xs">{{ __('crud.info_kk') }}</label>
+                                            <textarea wire:model="protocolRequirements.{{ $index }}.info_kk" rows="1"
+                                                      class="form-input text-sm" placeholder="{{ __('crud.info_placeholder') }}"></textarea>
+                                        </div>
+                                        <div>
+                                            <label class="form-label text-xs">{{ __('crud.info_en') }}</label>
+                                            <textarea wire:model="protocolRequirements.{{ $index }}.info_en" rows="1"
+                                                      class="form-input text-sm" placeholder="{{ __('crud.info_placeholder') }}"></textarea>
+                                        </div>
+                                    </div>
+
+                                    {{-- Extensions and Required --}}
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex-1">
+                                            <label class="form-label text-xs">{{ __('crud.extensions') }}</label>
+                                            <input type="text" wire:model="protocolRequirements.{{ $index }}.extensions"
+                                                   class="form-input text-sm" placeholder='["pdf", "doc", "docx"]'>
+                                            <p class="text-xs mt-1" style="color: var(--text-muted);">{{ __('crud.extensions_hint') }}</p>
+                                        </div>
+                                        <label class="flex items-center gap-2 cursor-pointer select-none whitespace-nowrap mt-4">
+                                            <input type="checkbox" wire:model="protocolRequirements.{{ $index }}.is_required"
+                                                   class="w-4 h-4 rounded" style="accent-color: var(--color-primary);">
+                                            <span class="text-xs" style="color: var(--text-secondary);">{{ __('crud.is_required') }}</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-sm" style="color: var(--text-muted);">{{ __('crud.no_results') }}</p>
+                    @endif
+                </div>
             </div>
         </form>
 

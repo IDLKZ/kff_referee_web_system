@@ -307,11 +307,10 @@
             <div>
                 <label class="form-label">{{ __('crud.file') }}</label>
                 <input type="file"
-                       wire:model="uploadFiles"
-                       multiple
+                       wire:model="uploadedDocument"
                        class="form-input"
                        accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.jpg,.jpeg,.png,.gif,.webp,.svg">
-                @error('uploadFiles.*')
+                @error('uploadedDocument')
                     <p class="form-error">{{ $message }}</p>
                 @enderror
             </div>
@@ -326,8 +325,11 @@
         </div>
 
         <x-slot name="footer">
-            <button wire:click="closeUploadModal" class="btn-secondary">{{ __('crud.cancel') }}</button>
-            <button wire:click="uploadDocument" class="btn-primary">{{ __('crud.upload') }}</button>
+            <button type="button" wire:click="closeUploadModal" class="btn-secondary">{{ __('crud.cancel') }}</button>
+            <button type="button" wire:click="uploadDocument" class="btn-primary" wire:loading.attr="disabled">
+                <span wire:loading.remove>{{ __('crud.upload') }}</span>
+                <span wire:loading>Загрузка...</span>
+            </button>
         </x-slot>
     </x-modal>
 </div>

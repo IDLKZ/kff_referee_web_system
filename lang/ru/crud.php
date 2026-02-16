@@ -48,6 +48,7 @@ return [
 
     // Role-Permission specific
     'role_permissions' => 'Связи ролей и разрешений',
+    'role_operations' => 'Операции ролей',
     'create_role_permission' => 'Назначить разрешение роли',
     'role_permission_exists' => 'Эта связь уже существует',
     'role' => 'Роль',
@@ -477,6 +478,9 @@ return [
     'request_comment_placeholder' => 'Дополнительная информация для судьи (необязательно)',
     'accepted' => 'Принято',
     'declined' => 'Отклонено',
+    'accept_invitation' => 'Принять приглашение',
+    'decline_invitation' => 'Отклонить приглашение',
+    'invite' => 'Пригласить',
     'confirm_accept_invitation' => 'Подтверждение принятия приглашения',
     'confirm_decline_invitation' => 'Подтверждение отклонения приглашения',
     'response_comment_placeholder' => 'Укажите причину или комментарий (необязательно)',

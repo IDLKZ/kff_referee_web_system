@@ -2,6 +2,7 @@
 
 return [
     'required' => ':attribute өрісі міндетті түрде толтырылуы керек.',
+    'file' => ':attribute өрісі файл болуы керек.',
     'string' => ':attribute өрісі жол болуы керек.',
     'min' => [
         'string' => ':attribute өрісі кемінде :min таңбадан тұруы керек.',

@@ -486,6 +486,7 @@ return [
     'my_comment' => 'Менің түсініктемесі',
     'accepted' => 'Қабылданды',
     'declined' => 'Қабылданбады',
+    'invite' => 'Шақыру',
     'my_assignment' => 'Менің тағайындауым',
     'no_assignment_yet' => 'Тағайындаулар жоқ',
     'not_assigned_yet' => 'Әлі тағайындалмаған',
