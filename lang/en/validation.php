@@ -22,6 +22,7 @@ return [
     'invalid_phone_format' => 'Invalid phone format. Use: +7(777)123-45-67',
     'invalid_username_format' => 'Username can only contain Latin letters, numbers, underscore and @',
     'invalid_iin_format' => 'IIN must consist of 12 digits',
+    'birth_date_minimum_18' => 'User must be at least 18 years old',
 
     'attributes' => [
         'login' => 'login',
@@ -30,6 +31,7 @@ return [
         'phone' => 'phone',
         'username' => 'username',
         'file' => 'file',
+        'birth_date' => 'birth date',
     ],
 
     // Match Logists validation

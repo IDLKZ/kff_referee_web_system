@@ -22,6 +22,7 @@ return [
     'invalid_phone_format' => 'Неверный формат телефона. Используйте формат: +7(777)123-45-67',
     'invalid_username_format' => 'Логин может содержать только латинские буквы, цифры, подчеркивание и @',
     'invalid_iin_format' => 'ИИН должен состоять из 12 цифр',
+    'birth_date_minimum_18' => 'Пользователю должно быть не менее 18 лет',
 
     'attributes' => [
         'login' => 'логин',
@@ -30,6 +31,7 @@ return [
         'phone' => 'телефон',
         'username' => 'имя пользователя',
         'file' => 'файл',
+        'birth_date' => 'дата рождения',
     ],
 
     // Match Logists validation

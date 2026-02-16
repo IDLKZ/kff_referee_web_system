@@ -13,12 +13,14 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 #[Layout('admin.layout')]
 #[Title('Users')]
 class UserManagement extends Component
 {
     use WithFileUploads;
+    use WithPagination;
 
     // Search & Filter
     public string $search = '';
@@ -89,6 +91,21 @@ class UserManagement extends Component
         }
 
         return $rules;
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            // Check birth date is at least 18 years ago
+            if ($this->birth_date) {
+                $birthDate = \Carbon\Carbon::parse($this->birth_date);
+                $minBirthDate = \Carbon\Carbon::now()->subYears(18);
+
+                if ($birthDate->gt($minBirthDate)) {
+                    $validator->errors()->add('birth_date', __('validation.birth_date_minimum_18'));
+                }
+            }
+        });
     }
 
     public function getValidationMessages(): array
@@ -233,6 +250,11 @@ class UserManagement extends Component
         $this->filter_role_id = null;
         $this->filter_is_active = null;
         $this->filter_is_verified = null;
+    }
+
+    public function gotoPage($page): void
+    {
+        $this->setPage($page);
     }
 
     public function removeImage(): void

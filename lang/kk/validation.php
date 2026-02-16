@@ -22,6 +22,7 @@ return [
     'invalid_phone_format' => 'Телефон форматы дұрыс емес. Пайдаланыңыз: +7(777)123-45-67',
     'invalid_username_format' => 'Логин тек латын әріптері, сандар, астыңғы сызық және @ құрайды',
     'invalid_iin_format' => 'ЖСН 12 цифрдан тұруы керек',
+    'birth_date_minimum_18' => 'Пайдаланушының жасы кемінде 18 жас болуы керек',
 
     'attributes' => [
         'login' => 'логин',
@@ -30,6 +31,7 @@ return [
         'phone' => 'телефон',
         'username' => 'пайдаланушы аты',
         'file' => 'файл',
+        'birth_date' => 'туған күні',
     ],
 
     // Match Logists validation

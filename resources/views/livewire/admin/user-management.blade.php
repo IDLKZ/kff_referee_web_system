@@ -243,171 +243,156 @@
         </x-slot>
 
         <form wire:submit="save">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {{-- Left column - Image & Basic info --}}
-                <div class="space-y-4">
-                    {{-- Image Upload --}}
-                    <div>
-                        <label class="form-label">{{ __('crud.photo') }}</label>
-                        <div class="flex flex-col items-center gap-3">
-                            @if($image_id || $image)
-                                <div class="relative">
-                                    @if($temporaryImageUrl)
-                                        <img src="{{ $temporaryImageUrl }}" class="w-24 h-24 rounded-full object-cover">
-                                    @elseif($existingImageUrl)
-                                        <img src="{{ $existingImageUrl }}" class="w-24 h-24 rounded-full object-cover">
-                                    @endif
-                                    <button type="button" wire:click="removeImage"
-                                            class="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-white"
-                                            style="background: var(--color-danger);">
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                            @else
-                                <div class="w-24 h-24 rounded-full flex items-center justify-center"
-                                     style="background: var(--bg-hover); color: var(--text-muted);">
-                                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+            <div class="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+                {{-- Image Upload --}}
+                <div>
+                    <label class="form-label">{{ __('crud.photo') }}</label>
+                    <div class="flex flex-col items-center gap-3">
+                        @if($image_id || $image)
+                            <div class="relative">
+                                @if($temporaryImageUrl)
+                                    <img src="{{ $temporaryImageUrl }}" class="w-24 h-24 rounded-full object-cover">
+                                @elseif($existingImageUrl)
+                                    <img src="{{ $existingImageUrl }}" class="w-24 h-24 rounded-full object-cover">
+                                @endif
+                                <button type="button" wire:click="removeImage"
+                                        class="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-white"
+                                        style="background: var(--color-danger);">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                     </svg>
-                                </div>
-                            @endif
-                            <input type="file" wire:model="image" class="hidden" id="image-upload">
-                            <label for="image-upload" class="btn-secondary text-sm cursor-pointer">
-                                {{ $image_id || $image ? __('crud.change_photo') : __('crud.upload_photo') }}
-                            </label>
-                            @error('image') <p class="form-error">{{ $message }}</p> @enderror
-                        </div>
-                    </div>
-
-                    {{-- Role --}}
-                    <div>
-                        <label class="form-label">{{ __('crud.role') }}</label>
-                        <select wire:model="role_id"
-                                class="form-input @error('role_id') is-invalid @enderror">
-                            <option value="">{{ __('crud.select_role') }}</option>
-                            @foreach($this->getRoleOptions() as $id => $title)
-                                <option value="{{ $id }}">{{ $title }}</option>
-                            @endforeach
-                        </select>
-                        @error('role_id') <p class="form-error">{{ $message }}</p> @enderror
-                    </div>
-
-                    {{-- Sex --}}
-                    <div>
-                        <label class="form-label">{{ __('crud.sex') }}</label>
-                        <select wire:model="sex"
-                                class="form-input @error('sex') is-invalid @enderror">
-                            @foreach($this->getSexOptions() as $value => $label)
-                                <option value="{{ $value }}">{{ $label }}</option>
-                            @endforeach
-                        </select>
-                        @error('sex') <p class="form-error">{{ $message }}</p> @enderror
+                                </button>
+                            </div>
+                        @else
+                            <div class="w-24 h-24 rounded-full flex items-center justify-center"
+                                 style="background: var(--bg-hover); color: var(--text-muted);">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </div>
+                        @endif
+                        <input type="file" wire:model="image" class="hidden" id="image-upload" accept="image/*">
+                        <label for="image-upload" class="btn-secondary text-sm cursor-pointer">
+                            {{ $image_id || $image ? __('crud.change_photo') : __('crud.upload_photo') }}
+                        </label>
+                        @error('image') <p class="form-error">{{ $message }}</p> @enderror
                     </div>
                 </div>
 
-                {{-- Right column - Form fields --}}
-                <div class="lg:col-span-2 space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        {{-- Last Name --}}
-                        <div>
-                            <label class="form-label">{{ __('crud.last_name') }} <span style="color:var(--color-danger);">*</span></label>
-                            <input type="text" wire:model="last_name"
-                                   class="form-input @error('last_name') is-invalid @enderror">
-                            @error('last_name') <p class="form-error">{{ $message }}</p> @enderror
-                        </div>
+                {{-- Role --}}
+                <div>
+                    <label class="form-label">{{ __('crud.role') }}</label>
+                    <select wire:model="role_id"
+                            class="form-input @error('role_id') is-invalid @enderror">
+                        <option value="">{{ __('crud.select_role') }}</option>
+                        @foreach($this->getRoleOptions() as $id => $title)
+                            <option value="{{ $id }}">{{ $title }}</option>
+                        @endforeach
+                    </select>
+                    @error('role_id') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
 
-                        {{-- First Name --}}
-                        <div>
-                            <label class="form-label">{{ __('crud.first_name') }} <span style="color:var(--color-danger);">*</span></label>
-                            <input type="text" wire:model="first_name"
-                                   class="form-input @error('first_name') is-invalid @enderror">
-                            @error('first_name') <p class="form-error">{{ $message }}</p> @enderror
-                        </div>
+                {{-- Sex --}}
+                <div>
+                    <label class="form-label">{{ __('crud.sex') }}</label>
+                    <select wire:model="sex"
+                            class="form-input @error('sex') is-invalid @enderror">
+                        @foreach($this->getSexOptions() as $value => $label)
+                            <option value="{{ $value }}">{{ $label }}</option>
+                        @endforeach
+                    </select>
+                    @error('sex') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
 
-                        {{-- Patronymic --}}
-                        <div>
-                            <label class="form-label">{{ __('crud.patronymic') }}</label>
-                            <input type="text" wire:model="patronymic"
-                                   class="form-input @error('patronymic') is-invalid @enderror">
-                            @error('patronymic') <p class="form-error">{{ $message }}</p> @enderror
-                        </div>
-                    </div>
+                {{-- Last Name --}}
+                <div>
+                    <label class="form-label">{{ __('crud.last_name') }} <span style="color:var(--color-danger);">*</span></label>
+                    <input type="text" wire:model="last_name"
+                           class="form-input @error('last_name') is-invalid @enderror">
+                    @error('last_name') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {{-- Phone --}}
-                        <div>
-                            <label class="form-label">{{ __('crud.phone') }} <span style="color:var(--color-danger);">*</span></label>
-                            <input type="text" wire:model="phone"
-                                   placeholder="+7(777)123-45-67"
-                                   class="form-input @error('phone') is-invalid @enderror">
-                            @error('phone') <p class="form-error">{{ $message }}</p> @enderror
-                        </div>
+                {{-- First Name --}}
+                <div>
+                    <label class="form-label">{{ __('crud.first_name') }} <span style="color:var(--color-danger);">*</span></label>
+                    <input type="text" wire:model="first_name"
+                           class="form-input @error('first_name') is-invalid @enderror">
+                    @error('first_name') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
 
-                        {{-- Email --}}
-                        <div>
-                            <label class="form-label">{{ __('crud.email') }} <span style="color:var(--color-danger);">*</span></label>
-                            <input type="email" wire:model="email"
-                                   class="form-input @error('email') is-invalid @enderror">
-                            @error('email') <p class="form-error">{{ $message }}</p> @enderror
-                        </div>
-                    </div>
+                {{-- Patronymic --}}
+                <div>
+                    <label class="form-label">{{ __('crud.patronymic') }}</label>
+                    <input type="text" wire:model="patronymic"
+                           class="form-input @error('patronymic') is-invalid @enderror">
+                    @error('patronymic') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {{-- Username --}}
-                        <div>
-                            <label class="form-label">{{ __('crud.username') }} <span style="color:var(--color-danger);">*</span></label>
-                            <input type="text" wire:model="username"
-                                   placeholder="A-Za-z0-9_@"
-                                   class="form-input @error('username') is-invalid @enderror">
-                            @error('username') <p class="form-error">{{ $message }}</p> @enderror
-                        </div>
+                {{-- Phone --}}
+                <div>
+                    <label class="form-label">{{ __('crud.phone') }} <span style="color:var(--color-danger);">*</span></label>
+                    <input type="text" wire:model="phone"
+                           placeholder="+7(777)123-45-67"
+                           class="form-input @error('phone') is-invalid @enderror">
+                    @error('phone') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
 
-                        {{-- IIN --}}
-                        <div>
-                            <label class="form-label">{{ __('crud.iin') }}</label>
-                            <input type="text" wire:model="iin"
-                                   placeholder="12 цифр"
-                                   maxlength="12"
-                                   class="form-input @error('iin') is-invalid @enderror">
-                            @error('iin') <p class="form-error">{{ $message }}</p> @enderror
-                        </div>
-                    </div>
+                {{-- Email --}}
+                <div>
+                    <label class="form-label">{{ __('crud.email') }} <span style="color:var(--color-danger);">*</span></label>
+                    <input type="email" wire:model="email"
+                           class="form-input @error('email') is-invalid @enderror">
+                    @error('email') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {{-- Birth Date --}}
-                        <div>
-                            <label class="form-label">{{ __('crud.birth_date') }}</label>
-                            <input type="date" wire:model="birth_date"
-                                   class="form-input @error('birth_date') is-invalid @enderror">
-                            @error('birth_date') <p class="form-error">{{ $message }}</p> @enderror
-                        </div>
+                {{-- Username --}}
+                <div>
+                    <label class="form-label">{{ __('crud.username') }} <span style="color:var(--color-danger);">*</span></label>
+                    <input type="text" wire:model="username"
+                           placeholder="A-Za-z0-9_@"
+                           class="form-input @error('username') is-invalid @enderror">
+                    @error('username') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
 
-                        {{-- Password --}}
-                        <div>
-                            <label class="form-label">
-                                {{ $isEditing ? __('crud.password_new') : __('crud.password') }}
-                                @if(!$isEditing)<span style="color:var(--color-danger);">*</span>@endif
-                            </label>
-                            <input type="password" wire:model="password"
-                                   placeholder="@if($isEditing){{ __('crud.password_leave_empty') }}@endif"
-                                   class="form-input @error('password') is-invalid @enderror">
-                            @error('password') <p class="form-error">{{ $message }}</p> @enderror
-                        </div>
-                    </div>
+                {{-- IIN --}}
+                <div>
+                    <label class="form-label">{{ __('crud.iin') }}</label>
+                    <input type="text" wire:model="iin"
+                           placeholder="12 цифр"
+                           maxlength="12"
+                           class="form-input @error('iin') is-invalid @enderror">
+                    @error('iin') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
 
-                    {{-- Checkboxes --}}
+                {{-- Birth Date --}}
+                <div>
+                    <label class="form-label">{{ __('crud.birth_date') }}</label>
+                    <input type="date" wire:model="birth_date"
+                           class="form-input @error('birth_date') is-invalid @enderror">
+                    @error('birth_date') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Password --}}
+                <div>
+                    <label class="form-label">
+                        {{ $isEditing ? __('crud.password_new') : __('crud.password') }}
+                        @if(!$isEditing)<span style="color:var(--color-danger);">*</span>@endif
+                    </label>
+                    <input type="password" wire:model="password"
+                           placeholder="@if($isEditing){{ __('crud.password_leave_empty') }}@endif"
+                           class="form-input @error('password') is-invalid @enderror">
+                    @error('password') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Status checkboxes --}}
+                <div>
                     <div class="flex items-center gap-6">
-                        {{-- Is Active --}}
                         <label class="flex items-center gap-2 cursor-pointer select-none">
                             <input type="checkbox" wire:model="is_active"
                                    class="w-4 h-4 rounded" style="accent-color: var(--color-primary);">
                             <span class="text-sm" style="color: var(--text-secondary);">{{ __('crud.is_active') }}</span>
                         </label>
-
-                        {{-- Is Verified --}}
                         <label class="flex items-center gap-2 cursor-pointer select-none">
                             <input type="checkbox" wire:model="is_verified"
                                    class="w-4 h-4 rounded" style="accent-color: var(--color-primary);">
