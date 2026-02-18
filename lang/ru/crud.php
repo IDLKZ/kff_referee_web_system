@@ -586,7 +586,10 @@ return [
     'info_en' => 'Информация (EN)',
     'info_placeholder' => 'Дополнительная информация...',
     'extensions' => 'Расширения',
-    'extensions_hint' => 'Введите данные в формате JSON. Например: {"allowed_extensions": ["pdf", "doc"], "max_size": 5242880}',
+    'extensions_hint' => 'Выберите допустимые расширения файлов',
+    'select_all' => 'Выбрать все',
+    'clear_selection' => 'Очистить',
+    'selected' => 'выбрано',
 
     // MatchProtocolDetailReport-specific
     'review_decision' => 'Решение проверки',
@@ -604,4 +607,5 @@ return [
     'protocol_reprocessing_success' => 'Отчет отправлен на доработку',
     'save_decision' => 'Сохранить решение',
     'download' => 'Скачать',
+    'total' => 'Итого',
 ];

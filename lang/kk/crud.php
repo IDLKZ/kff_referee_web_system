@@ -623,7 +623,10 @@ return [
     'info_en' => 'Ақпарат (EN)',
     'info_placeholder' => 'Қосымша ақпарат...',
     'extensions' => 'Кеңейтулер',
-    'extensions_hint' => 'JSON пішімінде енгізіңіз. Мысалы: {"allowed_extensions": ["pdf", "doc"], "max_size": 5242880}',
+    'extensions_hint' => 'Рұқсат етілген файл кеңейтулерін таңдаңыз',
+    'select_all' => 'Барлығын таңдау',
+    'clear_selection' => 'Тазалау',
+    'selected' => 'таңдалды',
 
     // MatchProtocolDetailReport-specific
     'review_decision' => 'Тексеру шешімі',
@@ -641,4 +644,5 @@ return [
     'protocol_reprocessing_success' => 'Есеп қайта өңдеуге жіберілді',
     'save_decision' => 'Шешімді сақтау',
     'download' => 'Жүктеу',
+    'total' => 'Барлығы',
 ];

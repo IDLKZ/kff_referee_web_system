@@ -623,7 +623,10 @@ return [
     'info_en' => 'Information (EN)',
     'info_placeholder' => 'Additional information...',
     'extensions' => 'Extensions',
-    'extensions_hint' => 'Enter data in JSON format. Example: {"allowed_extensions": ["pdf", "doc"], "max_size": 5242880}',
+    'extensions_hint' => 'Select allowed file extensions',
+    'select_all' => 'Select all',
+    'clear_selection' => 'Clear',
+    'selected' => 'selected',
 
     // MatchProtocolDetailReport-specific
     'review_decision' => 'Review Decision',
@@ -641,4 +644,5 @@ return [
     'protocol_reprocessing_success' => 'Report sent for reprocessing',
     'save_decision' => 'Save Decision',
     'download' => 'Download',
+    'total' => 'Total',
 ];

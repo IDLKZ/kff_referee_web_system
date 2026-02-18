@@ -657,15 +657,9 @@
                                         </div>
                                     </div>
 
-                                    {{-- Extensions and Required --}}
-                                    <div class="flex items-center gap-3">
-                                        <div class="flex-1">
-                                            <label class="form-label text-xs">{{ __('crud.extensions') }}</label>
-                                            <input type="text" wire:model="protocolRequirements.{{ $index }}.extensions"
-                                                   class="form-input text-sm" placeholder='["pdf", "doc", "docx"]'>
-                                            <p class="text-xs mt-1" style="color: var(--text-muted);">{{ __('crud.extensions_hint') }}</p>
-                                        </div>
-                                        <label class="flex items-center gap-2 cursor-pointer select-none whitespace-nowrap mt-4">
+                                    {{-- Required --}}
+                                    <div>
+                                        <label class="flex items-center gap-2 cursor-pointer select-none">
                                             <input type="checkbox" wire:model="protocolRequirements.{{ $index }}.is_required"
                                                    class="w-4 h-4 rounded" style="accent-color: var(--color-primary);">
                                             <span class="text-xs" style="color: var(--text-secondary);">{{ __('crud.is_required') }}</span>

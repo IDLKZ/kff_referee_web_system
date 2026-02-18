@@ -59,7 +59,7 @@ class Login extends Component
         $group = $user->role?->group;
         $route = RedirectByRole::dashboardRouteForGroup($group);
 
-        $this->redirect(route($route), navigate: true);
+        $this->redirect(route($route));
     }
 
     public function togglePasswordVisibility(): void

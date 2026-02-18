@@ -45,8 +45,6 @@ class MatchProtocolRequirementManagement extends Component
     public string $info_ru = '';
     public string $info_kk = '';
     public string $info_en = '';
-    public string $extensions = '';
-
     // Delete target
     public ?int $deletingId = null;
     public string $deletingName = '';
@@ -64,7 +62,6 @@ class MatchProtocolRequirementManagement extends Component
             'info_ru' => ['nullable', 'string'],
             'info_kk' => ['nullable', 'string'],
             'info_en' => ['nullable', 'string'],
-            'extensions' => ['nullable', 'string'],
         ];
     }
 
@@ -92,7 +89,6 @@ class MatchProtocolRequirementManagement extends Component
         $this->info_ru = $requirement->info_ru ?? '';
         $this->info_kk = $requirement->info_kk ?? '';
         $this->info_en = $requirement->info_en ?? '';
-        $this->extensions = is_array($requirement->extensions) ? json_encode($requirement->extensions, JSON_PRETTY_PRINT) : ($requirement->extensions ?? '');
         $this->isEditing = true;
         $this->showFormModal = true;
     }
@@ -107,18 +103,6 @@ class MatchProtocolRequirementManagement extends Component
 
         $this->validate();
 
-        // Parse extensions JSON
-        $extensionsData = [];
-        if (!empty($this->extensions)) {
-            $decoded = json_decode($this->extensions, true);
-            if (json_last_error() === JSON_ERROR_NONE) {
-                $extensionsData = $decoded;
-            } else {
-                $this->addError('extensions', __('validation.invalid_json'));
-                return;
-            }
-        }
-
         $data = [
             'title_ru' => $this->title_ru,
             'title_kk' => $this->title_kk ?: null,
@@ -130,7 +114,7 @@ class MatchProtocolRequirementManagement extends Component
             'info_ru' => $this->info_ru ?: null,
             'info_kk' => $this->info_kk ?: null,
             'info_en' => $this->info_en ?: null,
-            'extensions' => $extensionsData,
+            'extensions' => '[]',
         ];
 
         if ($this->isEditing) {
@@ -232,7 +216,6 @@ class MatchProtocolRequirementManagement extends Component
         $this->info_ru = '';
         $this->info_kk = '';
         $this->info_en = '';
-        $this->extensions = '';
         $this->resetValidation();
     }
 
@@ -246,7 +229,7 @@ class MatchProtocolRequirementManagement extends Component
     public function render()
     {
         $query = MatchProtocolRequirement::query()
-            ->with(['tournament', 'judge_type'])
+            ->with(['tournament', 'judge_type', 'match.ownerClub', 'match.guestClub'])
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('title_ru', 'like', "%{$this->search}%")

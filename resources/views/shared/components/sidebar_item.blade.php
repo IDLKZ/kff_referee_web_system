@@ -18,4 +18,7 @@
         {!! $icon !!}
     </span>
     <span class="sidebar-item-label">{{ $label }}</span>
+    @if(!empty($badge) && $badge > 0)
+        <span class="sidebar-item-badge">{{ $badge }}</span>
+    @endif
 </a>

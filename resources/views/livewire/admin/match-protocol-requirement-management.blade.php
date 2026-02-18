@@ -61,6 +61,7 @@
                             </div>
                         </th>
                         <th>{{ __('crud.tournament') }}</th>
+                        <th>{{ __('crud.match') }}</th>
                         <th>{{ __('crud.judge_type') }}</th>
                         <th class="cursor-pointer hover:bg-opacity-80 transition-colors" wire:click="sortBy('is_required')">
                             <div class="flex items-center gap-1">
@@ -90,6 +91,15 @@
                             </td>
                             <td>
                                 <span class="badge badge-secondary">{{ $requirement->tournament->title_ru ?? '—' }}</span>
+                            </td>
+                            <td>
+                                @if($requirement->match)
+                                    <span class="text-sm font-medium" style="color: var(--text-primary);">
+                                        {{ $requirement->match->ownerClub->title_ru ?? '?' }} — {{ $requirement->match->guestClub->title_ru ?? '?' }}
+                                    </span>
+                                @else
+                                    <span style="color: var(--text-muted);">—</span>
+                                @endif
                             </td>
                             <td>
                                 <span class="badge badge-info">{{ $requirement->judge_type->title_ru ?? '—' }}</span>
@@ -129,7 +139,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center py-8" style="color: var(--text-muted);">
+                            <td colspan="7" class="text-center py-8" style="color: var(--text-muted);">
                                 {{ __('crud.no_results') }}
                             </td>
                         </tr>
@@ -341,17 +351,6 @@
                 @error('info_en') <p class="form-error">{{ $message }}</p> @enderror
             </div>
 
-            {{-- Extensions (JSON) --}}
-            <div class="mb-4">
-                <label class="form-label block mb-2">{{ __('crud.extensions') }} (JSON)</label>
-                <textarea wire:model="extensions" rows="4"
-                          class="form-input font-mono text-sm @error('extensions') is-invalid @enderror"
-                          placeholder='{"allowed_extensions": ["pdf", "doc", "docx"], "max_size": 5242880}'></textarea>
-                @error('extensions') <p class="form-error">{{ $message }}</p> @enderror
-                <p class="text-xs mt-1" style="color: var(--text-muted);">
-                    {{ __('crud.extensions_hint') }}
-                </p>
-            </div>
         </form>
 
         <x-slot name="footer">

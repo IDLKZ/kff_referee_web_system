@@ -22,10 +22,7 @@
 
             {{-- Create button --}}
             @if(auth()->user()->hasPermission(\App\Constants\PermissionConstants::TOURNAMENTS_CREATE))
-                <button
-                    wire:click="$dispatch('openModal', { component: 'admin.tournament.tournament-form-modal' })"
-                    class="btn-primary"
-                >
+                <button wire:click="openCreateModal" class="btn-primary">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                     </svg>
@@ -156,11 +153,9 @@
                             <td>
                                 <div class="flex items-center gap-1">
                                     @if(auth()->user()->hasPermission(\App\Constants\PermissionConstants::TOURNAMENTS_UPDATE))
-                                        <button
-                                            wire:click="$dispatch('openModal', { component: 'admin.tournament.tournament-form-modal', arguments: { tournamentId: {{ $tournament->id }} } })"
-                                            class="btn-icon btn-icon-edit"
-                                            title="{{ __('crud.edit') }}"
-                                        >
+                                        <button wire:click="openEditModal({{ $tournament->id }})"
+                                                class="btn-icon btn-icon-edit"
+                                                title="{{ __('crud.edit') }}">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                       d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
@@ -169,11 +164,9 @@
                                     @endif
 
                                     @if(auth()->user()->hasPermission(\App\Constants\PermissionConstants::TOURNAMENTS_DELETE))
-                                        <button
-                                            wire:click="$dispatch('openModal', { component: 'admin.tournament.tournament-delete-modal', arguments: { tournamentId: {{ $tournament->id }} } })"
-                                            class="btn-icon btn-icon-delete"
-                                            title="{{ __('crud.delete') }}"
-                                        >
+                                        <button wire:click="confirmDelete({{ $tournament->id }})"
+                                                class="btn-icon btn-icon-delete"
+                                                title="{{ __('crud.delete') }}">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                       d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
@@ -251,48 +244,6 @@
                     <option value="0">{{ __('crud.inactive') }}</option>
                 </select>
             </div>
-
-            {{-- Sorting options --}}
-            <div>
-                <label class="form-label">{{ __('crud.sort_by') }}</label>
-                <div class="grid grid-cols-2 gap-2">
-                    <button wire:click="sortBy('id')"
-                            class="text-left px-3 py-2 rounded-md text-sm transition-colors {{ $sortField === 'id' ? 'btn-primary' : 'btn-secondary' }}">
-                        {{ __('crud.id') }}
-                        @if($sortField === 'id')
-                            <span class="ml-1">{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
-                        @endif
-                    </button>
-                    <button wire:click="sortBy('title_ru')"
-                            class="text-left px-3 py-2 rounded-md text-sm transition-colors {{ $sortField === 'title_ru' ? 'btn-primary' : 'btn-secondary' }}">
-                        {{ __('crud.title_ru') }}
-                        @if($sortField === 'title_ru')
-                            <span class="ml-1">{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
-                        @endif
-                    </button>
-                    <button wire:click="sortBy('value')"
-                            class="text-left px-3 py-2 rounded-md text-sm transition-colors {{ $sortField === 'value' ? 'btn-primary' : 'btn-secondary' }}">
-                        {{ __('crud.value') }}
-                        @if($sortField === 'value')
-                            <span class="ml-1">{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
-                        @endif
-                    </button>
-                    <button wire:click="sortBy('level')"
-                            class="text-left px-3 py-2 rounded-md text-sm transition-colors {{ $sortField === 'level' ? 'btn-primary' : 'btn-secondary' }}">
-                        {{ __('crud.level') }}
-                        @if($sortField === 'level')
-                            <span class="ml-1">{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
-                        @endif
-                    </button>
-                    <button wire:click="sortBy('is_active')"
-                            class="text-left px-3 py-2 rounded-md text-sm transition-colors {{ $sortField === 'is_active' ? 'btn-primary' : 'btn-secondary' }}">
-                        {{ __('crud.status') }}
-                        @if($sortField === 'is_active')
-                            <span class="ml-1">{{ $sortDirection === 'asc' ? '↑' : '↓' }}</span>
-                        @endif
-                    </button>
-                </div>
-            </div>
         </div>
 
         <x-slot name="footer">
@@ -301,6 +252,231 @@
             </button>
             <button wire:click="$set('showSearchModal', false)" class="btn-primary">
                 {{ __('crud.apply') }}
+            </button>
+        </x-slot>
+    </x-modal>
+
+    {{-- Create / Edit Modal --}}
+    <x-modal wire:model="showFormModal" maxWidth="xl">
+        <x-slot name="title">
+            {{ $isEditing ? __('crud.edit_tournament') : __('crud.create_tournament') }}
+        </x-slot>
+
+        <form wire:submit="save">
+            <div class="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
+                {{-- Image Upload --}}
+                <div>
+                    <label class="form-label">{{ __('crud.tournament_image') }}</label>
+                    <div class="flex items-center gap-4">
+                        @if($image_id || $image)
+                            <div class="relative group">
+                                @if($temporaryImageUrl)
+                                    <img src="{{ $temporaryImageUrl }}" class="w-20 h-20 rounded-xl object-cover border-2" style="border-color: var(--border-color);">
+                                @elseif($existingImageUrl)
+                                    <img src="{{ $existingImageUrl }}" class="w-20 h-20 rounded-xl object-cover border-2" style="border-color: var(--border-color);">
+                                @endif
+                                <button type="button" wire:click="removeImage"
+                                        class="absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center text-white"
+                                        style="background: var(--color-danger);">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        @else
+                            <div class="w-20 h-20 rounded-xl flex items-center justify-center border-2 border-dashed"
+                                 style="background: var(--bg-hover); border-color: var(--border-color); color: var(--text-muted);">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                            </div>
+                        @endif
+                        <div>
+                            <input type="file" wire:model="image" class="hidden" id="tournament-image-upload" accept="image/*">
+                            <label for="tournament-image-upload" class="btn-secondary text-sm cursor-pointer">
+                                {{ $image_id || $image ? __('crud.change_image') : __('crud.upload_image') }}
+                            </label>
+                            @error('image') <p class="form-error mt-2">{{ $message }}</p> @enderror
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Title RU --}}
+                <div>
+                    <label class="form-label">{{ __('crud.title_ru') }} <span style="color:var(--color-danger);">*</span></label>
+                    <input type="text" wire:model="title_ru"
+                           class="form-input @error('title_ru') is-invalid @enderror"
+                           placeholder="{{ __('crud.enter_title_ru') }}">
+                    @error('title_ru') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Title KK --}}
+                <div>
+                    <label class="form-label">{{ __('crud.title_kk') }}</label>
+                    <input type="text" wire:model="title_kk"
+                           class="form-input @error('title_kk') is-invalid @enderror"
+                           placeholder="{{ __('crud.enter_title_kk') }}">
+                    @error('title_kk') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Title EN --}}
+                <div>
+                    <label class="form-label">{{ __('crud.title_en') }}</label>
+                    <input type="text" wire:model="title_en"
+                           class="form-input @error('title_en') is-invalid @enderror"
+                           placeholder="{{ __('crud.enter_title_en') }}">
+                    @error('title_en') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Short Title RU --}}
+                <div>
+                    <label class="form-label">{{ __('crud.short_title_ru') }} <span style="color:var(--color-danger);">*</span></label>
+                    <input type="text" wire:model="short_title_ru"
+                           class="form-input @error('short_title_ru') is-invalid @enderror"
+                           placeholder="{{ __('crud.enter_short_title_ru') }}">
+                    @error('short_title_ru') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Short Title KK --}}
+                <div>
+                    <label class="form-label">{{ __('crud.short_title_kk') }} <span style="color:var(--color-danger);">*</span></label>
+                    <input type="text" wire:model="short_title_kk"
+                           class="form-input @error('short_title_kk') is-invalid @enderror"
+                           placeholder="{{ __('crud.enter_short_title_kk') }}">
+                    @error('short_title_kk') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Short Title EN --}}
+                <div>
+                    <label class="form-label">{{ __('crud.short_title_en') }} <span style="color:var(--color-danger);">*</span></label>
+                    <input type="text" wire:model="short_title_en"
+                           class="form-input @error('short_title_en') is-invalid @enderror"
+                           placeholder="{{ __('crud.enter_short_title_en') }}">
+                    @error('short_title_en') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Value --}}
+                <div>
+                    <label class="form-label">{{ __('crud.value') }} <span style="color:var(--color-danger);">*</span></label>
+                    <input type="text" wire:model="value"
+                           class="form-input @error('value') is-invalid @enderror"
+                           {{ $isEditing ? 'disabled' : '' }}
+                           placeholder="{{ __('crud.tournament_value_placeholder') }}">
+                    @error('value') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Country --}}
+                <div>
+                    <label class="form-label">{{ __('crud.country') }}</label>
+                    <select wire:model="country_id"
+                            class="form-input @error('country_id') is-invalid @enderror">
+                        <option value="">{{ __('crud.select_country') }}</option>
+                        @foreach($this->getCountryOptions() as $id => $title)
+                            <option value="{{ $id }}">{{ $title }}</option>
+                        @endforeach
+                    </select>
+                    @error('country_id') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Level --}}
+                <div>
+                    <label class="form-label">{{ __('crud.level') }} <span style="color:var(--color-danger);">*</span></label>
+                    <input type="number" wire:model="level" min="1"
+                           class="form-input @error('level') is-invalid @enderror"
+                           placeholder="{{ __('crud.enter_level') }}">
+                    @error('level') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Sex --}}
+                <div>
+                    <label class="form-label">{{ __('crud.sex') }} <span style="color:var(--color-danger);">*</span></label>
+                    <select wire:model="sex"
+                            class="form-input @error('sex') is-invalid @enderror">
+                        @foreach($this->getSexOptions() as $val => $label)
+                            <option value="{{ $val }}">{{ $label }}</option>
+                        @endforeach
+                    </select>
+                    @error('sex') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Description RU --}}
+                <div>
+                    <label class="form-label">{{ __('crud.description_ru') }}</label>
+                    <textarea wire:model="description_ru" rows="3"
+                              class="form-input @error('description_ru') is-invalid @enderror resize-none"
+                              placeholder="{{ __('crud.enter_description_ru') }}"></textarea>
+                    @error('description_ru') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Description KK --}}
+                <div>
+                    <label class="form-label">{{ __('crud.description_kk') }}</label>
+                    <textarea wire:model="description_kk" rows="3"
+                              class="form-input @error('description_kk') is-invalid @enderror resize-none"
+                              placeholder="{{ __('crud.enter_description_kk') }}"></textarea>
+                    @error('description_kk') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Description EN --}}
+                <div>
+                    <label class="form-label">{{ __('crud.description_en') }}</label>
+                    <textarea wire:model="description_en" rows="3"
+                              class="form-input @error('description_en') is-invalid @enderror resize-none"
+                              placeholder="{{ __('crud.enter_description_en') }}"></textarea>
+                    @error('description_en') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
+                {{-- Status --}}
+                <div>
+                    <label class="flex items-center gap-2 cursor-pointer select-none">
+                        <input type="checkbox" wire:model="is_active"
+                               class="w-4 h-4 rounded" style="accent-color: var(--color-primary);">
+                        <span class="text-sm" style="color: var(--text-secondary);">{{ __('crud.is_active') }}</span>
+                    </label>
+                </div>
+            </div>
+        </form>
+
+        <x-slot name="footer">
+            <button wire:click="$set('showFormModal', false)" class="btn-secondary">
+                {{ __('crud.cancel') }}
+            </button>
+            <button wire:click="save" class="btn-primary" wire:loading.attr="disabled">
+                <span wire:loading.remove wire:target="save">{{ __('crud.save') }}</span>
+                <span wire:loading wire:target="save">{{ __('ui.loading') }}</span>
+            </button>
+        </x-slot>
+    </x-modal>
+
+    {{-- Delete Confirmation Modal --}}
+    <x-modal wire:model="showDeleteModal" maxWidth="sm">
+        <x-slot name="title">
+            {{ __('crud.confirm_delete') }}
+        </x-slot>
+
+        <div class="text-center">
+            <div class="mx-auto flex items-center justify-center w-12 h-12 rounded-full mb-4"
+                 style="background: var(--color-danger-light);">
+                <svg class="w-6 h-6" style="color: var(--color-danger);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z"/>
+                </svg>
+            </div>
+            <p style="color: var(--text-secondary);">
+                {{ __('crud.confirm_delete_text') }}
+            </p>
+            <p class="mt-2 font-semibold" style="color: var(--text-primary);">
+                {{ $deletingTournamentInfo }}
+            </p>
+        </div>
+
+        <x-slot name="footer">
+            <button wire:click="$set('showDeleteModal', false)" class="btn-secondary">
+                {{ __('crud.cancel') }}
+            </button>
+            <button wire:click="delete" class="btn-danger" wire:loading.attr="disabled">
+                <span wire:loading.remove wire:target="delete">{{ __('crud.yes_delete') }}</span>
+                <span wire:loading wire:target="delete">{{ __('ui.loading') }}</span>
             </button>
         </x-slot>
     </x-modal>

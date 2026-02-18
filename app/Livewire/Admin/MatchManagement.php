@@ -215,7 +215,6 @@ class MatchManagement extends Component
                 'info_kk' => $req->info_kk,
                 'info_en' => $req->info_en,
                 'is_required' => $req->is_required,
-                'extensions' => $req->extensions ? json_encode($req->extensions, JSON_UNESCAPED_UNICODE) : '',
             ];
         })->toArray();
 
@@ -344,8 +343,6 @@ class MatchManagement extends Component
         $keepIds = [];
 
         foreach ($this->protocolRequirements as $req) {
-            $extensions = !empty($req['extensions']) ? json_decode($req['extensions'], true) : null;
-
             if (!empty($req['id'])) {
                 // Update existing
                 MatchProtocolRequirement::where('id', $req['id'])->update([
@@ -358,7 +355,6 @@ class MatchManagement extends Component
                     'info_kk' => $req['info_kk'] ?? null,
                     'info_en' => $req['info_en'] ?? null,
                     'is_required' => $req['is_required'],
-                    'extensions' => $extensions,
                 ]);
                 $keepIds[] = $req['id'];
             } else {
@@ -373,7 +369,7 @@ class MatchManagement extends Component
                     'info_kk' => $req['info_kk'] ?? null,
                     'info_en' => $req['info_en'] ?? null,
                     'is_required' => $req['is_required'],
-                    'extensions' => $extensions,
+                    'extensions' => '[]',
                 ]);
                 $keepIds[] = $newReq->id;
             }
@@ -431,7 +427,6 @@ class MatchManagement extends Component
             'info_kk' => '',
             'info_en' => '',
             'is_required' => true,
-            'extensions' => '',
         ];
     }
 

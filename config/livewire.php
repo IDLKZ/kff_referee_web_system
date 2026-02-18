@@ -130,10 +130,14 @@ return [
 
     'temporary_file_upload' => [
         'disk' => 'local', // Example: 'local', 's3'             | Default: 'default'
-        'rules' => null,                                      // Example: ['file', 'mimes:png,jpg'] | Default: ['required', 'file', 'max:12288'] (12MB)
+        'rules' => ['required', 'file'],                        // No size limit
         'directory' => 'livewire-tmp',                        // Explicit directory for temporary uploads
         'middleware' => null,                                 // Example: 'throttle:5,1'            | Default: 'throttle:60,1'
-        'preview_mimes' => [],                                // Disabled: prevents "Unable to retrieve the file_size" errors
+        'preview_mimes' => [
+            'png', 'gif', 'bmp', 'svg', 'wav', 'mp4',
+            'mov', 'avi', 'wmv', 'mp3', 'm4a',
+            'jpg', 'jpeg', 'mpga', 'webp', 'wma',
+        ],
         'max_upload_time' => 50, // Max duration (in minutes) before an upload is invalidated...
         'cleanup' => false, // Disabled temporarily to prevent premature cleanup
     ],

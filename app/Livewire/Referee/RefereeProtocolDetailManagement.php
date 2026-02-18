@@ -302,7 +302,8 @@ class RefereeProtocolDetailManagement extends Component
 
         DB::beginTransaction();
         try {
-            $fileService = new FileService();
+            $fileService = app(FileService::class);
+            $fileService->setDisk('uploads');
 
             $uploadedFile = $this->uploadedDocument;
 
@@ -381,7 +382,8 @@ class RefereeProtocolDetailManagement extends Component
 
         DB::beginTransaction();
         try {
-            $fileService = new FileService();
+            $fileService = app(FileService::class);
+            $fileService->setDisk('uploads');
             $fileService->delete($document->file_id);
             $document->delete();
 

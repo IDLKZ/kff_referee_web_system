@@ -436,6 +436,17 @@
                                                         {{ number_format($document['total_price'], 0, '.', ' ') }} KZT
                                                     </span>
                                                 @endif
+                                                @if(!empty($document['file']))
+                                                    <a href="{{ route('files.download', $document['file']['id']) }}"
+                                                       class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium shrink-0 transition-colors"
+                                                       style="color: var(--color-info); background: var(--color-info-light);"
+                                                       title="{{ $document['file']['filename'] }}">
+                                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                                        </svg>
+                                                        {{ __('crud.download') }}
+                                                    </a>
+                                                @endif
                                             </div>
                                             @if(!$isReadOnly)
                                                 <div class="flex items-center gap-1 shrink-0 ml-2">

@@ -5,7 +5,6 @@ namespace App\Livewire\Kff;
 use App\Constants\OperationConstants;
 use App\Constants\RoleConstants;
 use App\Models\City;
-use App\Models\File;
 use App\Models\Hotel;
 use App\Models\HotelRoom;
 use App\Models\MatchJudge;
@@ -18,6 +17,8 @@ use App\Models\TripDocument;
 use App\Models\TripHotel;
 use App\Models\TripMigration;
 use App\Models\TransportType;
+use App\Services\File\DTO\FileValidationOptions;
+use App\Services\File\FileService;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -131,7 +132,6 @@ class KffTripDetail extends Component
         $hasAccess = MatchLogist::where('match_id', $this->matchId)
             ->where('logist_id', auth()->id())
             ->exists();
-
         abort_unless($hasAccess, 403);
 
         // Check if match is in correct operation
@@ -625,13 +625,13 @@ class KffTripDetail extends Component
 
         // Handle file upload
         if ($this->tripDocumentFileUpload) {
-            $path = $this->tripDocumentFileUpload->store('trip_documents', 'public');
-            $file = File::create([
-                'filename' => basename($path),
-                'file_path' => $path,
-                'file_size_bytes' => $this->tripDocumentFileUpload->getSize(),
-                'mime_type' => $this->tripDocumentFileUpload->getMimeType(),
-            ]);
+            $fileService = app(FileService::class);
+            $fileService->setDisk('uploads');
+            $file = $fileService->save(
+                $this->tripDocumentFileUpload,
+                'trip_documents',
+                FileValidationOptions::any(maxSizeMB: 10)
+            );
             $fileId = $file->id;
         }
 

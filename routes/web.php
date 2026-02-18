@@ -81,7 +81,7 @@ Route::middleware('auth.active')->group(function () {
         if (!$file) {
             abort(404);
         }
-        return Storage::disk(config('filesystems.default', 'public'))->download($file->file_path, $file->filename);
+        return Storage::disk('uploads')->download($file->file_path, $file->filename);
     })->name('files.download');
 
     // Root — redirect to role-specific dashboard
